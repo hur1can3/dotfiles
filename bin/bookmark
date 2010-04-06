@@ -1,0 +1,133 @@
+#!/bin/bash
+#
+# PREAMBLE {{{
+#
+# pbrisbin 2009
+#
+# create/load an html page of # links based on a folder
+# hierchy of bookmark lists
+#
+# keep $bookmarks organized something like this, where the 
+# ONLY info in the individual bookmark text files is listed 
+# urls of your bookmarked links corresponding to the
+# containing dir's category
+# 
+# $bookmarks
+# |-- linux
+# |   |-- arch
+# |   |   `-- bookmarks
+# |   |-- cli
+# |   |   `-- bookmarks
+# |   |-- howto
+# |   |   `-- bookmarks
+# |   |-- mutt
+# |   |   `-- bookmarks
+# `-- mac
+#     |-- howto
+#     |   `-- bookmarks
+#     |-- programs
+#     |   `-- bookmarks
+#     `-- reference
+#         `-- bookmarks
+# 
+# }}}
+###
+
+. /home/hur1can3/.bin/siteutils
+
+# help message
+message() {
+  echo 'bookmark [-ls] [-l search terms] [-a category url] [-s search terms]'
+  echo
+  
+  exit 1
+}
+
+create_page() {
+  local LC_ALL='C'
+
+  # write a header
+  write_page_header "$tmp_page" 'Bookmarks'
+
+  # write each category's section
+  for path in $(find "$bookmarks" -type f | sort); do
+    folder="$(dirname "$path")"
+
+    echo "<h2>${folder/$bookmarks/}</h2>" >> $tmp_page
+    
+    while read url; do
+      echo "<p>$(file2link -r -a "$url" "$url")</p>" >> "$tmp_page"
+    done < "$path"
+
+  done
+
+  # write a footer
+  write_page_footer "$tmp_page" true
+}
+
+list_categories() { tree -d "$bookmarks"; }
+
+insert_bookmark() {
+  [ $# -ne 2 ] && message
+
+  local dir="$(find $bookmarks -type d -wholename "$bookmarks/$1")"
+
+  [ -f "$dir/bookmarks" ] || errorout 'file $dir/bookmarks not found'
+
+  if ! grep -Fqx "$2" "$dir/bookmarks"; then
+    echo "$2" >> "$dir/bookmarks" && echo "added: $dir/$2"
+  fi
+
+  # update the page in the background
+  create_page &
+}
+
+# seach bookmarks by CLI
+search_bookmark() {
+  [ -z "$1" ] && message
+
+  local ret=1
+
+  while read r bookmark; do
+    grep "$*" $bookmark && ret=0
+  done < <(find $bookmarks -type f -name bookmarks)
+
+  exit $ret
+}
+
+# open the bookmarkpage
+open_bookmarks() { 
+  [ -e "$tmp_page" ] || create_page
+
+  echo "would open  $BROWSER "file://$tmp_page" &>/dev/null &"
+  echo "or possibly $BROWSER "$(file2link "$tmp_page")" &>/dev/null &"
+} 
+
+# open a bookmark via CLI
+load_from_bookmark() { 
+  [ -z "$1" ] && message
+  
+  $BROWSER "$(search_bookmark "$*" | head -1)" &>/dev/null &
+}
+
+# directory under which all your bookmarks reside
+bookmarks="$HOME/.my_bookmarks"
+
+# store the rendered page here
+tmp_page="$srv/shared/bookmarks.html"
+
+# default is open page
+if [ -z "$1" ]; then
+  open_bookmarks
+  exit 0
+fi
+
+# other options
+case "$1" in
+  -r)  create_page                      ;;
+  -ls) list_categories                  ;;  
+  -l)  shift; load_from_bookmark "$*"   ;;
+  -a)  shift; insert_bookmark "$1" "$2" ;;
+  -s)  shift; search_bookmark "$*"      ;;
+  *)   message                          ;;
+esac

@@ -1,0 +1,51 @@
+#!/bin/bash
+# sourced by .bashrc
+
+# check for browser
+if [ -z "$DISPLAY" ]; then
+  BROWSER=elinks
+else
+  BROWSER=firefox
+fi
+
+# Set some variables
+LESS="-P ?f%f(?b%bb/?B%B Byte)Line %lb of %L %pb\% ?eEOF"
+EDITOR=/usr/bin/vim
+VISUAL=/usr/bin/vim
+MPD_PORT=6600
+MPD_HOST=127.0.0.1
+PAGER=/bin/less
+GREP_OPTIONS='--colour=auto'
+GREP_COLOR='1;30;43'
+
+# bash options
+shopt -s cdable_vars        # if cd arg is not valid, assumes its a var defining a dir
+shopt -s cdspell            # autocorrects cd misspellings
+shopt -s checkwinsize       # update the value of LINES and COLUMNS after each command if altered
+shopt -s cmdhist            # save multi-line commands in history as single line
+shopt -s dotglob            # include dotfiles in pathname expansion
+shopt -s expand_aliases     # expand aliases
+shopt -s extglob            # enable extended pattern-matching features
+shopt -s nocaseglob         # pathname expansion will be treated as case-insensitive
+
+# Set the options for the historyfile
+shopt -s histappend
+HISTCONTROL=ignoredups
+HISTIGNORE="&:ls:ll:la:cd:exit:clear"
+HISTSIZE=20000
+HISTFILESIZE=20000
+HISTTIMEFORMAT="[%Y-%m-%d - %H:%M:%S] "
+
+# make ls nicer
+LS_OPTIONS='--group-directories-first --color=auto'
+
+# fix locale-shit
+LANGUAGE=en_US.UTF-8
+LC_ALL=en_US.utf8
+
+# EXPORT VARIABLES NOW
+export LANGUAGE LC_ALL LOCALE HISTCONTROL HISTIGNORE HISTSIZE HISTFILESIZE HISTTIMEFORMAT GREP_OPTIONS PAGER LESS MPD_HOST MPD_PORT BROWSER EDITOR VISUAL LS_OPTIONS GREP_COLOR
+# java exports
+#export CLASSPATH=/usr/share/java/xalan.jar:/usr/share/java/fop/fop.jar:/usr/share/java/avalon-framework/avalon-framework.jar
+# path exports
+export PATH=/bin:/usr/bin:/sbin:/usr/sbin:/opt/java/bin:/opt/java/jre/bin:/usr/local/bin:$HOME/bin

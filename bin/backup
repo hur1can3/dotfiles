@@ -1,0 +1,80 @@
+#!/bin/bash
+#
+# pbrisbin 2009, 2010
+#
+###
+
+logger() { echo "$(date +'[ %d-%b-%Y %H:%M ]') :: $*" | tee -a "$LOG"; }
+
+errorout() { logger "ERROR: $*"; exit 1; }
+
+# help message
+message() {
+  echo "usage: backup [opt]"
+  echo
+  echo "  options:"
+  echo "        -d      run daily backup routine"
+  echo "        -m      run monthly backup routine"
+  echo
+  exit 1
+}
+
+# handle $HOME specially
+backup_dir() {
+  for folder in "$@"; do
+    logger "$folder"
+
+    if [ "$folder" = '/home/patrick' ]; then
+      rsync -a -l --delete \
+                  --delete-excluded \
+                  --exclude-from="$excludes" \
+                  "$folder" "$dir/" &>> "$LOG"
+    else
+      rsync -a -l --delete "$folder" "$dir/" &>> "$LOG"
+    fi
+  done
+}
+
+# source a config file
+CONF='/home/hur1can3/.config/backup.conf'
+[ -f "$CONF" ] && . "$CONF" || errorout "config $CONF not found."
+  
+# check that we're root
+[ $(id -u) -ne 0 ] && errorout 'you must be root'
+
+# need options
+[ $# -lt 1 ] && message
+
+# allow use as daily or monthly backup
+case $1 in
+  -d) dir="$BACKUP_DAILY"   ;;
+  -m) dir="$BACKUP_MONTHLY" ;;
+  *)  message               ;;
+esac
+
+# list of files to not backup
+excludes="$EXCLUDES"
+
+# sanity checks
+[ -z "$dir" ] && errorout '$dir not set'
+[ -f "$excludes" ] || errorout 'excludes file missing'
+[ -f "$dir/.lock" ] || errorout 'drive not mounted'
+
+# and go!
+logger '----------------------'
+logger '-- backup initiated --'
+logger '----------------------'
+
+logger 'backing up directories...'
+backup_dir ${INCLUDES[@]}
+
+logger 'listing installed repo packages...'
+pacman -Qqe | grep -vx "$(pacman -Qqm)" > "$dir/paclog" || errorout 'failed creating paclisting'
+
+logger 'listing installed aur packages...'
+pacman -Qqm > "$dir/aurlog" || errorout 'failed creating aur listing'
+
+
+logger '----------------------'
+logger '-- backup completed --'
+logger '----------------------'

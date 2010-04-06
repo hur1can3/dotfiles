@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# pbrisbin 2009
+#
+# http://pbrisbin.com:8080/bin/sshot
+#
+# a general scrot wrapper script
+#
+# examples:
+#
+# sshot -name=foo_bar -cd 5
+#
+#   runs:  scrot -t 20 -cd 5 ~/Pictures/screenshots/foo_bar_200910261530.png
+#   echos: http://pbrisbin.com:8080/screenshots/foo_bar_200910261530.png
+#
+# sshot -cd 5
+#
+#   runs:  scrot -t 20 -cd 5 ~/Pictures/screenshots/desktop_200910261530.png
+#   echos: http://pbrisbin.com:8080/screenshots/desktop_200910261530.png
+#
+###
+
+. /home/patrick/.bin/siteutils
+
+name='desktop'   # default filename
+sopt=('-t' '20') # always make a thumb
+
+# grab -name=* for us, pass anything
+# else directly to scrot
+while [ -n "$1" ]; do
+  case $1 in
+    -name=*) name=${1#*=}   ;;
+    *)       sopt+=( "$1" ) ;; 
+  esac
+  shift
+done
+
+shot="$shots_dir/${name// /_}_$(date +%y%m%d%H%M).png"
+
+url="$shots_link/$(basename "$shot")"
+
+# take the shot
+scrot ${sopt[@]} "$shot" || exit 1
+
+# put in clipboard
+echo -n "$url" | xclip &>/dev/null
+
+# print to screen
+echo "$url"

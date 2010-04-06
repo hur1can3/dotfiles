@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# pbrisbin 2009
+#
+# compress and aurpload an aur package
+#
+###
+
+# functions
+logger() { echo "$(date +'[ %Y %b %d %H:%M ]') :: $*" | tee -a "$log"; }
+
+errorout() { logger "ERROR: $*"; exit 1; }
+
+# constants
+log="$HOME/.logs/aurpload.log"
+file="$HOME/.aurploader_pass"
+
+# safety checks
+[ -z "$1" ] && errorout 'usage: upload [pkgdir]'
+[ -f "$file" ] || errorout 'aur password file not found'
+[ -f "$1/PKGBUILD" ] || errorout "$1: no PKGBUILD found"
+
+archive="./$(basename "$1").tar.gz"
+
+logger 'compressing $1 into $archive...'
+tar cvpzf "$archive" "$1" &>/dev/null || errorout "tar: failed to compress $1"
+
+logger 'uploading $archive to AUR...'
+aurploader -r -l "$file" "$archive" || errorout "aurploader: failed to upload $archive"
+
+logger 'cleaning up...'
+rm "$archive" || errorout "rm: failed to remove $archive"
+
+logger 'done.'

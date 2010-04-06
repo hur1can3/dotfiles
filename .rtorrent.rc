@@ -1,0 +1,48 @@
+# Maximum and minimum number of peers to connect to per torrent.
+#min_peers = 40
+max_peers = 52
+
+# Same as above but for seeding completed torrents (-1 = same as downloading)
+#min_peers_seed = 10
+max_peers_seed = 52
+
+# Maximum number of simultanious uploads per torrent.
+max_uploads = 8
+
+# Global upload and download rate in KiB. "0" for unlimited.
+download_rate = 0
+upload_rate = 78
+
+# Default directory to save the downloaded torrents.
+directory = /home/hur1can3/Torrents/
+
+
+# Default session directory. Make sure you don't run multiple instance
+# of rtorrent using the same session directory. Perhaps using a
+# relative path?
+session = /home/hur1can3/.session/
+
+# Watch a directory for new torrents, and stop those that have been
+# deleted.
+#schedule = watch_directory,5,5,load_start=./watch/*.torrent
+#schedule = untied_directory,5,5,stop_untied=
+schedule = watch_directory,5,5,load_start=/home/hur1can3/*.torrent
+schedule = untied_directory,5,5,stop_untied=
+schedule = tied_directory,5,5,start_tied=
+
+# Check hash for finished torrents. Might be usefull until the bug is
+# fixed that causes lack of diskspace not to be properly reported.
+check_hash = yes
+
+# Encryption options, set to none (default) or any combination of the following:
+# allow_incoming, try_outgoing, require, require_RC4, enable_retry, prefer_plaintext
+#
+# The example value allows incoming encrypted connections, starts unencrypted
+# outgoing connections but retries with encryption if they fail, preferring
+# plaintext to RC4 encryption after the encrypted handshake
+#
+# encryption = allow_incoming,enable_retry,prefer_plaintext
+encryption = allow_incoming,try_outgoing,enable_retry
+
+
+port_range = 6890-6999

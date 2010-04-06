@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# pbrisbin 2009
+#
+# http://pbrisbin.com:8080/bin/mpdstats
+#
+#
+# query the mpd db directly based on
+# a passed folder name
+#
+###
+
+database="$HOME/.mpd/mpd.db"
+
+LC_ALL='C'
+
+number_of() { grep "$1" "$database" | sort | uniq | wc -l; }
+most_from() { grep "$1" "$database" | sort | uniq -c | sort -r | head -1 | cut -d ':' -f 2-; }
+
+echo "Collection Stats:"
+echo
+echo "  number of tracks  : $(number_of '^Title: ')"
+echo "  number of artists : $(number_of '^Artist: ')"
+echo "  number of albums  : $(number_of '^Album: ')"
+echo
+echo "  most from artist  : $(most_from '^Artist: ')"
+echo "  most from year    : $(most_from '^Date: ')"
+echo "  most from genre   : $(most_from '^Genre: ')"
+echo

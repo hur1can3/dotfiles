@@ -1,0 +1,113 @@
+#!/bin/bash
+#
+# pbrisbin 2009
+#
+# http://pbrisbin.com:8080/bin/archive
+#
+# wrapper script for [un]compressing archives of all sorts
+#
+###
+
+message() {
+  echo "archive: [un]compress files based on extension"
+  echo
+  echo "usage: (compression)"
+  echo "  archive (-dest=./archive.ext) [source] ..."
+  echo "  defaults to './archive.tar.gz'"
+  echo
+  echo "usage: (extraction)"
+  echo "  archive -u (-dest=./some_dir) [archive] ..."
+  echo "  defaults to './'"
+  echo
+  echo
+  exit 1
+}
+
+errorout() {
+  echo "error: $*"
+  echo
+  exit 1
+}
+
+compress_archive() {
+  local dst="$1"; shift
+
+  # warn but still clobber
+  [ -e "$dst" ] && echo "warning: overwriting $dst"
+
+  # check existence
+  for src in "$@"; do
+    [ -e "$src" ] || errorout "$src: not found."
+  done
+
+  case "$dst" in
+    *.tbz2|*.tar.bz2) tar cvpjf "$dst" "$@"            ;;
+    *.tgz|*.tar.gz)   tar cvpzf "$dst" "$@"            ;;
+    *.gz)             cat "$@" | gzip > "$dst"         ;;
+    *.bz2)            cat "$@" | bzip2 > "$dst"        ;;
+    *.zip)            zip "$dst" "$@"                  ;;
+    *.7z)             7z -t7z "$dst" "$@"              ;;
+    *)                errorout "invalid archive: $dst" ;;
+  esac
+
+  exit $?
+}
+
+extract_archive() {
+  local dir="$PWD"
+  local dst="$1"; shift
+
+  if [ "$dst" != './' ]; then
+    [ -d "$dst" ] || mkdir -p "$dst"
+    cd "$dst" || exit 1
+
+    dir="$OLDPWD"
+  fi
+
+  for archive in "$@"; do
+    archive="$dir/$archive"
+
+    # check existence
+    [ -e "$archive" ] || errorout "$archive: not found."
+
+    case "$archive" in
+      *.tbz2|*.tar.bz2) tar xvjf "$archive"                 ;;
+      *.tgz|*.tar.gz)   tar xvzf "$archive"                 ;;
+      *.tar)            tar xvf "$archive"                  ;;
+      *.gz)             gunzip "$archive"                   ;;
+      *.bz2)            bunzip2 "$archive"                  ;;
+      *.zip)            unzip "$archive"                    ;;
+      *.rar)            unrar x "$archive"                  ;;
+      *.Z)              uncompress "$archive"               ;;
+      *.7z)             7z x "$archive"                     ;;
+      #*)                errorout "invalid archive $archive" ;;
+      *)                tar xvzf "$archive.tgz"             ;; # a default
+    esac
+  done
+
+  exit $?
+}
+
+[ -z "$1" ] && message
+
+# set defaults
+MODE='comp'
+dst=''
+
+# get opts
+while [ -n "$1" ]; do
+  case "$1" in
+    -h)      message               ;;
+    -u)      MODE='ext'    ; shift ;;
+    -dest=*) dst="${1#*=}" ; shift ;;
+    *)       break                 ;;
+  esac
+done
+
+case $MODE in
+  ext)  [ -z "$dst" ] && dst='./'
+        extract_archive "$dst" "$@"        ;;
+  comp) [ -z "$dst" ] && dst='./archive.tar.gz'
+        compress_archive "$dst" "$@"       ;;
+  *)    errorout "how tf did you do that?" ;;
+esac

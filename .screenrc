@@ -1,0 +1,17 @@
+# hur1can3's screen init file on Arch GNU/Linux
+
+vbell off                         # no bell
+autodetach on                     # detach on hangup
+startup_message off               # don't display the copyright page
+defutf8 on                        # utf-8 encoding
+defscrollback 10000               # change default scrollback value for new windows
+nonblock on                       # don't block everything, waiting for an unresponsive window
+bufferfile $HOME/.screenex        # the file to use for "readbuf" ('<') and  "writebuf" ('>'):
+shell -$SHELL                     # make the shell in every window a login shell
+deflogin on                       # log new screen windows in utmp
+term screen-256color              # set $TERM
+termcapinfo rxvt* ti@:te@:XT      # improve mouse scrolling,
+altscreen on                      # and text will go into terminal scrollback buffer
+sorendition Wk                    # status: normal text on black bg
+                                  # [ hostname ][(0*$ zsh) (1-$ emacs)][ hostname ]
+hardstatus alwayslastline "%{G}[ %{Y}%H %{G}][%{w}%?%-Lw%?%{G}(%{W}%n*%f %t%?(%u)%?%{G})%{w}%?%+Lw%?%?%= %{G}][%{Y} %H %{G}]"

@@ -1,0 +1,72 @@
+#!/bin/bash
+#
+# pbrisbin 2009, 2010
+#
+###
+
+. /home/hur1can3/bin/siteutils
+
+# need root to write to srv
+[ $(id -u) -ne 0 ] && errorout 'you must be root'
+
+# location of public dotfiles
+dots="$srv/dotfiles"
+
+[ -d "$dots" ] || errorout 'dotfiles directory not found'
+
+# get sed scrubme pattern from a mod 600 cred file
+. /home/hur1can3/.credentials
+
+# if we don't now know what to scrub, GTFO
+[ -z "$scrubme" ] && errorout 'scrub pattern not found'
+
+clean='.bashrc
+       .bashrc_alias
+       .bashrc_alias_distro
+       .bashrc_functions
+       .bashrc_exports
+       .bashrc_colors
+       .Xdefaults
+       .xinitrc
+       .gitconfig
+       .screenrc
+       .vimrc
+       .conkyrc
+       .dmenurc
+       .gmrunrc
+       .gtkrc-2.0
+       .xcolors/zenburn.xcolors
+       .dzen_conkyrc
+       .config/volwheel
+       .config/bashrun/keys
+       .config/bashrun/rc
+       .config/geany/geany.conf
+       .config/geany/filedefs/*
+       .config/gmpc/gmpc.cfg
+       .config/leafpad/leafpadrc
+       .config/MusicBrainz/Picard.conf
+       .config/tint2/tint2rc
+       .config/xfce4/helpers
+       .config/openbox/rc.xml
+       .config/openbox/menu.xml
+       .config/openbox/autostart.sh'
+
+dirty='.mutt/muttrc
+       .mutt/gmail.muttrc
+       .mutt/colors.muttrc
+       .mutt/256colors.muttrc
+       .mutt/sidebar.muttrc
+       .offlineimaprc
+       .msmtprc'
+
+logger 'copying clean dotfiles...'
+for source in $clean; do
+  dest="$dots/$(basename ${source/\./})"
+  [ -e "/home/hur1can3/$source" ] && cp "/home/hur1can3/$source" "$dest" || logger "$source not found"
+done
+
+logger 'scrubbing dirty dotfiles...'
+for source in $dirty; do
+  dest="$dots/$(basename ${source/\./})"
+  [ -e "/home/hur1can3/$source" ] && sed "$scrubme" "/home/hur1can3/$source" > "$dest" || logger "$source not found"
+done

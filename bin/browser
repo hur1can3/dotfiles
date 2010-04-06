@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# pbrisbin 2010
+#
+# .Xdefaults (and others) can't use $BROWSER; this way, i
+# can just call this script from where ever and it will.
+#
+###
+
+if [ -z "$BROWSER" ]; then
+  echo '$BROWSER not set.'
+  exit 1
+fi
+
+$BROWSER $* &

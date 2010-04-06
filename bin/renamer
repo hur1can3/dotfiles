@@ -1,0 +1,37 @@
+#!/bin/bash
+#
+# pbrisbin 2009
+#
+# http://pbrisbin.com:8080/bin/renamer
+#
+#
+###
+
+message() {
+  echo "usage: renamer [dir1] [dir2] ..."
+  echo
+  exit 1
+}
+
+renameit() {
+  dir=$(dirname "$1")
+  old=$(basename "$1")
+  new=$(echo $old | tr 'A-Z' 'a-z' | sed 's/\ /_/g;s/_-_/_/g;s/__/_/g')
+
+  [ "$old" != "$new" ] && mv -iv "$dir/$old" "$dir/$new"
+}
+
+[ $# -lt 1 ] && message
+
+# can pass mixture of dirs and files
+# files are changed in basename
+# dirs are changed recursively
+for arg in "$@"; do
+  if [ -d "$arg" ]; then
+    find "$arg" -depth | while read dir; do
+      renameit "$dir"
+    done
+  else
+    renameit "$arg"
+  fi
+done

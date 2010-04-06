@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# pbrisbin 2010
+#
+###
+
+. /home/hur1can3/.bin/siteutils
+
+message() { echo 'usage: mklistpage'; exit 1; }
+
+[ $(id -u) -ne 0 ] && errorout 'you must be root'
+
+page="$pages/content.html"
+
+# write header
+write_page_header "$page" 'Site Content'
+
+# temporary note
+cat >> "$page" << EOF
+<p>
+Note: I recently had to do a mass update of my /pages/* to change some formatting around (still working on getting xhtml compliant).
+Because of this, the Last modified: time will be pretty useless for a while. Sorry.
+</p>
+EOF
+
+# write sections
+while read -r src_page; do
+  build_page_section "$src_page" "$page"
+done < <(get_pages_by_date)
+
+# write footer
+write_page_footer "$page" true

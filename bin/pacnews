@@ -1,0 +1,100 @@
+#!/bin/bash
+#
+# PacNews
+#
+# http://pbrisbin.com:8080/bin/pacnews
+#
+# pbrisbin 2009
+#
+###
+
+set_title() { echo -ne "\033]0;$(basename "$0")\007"; }
+
+message() {
+  echo "pacnews is designed to streamline dealing with .pacnew files."
+  echo
+  echo "pacnews must be run as root, and will optionally accept a"
+  echo "directory on which to act, otherwise /etc will be searched by"
+  echo "default."
+  echo
+  echo "all *.pacnew files found will be presented to you one by one; "
+  echo "you'll have the option of viewing/editing your current config"
+  echo "file side by side with the pacnew file through vimdiff, then"
+  echo "you can remove the pacnew file, replace you're existing" 
+  echo "config file with the .pacnew file, or do nothing."
+  echo
+  echo "answering anything other than \"y\" to the options will"
+  echo "eventually bring you back without changing your system in any"
+  echo "way."
+  echo
+  echo "note: spaces in filenames are not supported."
+  echo
+  exit 1
+}
+
+errorout(){ echo "error: $*"; exit 1; }
+
+prompt() {
+  echo -n "$*? [Y/n] " && read A
+
+  [ -z "$A" ] && return 0
+
+  case $A in
+    y|Y) return 0 ;;
+    q|Q) exit 1   ;;
+    *)   return 1 ;;
+  esac
+}
+
+remove_file() {
+  local file="$1"
+
+  rm -v "$file" || errorout 'could not remove the pacnew file'
+}
+
+replace_file() {
+  local src="$1"
+  local dst="$2"
+
+  cp -v "$dst" "$dst.pacsave" || errorout 'could not back up existing config'
+  mv -v "$src" "$dst" || errorout 'could not replace your config file'
+}
+
+set_title
+
+# must be root
+[ $(id -u) -ne 0 ] && errorout 'only root can do that.'
+
+# need vimdiff
+which vimdiff &>/dev/null || errorout 'vimdiff not installed.'
+
+if [ -z "$1" ]; then
+  dir='/etc'
+else
+  [ -d "$1" ] || message
+  dir="$1"
+fi
+
+files=( $(find "$dir" -name '*.pacnew' -print) )
+
+[ ${#files[@]} -eq 0 ] && errorout 'no pacnew files found.'
+
+for file in ${files[@]}; do
+  current="${file/.pacnew/}"
+
+  if prompt "$file found, view differences"; then
+    vimdiff "$current" "$file"
+
+    if prompt "remove $file"; then
+      remove_file "$file"
+    elif prompt "replace $current with $file"; then
+      replace_file "$file" "$current"
+    else
+      echo "$file left."
+    fi
+
+  else
+    echo "$file skipped."
+  fi
+
+done

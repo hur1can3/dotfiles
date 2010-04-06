@@ -1,0 +1,139 @@
+#!/bin/bash
+#
+# pbrisbin 2009
+#
+# http://pbrisbin.com:8080/bin/abuild
+#
+# quickly [re]builds packages via ABS
+#
+# your abs tree should be synced ahead of time
+#
+# read the abs wiki, use this script only when
+# you fully understand what it's doing
+#
+###
+
+### config
+pkgs="$HOME/Packages"        # where to keep built packages
+workdir="$HOME/Packages/abs" # where to keep temp files
+
+# our choice
+_EDITOR='vim'
+
+# use the environment variable if it's there
+EDITOR="${VISUAL:-$EDITOR}"
+EDITOR="${EDITOR:-$_EDITOR}"
+
+### script
+message() {
+  echo 'usage: abuild [package]'
+  echo
+  echo 'pass -f to skip the prompts'
+  echo
+  exit 1
+}
+
+errorout() {
+  echo -e "\aerror: $*"
+  rm -r "$workdir/$pack" # WD and PACK will always be defined
+  exit 1
+} 
+
+prompt() {
+  echo -en "\a$*? [Y/n] " && read A
+  
+  [ -z "$A" ] && return 0
+
+  case "$A" in
+    y|Y) return 0            ;;
+    q|Q) errorout 'aborted.' ;;
+    *)   return 1            ;;
+  esac
+}
+
+clean_exit() {
+  rm -r "$workdir/$pack"
+  exit $?
+}
+
+# sets PACMAN if it's a dep or not
+check_if_dep() {
+  pacman -Qi "$pack" 2>/dev/null | grep -Fqx 'Install Reason : Installed as a dependency for another package'
+
+  if [ $? -eq 0 ]; then
+    pacman='sudo pacman-color -U --asdeps'
+  else
+    pacman='sudo pacman-color -U'
+  fi
+}
+
+# sets globar vars pkg_biuld and build_dir
+set_PKGBUILD() {
+  # find the directory containing the package's PKGBUILD
+  abs_dir="$(find /var/abs -name "$pack" -print -quit)"
+  [ -z "$abs_dir" ] && errorout "$pack: no results found"
+
+  # copy the PKGBUILD to a local build directory
+  rsync -r "$abs_dir" "$workdir/" || errorout 'failed to copy source files.'
+  pkg_build="$(find "$workdir/$pack" -name 'PKGBUILD')"
+
+  [ -z "$pkg_build" ] && errorout "$pack: no PKGBUILD found"
+  build_dir="$(dirname "$pkg_build")"
+}
+
+edit_PKGBUILD() {
+  $fast && return
+
+  prompt 'edit PKGBUILD' && $EDITOR "$pkg_build"
+}
+
+do_build() {
+  pushd "$build_dir" &>/dev/null || errorout 'failed to change directory'
+  PKGDEST="$PWD" makepkg -s || errorout 'failed to make package'
+  popd &>/dev/null
+}
+
+build_package() {
+  if $fast; then
+    do_build
+    return
+  fi
+
+  if prompt 'build package'; then
+    do_build
+  elif prompt 'remove source files'; then
+    clean_exit
+  else
+    exit 0
+  fi
+}
+
+install_package() {
+  local pkg="$(find "$build_dir" -name "$pack-*.pkg.tar.gz")"
+
+  $pacman "$pkg" || errorout 'failed to install the package'
+  cp -v "$pkg" "$pkgs/"
+}
+
+# get options
+fast=false
+case $1 in
+  -h|--help) message ;;
+  -f|--fast) fast=true; shift; pack="$1" ;;
+  *)         pack="$1";
+esac
+
+# check input/set up environment
+[ -z "$pack" ] && message
+[ -d "$workdir" ] || mkdir -p "$workdir"
+[ -d "$pkgs" ] || mkdir -p "$pkgs"
+
+# run though it
+check_if_dep
+set_PKGBUILD
+edit_PKGBUILD
+build_package
+install_package
+
+# always ask to remove source files
+prompt 'remove source files' && clean_exit

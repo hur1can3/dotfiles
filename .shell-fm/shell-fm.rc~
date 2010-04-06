@@ -1,0 +1,12 @@
+username = hur1can3
+password = scipio
+default-radio=lastfm://artist/skillet/similarartists
+np-file=/home/hur1can3/.shell-fm/currentsong
+np-file-format=%s:%a:%l:%t
+unix= /tmp/shell-fm.sck
+extern = tee "/home/hur1can3/Music/LastFM/%a - %l - %t.mp3" | madplay -Q -
+download = /home/hur1can3/Music/LastFM/%a;%t;%l;%d.mp3
+np-cmd = cd /home/hur1can3/Music/LastFM/; update_id3
+delay-change = true
+minimum = 80
+gap = 20

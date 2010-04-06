@@ -1,0 +1,92 @@
+! -------------------------------------------------
+! file:     ~/.Xdefaults                           
+! author:   jason ryan - http://jasonwryan.com/    
+! vim:enc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
+! -------------------------------------------------
+
+! Urxvt
+URxvt.buffered: true
+URxvt.background: #1A1A1A
+URxvt.foreground: #999999
+URxvt.cursorColor: #5E468C
+URxvt.cursorBlink: true
+URxvt.geometry: 90x32
+URxvt.transparent: 0
+URxvt.title: Urxvt
+
+! -- Xft settings -- !
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hinstyle:   hintslight
+
+! borderless and no scrollbar
+URxvt*scrollBar_right: false
+URxvt*scrollBar: false
+URxvt*borderLess: false
+
+! teh transparency stuff
+URxvt*inheritPixmap: true
+URxvt*tintColor: #1A1A1A
+URxvt*shading: 95
+
+! -- Fonts -- !
+!URxvt.font:xft:envy code r:medium:pixelsize=15
+!URxvt.boldFont:xft:envy code r:medium:pixelsize=15
+URxvt.font:xft:droid sans mono:medium:pixelsize=13
+URxvt.boldFont:xft:droid sans mono:bold:pixelsize=13
+!URxvt.font:xft:inconsolata:bold:pixelsize=12
+!URxvt.font:     -*-dina-medium-r-*-*-*-80-*-*-*-*-*-*
+!URxvt.boldFont: -*-dina-medium-r-*-*-*-80-*-*-*-*-*-*
+!URxvt.font:     -*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*
+!URxvt.boldFont: -*-terminus-medium-r-*-*-16*-*-*-*-*
+
+! -- Colours -- !
+!#include "/home/hur1can3/.xcolors/jwrdark.xcolors"
+!#include "/home/hur1can3/.xcolors/jasonwyran.xcolors"
+#include "/home/hur1can3/.xcolors/zenburn.xcolors"
+!#include "/home/hur1can3/.xcolors/zenburn"
+
+! -- Xterm settings -- !
+xterm*toolBar: false
+xterm*scrollBar: false
+xterm*rightScrollBar: false
+xterm*background: #1A1A1A
+xterm*foreground: #A9A9A9
+xterm*font:-*-terminus-medium-*-*-*-16-*-*-*-*-*-iso8859-*
+xterm*geometry: 120x28 
+
+!! == xscreensaver == !!
+
+! -- font settings -- !
+xscreensaver.Dialog.headingFont:xft:envy code r:medium:pixelsize=12
+xscreensaver.Dialog.bodyFont:xft::envy code r:medium:pixelsize=12
+xscreensaver.Dialog.labelFont:xft:envy code r:medium:pixelsize=12
+xscreensaver.Dialog.unameFont:xft:envy code r:medium:pixelsize=12
+xscreensaver.Dialog.buttonFont:xft:envy code r:medium:pixelsize=12
+xscreensaver.Dialog.dateFont:xft:envy code r:medium:pixelsize=12
+xscreensaver.passwd.passwdFont::xft:envy code r:medium:pixelsize=12
+
+! -- general dialog box -- !
+xscreensaver.Dialog.foreground:         #CCCCCC
+xscreensaver.Dialog.background:         #191717
+xscreensaver.Dialog.topShadowColor:     #434343
+xscreensaver.Dialog.bottomShadowColor:  #424242
+xscreensaver.Dialog.Button.foreground:  #CCCCCC
+xscreensaver.Dialog.Button.background:  #191717
+
+! -- username/password input box and date text colour -- !
+xscreensaver.Dialog.text.foreground:    #333333
+xscreensaver.Dialog.text.background:    #999999
+xscreensaver.Dialog.internalBorderWidth:24
+xscreensaver.Dialog.borderWidth:        20
+xscreensaver.Dialog.shadowThickness:    2
+
+! -- timeout bar -- !
+xscreensaver.passwd.thermometer.foreground:  #CCCCCC
+xscreensaver.passwd.thermometer.background:  #999999
+xscreensaver.passwd.thermometer.width:       8
+
+! -- datestamp format -- !
+xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
