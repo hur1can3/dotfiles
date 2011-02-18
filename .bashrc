@@ -18,8 +18,8 @@
 [ -f ~/.bash_options ] && source $HOME/.bash_options
 [ -f ~/.bash_functions ] && source $HOME/.bash_functions
 [ -f ~/.bash_alias ] && source $HOME/.bash_alias
-[ -f ~/.bash_alias_arch ] && source $HOME/.bash_alias_arch
-#[ -f ~/.bash_alias_ubuntu ] && source $HOME/.bash_alias_ubuntu
+#[ -f ~/.bash_alias_arch ] && source $HOME/.bash_alias_arch
+[ -f ~/.bash_alias_ubuntu ] && source $HOME/.bash_alias_ubuntu
 [ -f ~/.bash_colors ] && source $HOME/.bash_colors
 
 # make less more friendly for non-text input files, see lesspipe(1)

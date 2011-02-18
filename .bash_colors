@@ -69,7 +69,7 @@ set_prompt_style () {
 }
 set_prompt_style
 
-eval `dircolors -b ~/.dir_colors`
+#eval `dircolors -b ~/.dir_colors`
 
 # colourize terminal output w/ cope
 export PATH=/usr/share/perl5/vendor_perl/auto/share/dist/Cope:$PATH
