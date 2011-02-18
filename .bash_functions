@@ -32,11 +32,47 @@ extract () {
 	fi
 }
 
+
+# Follow copied and moved files to destination directory
+goto() { [ -d "$1" ] && cd "$1" || cd "$(dirname "$1")"; }
+cpf() { cp "$@" && goto "$_"; }
+mvf() { mv "$@" && goto "$_"; }
+
+#===  FUNCTION  ================================================================
+#          NAME:  togglecpu
+#   DESCRIPTION:  toggles between a performance profile and ondemand for cpu 
+#		  frequency scaling
+#    PARAMETERS:  none
+#===============================================================================
 function togglecpu () {
     [ "$(cpufreq-info | grep \"ondemand\")" ] && \
     sudo cpufreq-set -g performance || \
     sudo cpufreq-set -g ondemand ; 
 }
+
+#===  FUNCTION  ================================================================
+#          NAME:  dirsize
+#   DESCRIPTION:  gets the size of a directory
+#    PARAMETERS:  none
+#===============================================================================
+dirsize ()
+{
+du -shx * .[a-zA-Z0-9_]* 2> /dev/null | \
+egrep '^ *[0-9.]*[MG]' | sort -n > /tmp/list
+egrep '^ *[0-9.]*M' /tmp/list
+egrep '^ *[0-9.]*G' /tmp/list
+rm /tmp/list
+}
+
+# Query wikipedia
+wiki() { dig +short txt $1.wp.dg.cx; }
+
+
+# Print man pages 
+manp() { man -t "$@" | lpr -pPrinter; }
+
+# Create pdf of man page (requires ghostscript & perl-file-mimeinfo)
+manpdf () { man -t "$@" | ps2pdf - /tmp/manpdf_$1.pdf && xdg-open /tmp/manpdf_$1.pdf ;}
 
 
 #===  FUNCTION  ================================================================
@@ -293,6 +329,14 @@ definesayold () {
 rm -f /tmp/templookup.txt
 }
 
+
+#===  FUNCTION  ================================================================
+#          NAME:  dsb
+#   DESCRIPTION:  The same as the define say function except it uses bing as the
+#		  search engine backend.
+#    PARAMETERS:  dsb [definition]
+#       RETURNS:  3 defintions printed on the terminal
+#===============================================================================
 dsb() {
 		lynx -dump "http://www.bing.com/search?q=define%3A+${1}&go=&form=QBRE&qs=n&sc=8-11" | grep -m 3 -w "Definition"  | sed 's/;/ -/g' | cut -d- -f1 > /tmp/templookup.txt
             if [[ -s  /tmp/templookup.txt ]] ;then    
@@ -312,7 +356,7 @@ rm -f /tmp/templookup.txt
 calc(){ echo "$*" | bc; }
 
 # Pretty-print using enscript
-pjet(){ enscript -h -G -fCourier9 -d "$1"; }
+pjet(){ enscript -h -G -fCourier9 "$1"; }
 
 # Copy with progress
 copy(){ cp -v "$1" "$2"&watch -n 1 'du -h "$1" "$2";printf "%s%%\n" $(echo `du -h "$2"|cut -dG -f1`/0.`du -h "$1"|cut -dG -f1`|bc)'; }
@@ -442,26 +486,54 @@ grepp() {
   perl -00ne "print if /$1/i" < $2
 }
 
-# pull a single file out of a .tar.gz
-pullout() {
-  if [ $# -ne 2 ]; then
-    echo "need proper arguments:"
-    echo "pullout [file] [archive.tar.gz]"
-    return 1
-  fi
-  case $2 in
-    *.tar.gz|*.tgz)
-    gunzip < $2 | tar -xf - $1
-    ;;
-    *)
-    echo $2 is not a valid archive
-    return 1
-    ;;
-  esac
-  return 0
-}
 
-# recursively fix dir/file permissions on a given directory
+#===  FUNCTION  ================================================================
+#          NAME:  pullout
+#   DESCRIPTION:  pulls a single file out of a .tar.gz
+#    PARAMETERS:  pullout [file] [archive.tar.gz]
+#       RETURNS:  [file]
+#===============================================================================
+pullout() {
+
+	if [ $# -ne 2 ]; then
+		echo "need proper arguments:"
+		echo "pullout [file] [archive.tar.gz]"
+    		return 1
+	fi
+	if [ -f "$2" ] ; then
+		for i in "$@"
+		do
+			case "$i" in
+				*.tar.gz)	gunzip < "$i" | tar -xf - $1  ;;
+				*.tar.bz2)	bunzip2 < "$i" |tar -xf - $1  ;;
+				*.rar)		unrar x - "$i" - $1           ;;
+				*.zip)		unzip "$i" - $1               ;;
+				*)		echo "'$i' cannot be extracted via >extract<" ;;
+			esac
+		done
+	else
+		echo "'$i' is not a valid archive file"
+	fi
+}
+  #case $2 in
+  #    *.tar.gz|*.tgz)
+  #   gunzip < $2 | tar -xf - $1
+  #  ;;
+  #  *)
+  #  echo $2 is not a valid archive
+  #  return 1
+  #  ;;
+  #esac
+  #return 0
+#}
+
+
+
+#===  FUNCTION  ================================================================
+#          NAME:  fix
+#   DESCRIPTION:  recursively fix dir/file permissions on a given directory
+#    PARAMETERS:  fix [dir/file] 
+#===============================================================================
 fix() {
   if [ -d "$1" ]; then 
     find "$1" -type d -exec chmod 755 {} -type f -exec chmod 644 {} \;
@@ -470,28 +542,54 @@ fix() {
   fi
 }
 
-# take a timestamped screenshot
+
+#===  FUNCTION  ================================================================
+#          NAME:  shot
+#   DESCRIPTION:  takes a timestamped screen shot
+#    PARAMETERS:  shot [destination]
+#       RETURNS:  [destination]/desktop_[date].png
+#===============================================================================
 shot(){
-  local PIC="$HOME/Pictures/screenshots/desktop_$(date +%y%m%d%H%M).png"
+  local PIC="$1/desktop_$(date +%y%m%d%H%M).png"
   scrot -t 20 -cd 3 $PIC
 }
 
-# rip a file with handbrake and good options
+
+#===  FUNCTION  ================================================================
+#          NAME:  rip
+#   DESCRIPTION:  rips a standard dvd with handbrake into an x264 mp4
+#    PARAMETERS:  rip [dvd drive] [output file]
+#       RETURNS:  [output file].mp4 with bitrate 4000 and audio 192 kb
+#===============================================================================
 rip() {
-  handbrake -i /dev/dvd -o $HOME/Movies/$1.mp4 -L -U -F -f mp4 -e x264 -b 4000 -B 192
+  handbrake -i $1 -o $2.mp4 -L -U -F -f mp4 -e x264 -b 4000 -B 192
 }
 
-# make a backup before editing a file
+
+#===  FUNCTION  ================================================================
+#          NAME:  safeedit
+#   DESCRIPTION:  make a backup of a file to [file].backup before editing it
+#    PARAMETERS:  safeedit [file]
+#===============================================================================
 safeedit() {
   cp $1 $1.backup && vim $1
 }
 
-# save a file to ~/Temp
+#===  FUNCTION  ================================================================
+#          NAME:  saveit
+#   DESCRIPTION:  saves a file to ~/Temp or $HOME/Temp
+#    PARAMETERS:  saveit [file]
+#===============================================================================
 saveit() {
   cp $1 $HOME/Temp/$1.saved
 }
 
-# switch two files (comes in handy)
+
+#===  FUNCTION  ================================================================
+#          NAME:  switchfile
+#   DESCRIPTION:  switch two files (comes in handy)
+#    PARAMETERS:  switchfile [file1] [file2]
+#===============================================================================
 switchfile() {
   mv $1 $1.tmp && mv $2 $1 && mv $1.tmp $2
 }
@@ -537,4 +635,13 @@ trash () {
 			fi
 		fi
 	done
+}
+
+#===  FUNCTION  ================================================================
+#          NAME:  fixscript
+#   DESCRIPTION:  removes control characters from linux typescript or script
+#    PARAMETERS:  fixscript [file]
+#===============================================================================
+fixscript() {
+cat $1 | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b > $1-processed
 }

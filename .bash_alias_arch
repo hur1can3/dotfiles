@@ -1,0 +1,31 @@
+#!/bin/bash
+# sourced by .bashrc
+
+### Arch Linux aliases
+## Pacman 
+# Colorize pacman search
+alias pacman="pacman-color"
+
+# Lets you search through all available packages simply using 'pacsearch packagename'
+alias pacsearch="pacman -Sl | cut -d' ' -f2 | grep "
+
+# sudo pacman -Syu by typing pacup (sudo must be installed and configured first)
+alias pacup="sudo pacman-color -Syu"
+
+# sudo pacman -S by typing pac
+alias pac="sudo pacman -S"
+
+# Clean cache
+alias clean="sudo pacman -Sc"
+
+# Remove orphans
+alias orphans="pacman -Qtdq > orphans.txt && less orphans.txt"
+
+# sudo pacman backup packages to Dropbox
+alias pacback='sudo pacman -Qqe | grep -v "$(pacman -Qmq)" > ~/Dropbox/dotfiles/pklist.txt'
+
+## BauerBill aliases
+alias bilup="bauerbill -Syu --rebase --abs --build-as me --aur --trust-abs"
+alias bils="bauerbill -Ss --aur"
+alias bil="bauerbil -S --aur"
+

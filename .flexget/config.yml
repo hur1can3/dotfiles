@@ -1,0 +1,89 @@
+presets:
+  global:
+    download: ~/Downloads/
+
+  tv:
+    series:
+      hdtv:
+        - Lost
+        - Smallville
+        - Mythbusters
+        - Legend of the Seeker
+        - Deadliest Warrior
+        - Doctor Who
+        - The Pacific
+        - V
+        - Family Guy
+        - Dirty Jobs
+        - Being Human
+        - Heroes
+        - The Big Bang Theory
+        - Two and a Half Men
+        - How I Met Your Mother
+    download: ~/Torrents/
+      
+  movies:
+    limit_new: 1
+    seen_movies: loose
+    imdb:
+      min_score: 6.0
+      min_votes: 2000
+      min_year: 2009
+      reject_genres:
+        - horror
+        - documentary
+        - musical
+        - music
+        - biography
+        - family
+        - romance
+    download: ~/Torrents/
+
+feeds:
+#### TV feeds:
+  ezrss:
+    rss: http://www.ezrss.it/feed/
+    preset: tv
+
+#### Movie feeds:
+  rlslog_dvdrips:
+    rlslog: http://www.rlslog.net/category/movies/dvdrip/
+    preset: movies
+
+#### Anime feeds: 
+  ## Fansubs Naruto, Dragonball, Inuyasha by Taka Fansubs
+  taka:
+    html: http://www.takafansubs.com/?p=torrents#c58cd02cd8f66e9b2e89114a46f82023 
+    limit_new: 2 
+    regexp:
+      accept:
+        - Naruto Shippuuden
+      reject:
+        - 720p
+        - Movie     
+    download: ~/Torrents/
+    
+  ## Full Metal Aclhemist from Eclipse 
+  eclipse:
+    html: http://eclipse.speedsubs.org/
+    limit_new: 2 
+    regexp:
+      accept:
+        - Fullmetal Alchemist Brotherhood
+      reject:
+        - h264
+    download: ~/Torrents/
+
+  ## Bleach from DatteBayo  
+  dattebayo:
+    html: http://www.dattebayo.com/t/
+    limit_new: 2 
+    regexp:
+      accept:
+        - Bleach
+      reject:
+        - Movie
+        - HDTV
+        - Final
+        - YHBT
+    download: ~/Torrents/

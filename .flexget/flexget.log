@@ -1,0 +1,177 @@
+2010-05-03 09:05 CRITICAL feed          rlslog_dvdrips  Feed 'rlslog_dvdrips' has configuration errors:
+2010-05-03 09:05 ERROR    feed          rlslog_dvdrips  Unknown plugin 'statistics'
+2010-05-03 09:05 INFO     feed          rlslog_dvdrips  Aborting feed (plugin: --search-plugins)
+2010-05-03 09:05 CRITICAL feed          taka            Feed 'taka' has configuration errors:
+2010-05-03 09:05 ERROR    feed          taka            Unknown plugin 'statistics'
+2010-05-03 09:05 INFO     feed          taka            Aborting feed (plugin: --search-plugins)
+2010-05-03 09:05 CRITICAL feed          ezrss           Feed 'ezrss' has configuration errors:
+2010-05-03 09:05 ERROR    feed          ezrss           Unknown plugin 'statistics'
+2010-05-03 09:05 INFO     feed          ezrss           Aborting feed (plugin: --search-plugins)
+2010-05-03 09:05 CRITICAL feed          eclipse         Feed 'eclipse' has configuration errors:
+2010-05-03 09:05 ERROR    feed          eclipse         Unknown plugin 'statistics'
+2010-05-03 09:05 INFO     feed          eclipse         Aborting feed (plugin: --search-plugins)
+2010-05-03 09:05 CRITICAL feed          dattebayo       Feed 'dattebayo' has configuration errors:
+2010-05-03 09:05 ERROR    feed          dattebayo       Unknown plugin 'statistics'
+2010-05-03 09:05 INFO     feed          dattebayo       Aborting feed (plugin: --search-plugins)
+2010-05-03 09:06 CRITICAL feed          rlslog_dvdrips  Feed 'rlslog_dvdrips' has configuration errors:
+2010-05-03 09:06 ERROR    feed          rlslog_dvdrips  Unknown plugin 'statistics'
+2010-05-03 09:06 INFO     feed          rlslog_dvdrips  Aborting feed (plugin: --search-plugins)
+2010-05-03 09:06 CRITICAL feed          taka            Feed 'taka' has configuration errors:
+2010-05-03 09:06 ERROR    feed          taka            Unknown plugin 'statistics'
+2010-05-03 09:06 INFO     feed          taka            Aborting feed (plugin: --search-plugins)
+2010-05-03 09:06 CRITICAL feed          ezrss           Feed 'ezrss' has configuration errors:
+2010-05-03 09:06 ERROR    feed          ezrss           Unknown plugin 'statistics'
+2010-05-03 09:06 INFO     feed          ezrss           Aborting feed (plugin: --search-plugins)
+2010-05-03 09:06 CRITICAL feed          eclipse         Feed 'eclipse' has configuration errors:
+2010-05-03 09:06 ERROR    feed          eclipse         Unknown plugin 'statistics'
+2010-05-03 09:06 INFO     feed          eclipse         Aborting feed (plugin: --search-plugins)
+2010-05-03 09:06 CRITICAL feed          dattebayo       Feed 'dattebayo' has configuration errors:
+2010-05-03 09:06 ERROR    feed          dattebayo       Unknown plugin 'statistics'
+2010-05-03 09:06 INFO     feed          dattebayo       Aborting feed (plugin: --search-plugins)
+2010-05-03 09:10 INFO     manager                       Test mode, creating a copy from database ...
+2010-05-03 09:10 INFO     manager                       Test database created
+2010-05-03 09:10 INFO     feed          rlslog_dvdrips  Produced 7 entries.
+2010-05-03 09:10 INFO     feed          rlslog_dvdrips  Parsing imdb for Percy Jackson And The Olympians The Lightning Thief REPACK DVDRip XviD-ARROW
+2010-05-03 09:10 INFO     imdb          rlslog_dvdrips  Skipping Percy Jackson & the Olympians: The Lightning Thief because of rule(s) min_score (5.9 < 6.0)
+2010-05-03 09:10 INFO     feed          rlslog_dvdrips  Parsing imdb for The New Daughter DVDRiP XViD-IMAGiNE
+2010-05-03 09:10 INFO     imdb          rlslog_dvdrips  Skipping The New Daughter because of rule(s) min_votes (36 < 6000), reject_genres
+2010-05-03 09:10 INFO     feed          rlslog_dvdrips  Parsing imdb for Shut Up And Shoot 2006 DVDRip XviD-VoMiT
+2010-05-03 09:10 INFO     imdb          rlslog_dvdrips  Skipping Shut Up and Shoot! because of rule(s) min_score (3.3 < 6.0), min_votes (377 < 6000), min_year (2006 < 2009)
+2010-05-03 09:10 INFO     feed          rlslog_dvdrips  Parsing imdb for Cold Storage 2006 DVDRip XviD-VoMiT
+2010-05-03 09:10 INFO     imdb          rlslog_dvdrips  Skipping Cold Storage because of rule(s) min_votes (41 < 6000), min_year (2006 < 2009)
+2010-05-03 09:10 INFO     feed          rlslog_dvdrips  Parsing imdb for Bigfoot 2006 DVDRip XviD-VoMiT
+2010-05-03 09:10 INFO     imdb          rlslog_dvdrips  Skipping Bigfoot because of rule(s) min_votes (25 < 6000), min_year (2006 < 2009), reject_genres
+2010-05-03 09:10 INFO     feed          rlslog_dvdrips  Parsing imdb for Justice Be Damned 2007 DVDRip XviD-SPRiNTER
+2010-05-03 09:10 INFO     imdb          rlslog_dvdrips  Skipping Justice Be Damned because of rule(s) min_score (4.6 < 6.0), min_votes (5 < 6000), min_year (2007 < 2009), reject_genres
+2010-05-03 09:10 INFO     feed          rlslog_dvdrips  Parsing imdb for Float 2008 DVDRip XviD-aAF
+2010-05-03 09:10 INFO     imdb          rlslog_dvdrips  Skipping Float because of rule(s) min_score (5.1 < 6.0), min_votes (93 < 6000), min_year (2008 < 2009)
+2010-05-03 09:10 INFO     feed          rlslog_dvdrips  Passed Percy Jackson And The Olympians The Lightning Thief REPACK DVDRip XviD-ARROW (http://www.newtorrents.info/search/Percy.Jackson.And.The.Olympians.The.Lightning.Thief.REPACK.DVDRip.XviD-ARROW  )
+2010-05-03 09:10 INFO     feed          rlslog_dvdrips  Accepted: 0 (Rejected: 6 Undecided: 1 Failed: 0)
+2010-05-03 09:10 INFO     feed          taka            Produced 339 entries.
+2010-05-03 09:10 INFO     feed          taka            Passed [Taka] Naruto Shippuuden 158 480p (http://www.takafansubs.com/torrents/%5BTaka%5D_Naruto_Shippuuden_158_%5B480p%5D%5B02CD5373%5D.mp4.torrent)
+2010-05-03 09:10 INFO     feed          taka            Passed [Taka] Naruto Shippuuden 157 480p (http://www.takafansubs.com/torrents/%5BTaka%5D_Naruto_Shippuuden_157_%5B480p%5D%5B2CC92495%5D.mp4.torrent)
+2010-05-03 09:10 INFO     feed          taka            Accepted: 2 (Rejected: 337 Undecided: 0 Failed: 0)
+2010-05-03 09:10 INFO     download      taka            Would download: [Taka] Naruto Shippuuden 158 480p
+2010-05-03 09:10 INFO     download      taka            Would download: [Taka] Naruto Shippuuden 157 480p
+2010-05-03 09:10 INFO     download      taka            Would write: [Taka] Naruto Shippuuden 158 480p
+2010-05-03 09:10 INFO     download      taka            Would write: [Taka] Naruto Shippuuden 157 480p
+2010-05-03 09:10 INFO     feed          ezrss           Produced 30 entries.
+2010-05-03 09:10 INFO     feed          ezrss           Accepted: 1 (Rejected: 0 Undecided: 29 Failed: 0)
+2010-05-03 09:10 INFO     download      ezrss           Would download: Legend of the Seeker 2x19 [HDTV - LOL]
+2010-05-03 09:10 INFO     download      ezrss           Would write: Legend of the Seeker 2x19 [HDTV - LOL]
+2010-05-03 09:10 INFO     html          eclipse         Link names seem to be useless, auto-enabling 'title_from: url'. This may not work well, you might need to configure it.
+2010-05-03 09:10 INFO     feed          eclipse         Produced 54 entries.
+2010-05-03 09:10 INFO     feed          eclipse         Passed [Eclipse] Fullmetal Alchemist Brotherhood - 55 (XviD) [BDC50451].avi (http://torrents.speedsubs.org/eclipse/%5bEclipse%5d%20Fullmetal%20Alchemist%20Brotherhood%20-%2055%20(XviD)%20%5bBDC50451%5d.avi.torrent)
+2010-05-03 09:10 INFO     feed          eclipse         Passed [Eclipse] Fullmetal Alchemist Brotherhood - 54 (XviD) [38AF0DC7].avi (http://torrents.speedsubs.org/eclipse/%5bEclipse%5d%20Fullmetal%20Alchemist%20Brotherhood%20-%2054%20(XviD)%20%5b38AF0DC7%5d.avi.torrent)
+2010-05-03 09:10 INFO     feed          eclipse         Accepted: 2 (Rejected: 52 Undecided: 0 Failed: 0)
+2010-05-03 09:10 INFO     download      eclipse         Would download: [Eclipse] Fullmetal Alchemist Brotherhood - 55 (XviD) [BDC50451].avi
+2010-05-03 09:10 INFO     download      eclipse         Would download: [Eclipse] Fullmetal Alchemist Brotherhood - 54 (XviD) [38AF0DC7].avi
+2010-05-03 09:10 INFO     download      eclipse         Would write: [Eclipse] Fullmetal Alchemist Brotherhood - 55 (XviD) [BDC50451].avi
+2010-05-03 09:10 INFO     download      eclipse         Would write: [Eclipse] Fullmetal Alchemist Brotherhood - 54 (XviD) [38AF0DC7].avi
+2010-05-03 09:10 INFO     feed          dattebayo       Produced 629 entries.
+2010-05-03 09:11 INFO     feed          dattebayo       Passed Bleach (http://www.dattebayo.com/t/#Bleach)
+2010-05-03 09:11 INFO     feed          dattebayo       Passed [DB] Bleach 268 (http://www.dattebayo.com/t/b268.torrent)
+2010-05-03 09:11 INFO     feed          dattebayo       Accepted: 2 (Rejected: 627 Undecided: 0 Failed: 0)
+2010-05-03 09:11 INFO     download      dattebayo       Would download: Bleach
+2010-05-03 09:11 INFO     download      dattebayo       Would download: [DB] Bleach 268
+2010-05-03 09:11 INFO     download      dattebayo       Would write: Bleach
+2010-05-03 09:11 INFO     download      dattebayo       Would write: [DB] Bleach 268
+2010-05-03 09:11 INFO     manager                       Removed test database
+2010-05-03 09:15 INFO     manager                       Test mode, creating a copy from database ...
+2010-05-03 09:15 INFO     manager                       Test database created
+2010-05-03 09:15 INFO     feed          rlslog_dvdrips  Produced 7 entries.
+2010-05-03 09:15 INFO     feed          rlslog_dvdrips  Parsing imdb for Percy Jackson And The Olympians The Lightning Thief REPACK DVDRip XviD-ARROW
+2010-05-03 09:15 INFO     imdb          rlslog_dvdrips  Skipping Percy Jackson & the Olympians: The Lightning Thief because of rule(s) min_score (5.9 < 6.0)
+2010-05-03 09:15 INFO     feed          rlslog_dvdrips  Parsing imdb for The New Daughter DVDRiP XViD-IMAGiNE
+2010-05-03 09:15 INFO     imdb          rlslog_dvdrips  Skipping The New Daughter because of rule(s) min_votes (36 < 2000), reject_genres
+2010-05-03 09:15 INFO     feed          rlslog_dvdrips  Parsing imdb for Shut Up And Shoot 2006 DVDRip XviD-VoMiT
+2010-05-03 09:15 INFO     imdb          rlslog_dvdrips  Skipping Shut Up and Shoot! because of rule(s) min_score (3.3 < 6.0), min_votes (377 < 2000), min_year (2006 < 2009)
+2010-05-03 09:15 INFO     feed          rlslog_dvdrips  Parsing imdb for Cold Storage 2006 DVDRip XviD-VoMiT
+2010-05-03 09:15 INFO     imdb          rlslog_dvdrips  Skipping Cold Storage because of rule(s) min_votes (41 < 2000), min_year (2006 < 2009)
+2010-05-03 09:15 INFO     feed          rlslog_dvdrips  Parsing imdb for Bigfoot 2006 DVDRip XviD-VoMiT
+2010-05-03 09:15 INFO     imdb          rlslog_dvdrips  Skipping Bigfoot because of rule(s) min_votes (25 < 2000), min_year (2006 < 2009), reject_genres
+2010-05-03 09:15 INFO     feed          rlslog_dvdrips  Parsing imdb for Justice Be Damned 2007 DVDRip XviD-SPRiNTER
+2010-05-03 09:15 INFO     imdb          rlslog_dvdrips  Skipping Justice Be Damned because of rule(s) min_score (4.6 < 6.0), min_votes (5 < 2000), min_year (2007 < 2009), reject_genres
+2010-05-03 09:15 INFO     feed          rlslog_dvdrips  Parsing imdb for Float 2008 DVDRip XviD-aAF
+2010-05-03 09:15 INFO     imdb          rlslog_dvdrips  Skipping Float because of rule(s) min_score (5.1 < 6.0), min_votes (93 < 2000), min_year (2008 < 2009)
+2010-05-03 09:15 INFO     feed          rlslog_dvdrips  Passed Percy Jackson And The Olympians The Lightning Thief REPACK DVDRip XviD-ARROW (http://www.newtorrents.info/search/Percy.Jackson.And.The.Olympians.The.Lightning.Thief.REPACK.DVDRip.XviD-ARROW  )
+2010-05-03 09:15 INFO     feed          rlslog_dvdrips  Accepted: 0 (Rejected: 6 Undecided: 1 Failed: 0)
+2010-05-03 09:15 INFO     feed          taka            Produced 339 entries.
+2010-05-03 09:16 INFO     feed          taka            Passed [Taka] Naruto Shippuuden 158 480p (http://www.takafansubs.com/torrents/%5BTaka%5D_Naruto_Shippuuden_158_%5B480p%5D%5B02CD5373%5D.mp4.torrent)
+2010-05-03 09:16 INFO     feed          taka            Passed [Taka] Naruto Shippuuden 157 480p (http://www.takafansubs.com/torrents/%5BTaka%5D_Naruto_Shippuuden_157_%5B480p%5D%5B2CC92495%5D.mp4.torrent)
+2010-05-03 09:16 INFO     feed          taka            Accepted: 2 (Rejected: 337 Undecided: 0 Failed: 0)
+2010-05-03 09:16 INFO     download      taka            Would download: [Taka] Naruto Shippuuden 158 480p
+2010-05-03 09:16 INFO     download      taka            Would download: [Taka] Naruto Shippuuden 157 480p
+2010-05-03 09:16 INFO     download      taka            Would write: [Taka] Naruto Shippuuden 158 480p
+2010-05-03 09:16 INFO     download      taka            Would write: [Taka] Naruto Shippuuden 157 480p
+2010-05-03 09:16 INFO     feed          ezrss           Produced 30 entries.
+2010-05-03 09:16 INFO     feed          ezrss           Accepted: 4 (Rejected: 0 Undecided: 26 Failed: 0)
+2010-05-03 09:16 INFO     download      ezrss           Would download: Legend of the Seeker 2x19 [HDTV - LOL]
+2010-05-03 09:16 INFO     download      ezrss           Would download: Doctor Who (2005) 5x5 [HDTV - BIA]
+2010-05-03 09:16 INFO     download      ezrss           Would download: The Pacific Pt VIII - p 7x20 [HDTV - DIMENSION]
+2010-05-03 09:16 INFO     download      ezrss           Would download: The Pacific Pt VIII [HDTV - NOTV]
+2010-05-03 09:16 INFO     download      ezrss           Would write: Legend of the Seeker 2x19 [HDTV - LOL]
+2010-05-03 09:16 INFO     download      ezrss           Would write: Doctor Who (2005) 5x5 [HDTV - BIA]
+2010-05-03 09:16 INFO     download      ezrss           Would write: The Pacific Pt VIII - p 7x20 [HDTV - DIMENSION]
+2010-05-03 09:16 INFO     download      ezrss           Would write: The Pacific Pt VIII [HDTV - NOTV]
+2010-05-03 09:16 INFO     html          eclipse         Link names seem to be useless, auto-enabling 'title_from: url'. This may not work well, you might need to configure it.
+2010-05-03 09:16 INFO     feed          eclipse         Produced 54 entries.
+2010-05-03 09:16 INFO     feed          eclipse         Passed [Eclipse] Fullmetal Alchemist Brotherhood - 55 (XviD) [BDC50451].avi (http://torrents.speedsubs.org/eclipse/%5bEclipse%5d%20Fullmetal%20Alchemist%20Brotherhood%20-%2055%20(XviD)%20%5bBDC50451%5d.avi.torrent)
+2010-05-03 09:16 INFO     feed          eclipse         Passed [Eclipse] Fullmetal Alchemist Brotherhood - 54 (XviD) [38AF0DC7].avi (http://torrents.speedsubs.org/eclipse/%5bEclipse%5d%20Fullmetal%20Alchemist%20Brotherhood%20-%2054%20(XviD)%20%5b38AF0DC7%5d.avi.torrent)
+2010-05-03 09:16 INFO     feed          eclipse         Accepted: 2 (Rejected: 52 Undecided: 0 Failed: 0)
+2010-05-03 09:16 INFO     download      eclipse         Would download: [Eclipse] Fullmetal Alchemist Brotherhood - 55 (XviD) [BDC50451].avi
+2010-05-03 09:16 INFO     download      eclipse         Would download: [Eclipse] Fullmetal Alchemist Brotherhood - 54 (XviD) [38AF0DC7].avi
+2010-05-03 09:16 INFO     download      eclipse         Would write: [Eclipse] Fullmetal Alchemist Brotherhood - 55 (XviD) [BDC50451].avi
+2010-05-03 09:16 INFO     download      eclipse         Would write: [Eclipse] Fullmetal Alchemist Brotherhood - 54 (XviD) [38AF0DC7].avi
+2010-05-03 09:16 INFO     feed          dattebayo       Produced 629 entries.
+2010-05-03 09:16 INFO     feed          dattebayo       Passed Bleach (http://www.dattebayo.com/t/#Bleach)
+2010-05-03 09:16 INFO     feed          dattebayo       Passed [DB] Bleach 268 (http://www.dattebayo.com/t/b268.torrent)
+2010-05-03 09:16 INFO     feed          dattebayo       Accepted: 2 (Rejected: 627 Undecided: 0 Failed: 0)
+2010-05-03 09:16 INFO     download      dattebayo       Would download: Bleach
+2010-05-03 09:16 INFO     download      dattebayo       Would download: [DB] Bleach 268
+2010-05-03 09:16 INFO     download      dattebayo       Would write: Bleach
+2010-05-03 09:16 INFO     download      dattebayo       Would write: [DB] Bleach 268
+2010-05-03 09:16 INFO     manager                       Removed test database
+2010-05-03 09:35 INFO     feed          rlslog_dvdrips  Produced 7 entries.
+2010-05-03 09:35 INFO     feed          rlslog_dvdrips  Parsing imdb for Percy Jackson And The Olympians The Lightning Thief REPACK DVDRip XviD-ARROW
+2010-05-03 09:35 INFO     imdb          rlslog_dvdrips  Skipping Percy Jackson & the Olympians: The Lightning Thief because of rule(s) min_score (5.9 < 6.0)
+2010-05-03 09:35 INFO     feed          rlslog_dvdrips  Parsing imdb for The New Daughter DVDRiP XViD-IMAGiNE
+2010-05-03 09:35 INFO     imdb          rlslog_dvdrips  Skipping The New Daughter because of rule(s) min_votes (36 < 2000), reject_genres
+2010-05-03 09:35 INFO     feed          rlslog_dvdrips  Parsing imdb for Shut Up And Shoot 2006 DVDRip XviD-VoMiT
+2010-05-03 09:35 INFO     imdb          rlslog_dvdrips  Skipping Shut Up and Shoot! because of rule(s) min_score (3.3 < 6.0), min_votes (377 < 2000), min_year (2006 < 2009)
+2010-05-03 09:35 INFO     feed          rlslog_dvdrips  Parsing imdb for Cold Storage 2006 DVDRip XviD-VoMiT
+2010-05-03 09:35 INFO     imdb          rlslog_dvdrips  Skipping Cold Storage because of rule(s) min_votes (41 < 2000), min_year (2006 < 2009)
+2010-05-03 09:35 INFO     feed          rlslog_dvdrips  Parsing imdb for Bigfoot 2006 DVDRip XviD-VoMiT
+2010-05-03 09:35 INFO     imdb          rlslog_dvdrips  Skipping Bigfoot because of rule(s) min_votes (25 < 2000), min_year (2006 < 2009), reject_genres
+2010-05-03 09:35 INFO     feed          rlslog_dvdrips  Parsing imdb for Justice Be Damned 2007 DVDRip XviD-SPRiNTER
+2010-05-03 09:36 INFO     imdb          rlslog_dvdrips  Skipping Justice Be Damned because of rule(s) min_score (4.6 < 6.0), min_votes (5 < 2000), min_year (2007 < 2009), reject_genres
+2010-05-03 09:36 INFO     feed          rlslog_dvdrips  Parsing imdb for Float 2008 DVDRip XviD-aAF
+2010-05-03 09:36 INFO     imdb          rlslog_dvdrips  Skipping Float because of rule(s) min_score (5.1 < 6.0), min_votes (93 < 2000), min_year (2008 < 2009)
+2010-05-03 09:36 INFO     feed          rlslog_dvdrips  Passed Percy Jackson And The Olympians The Lightning Thief REPACK DVDRip XviD-ARROW (http://www.newtorrents.info/search/Percy.Jackson.And.The.Olympians.The.Lightning.Thief.REPACK.DVDRip.XviD-ARROW  )
+2010-05-03 09:36 INFO     feed          rlslog_dvdrips  Accepted: 0 (Rejected: 6 Undecided: 1 Failed: 0)
+2010-05-03 09:36 INFO     feed          taka            Produced 339 entries.
+2010-05-03 09:36 INFO     feed          taka            Passed [Taka] Naruto Shippuuden 158 480p (http://www.takafansubs.com/torrents/%5BTaka%5D_Naruto_Shippuuden_158_%5B480p%5D%5B02CD5373%5D.mp4.torrent)
+2010-05-03 09:36 INFO     feed          taka            Passed [Taka] Naruto Shippuuden 157 480p (http://www.takafansubs.com/torrents/%5BTaka%5D_Naruto_Shippuuden_157_%5B480p%5D%5B2CC92495%5D.mp4.torrent)
+2010-05-03 09:36 INFO     feed          taka            Accepted: 2 (Rejected: 337 Undecided: 0 Failed: 0)
+2010-05-03 09:36 INFO     download      taka            Downloading: [Taka] Naruto Shippuuden 158 480p
+2010-05-03 09:36 INFO     download      taka            Downloading: [Taka] Naruto Shippuuden 157 480p
+2010-05-03 09:36 INFO     feed          ezrss           Produced 30 entries.
+2010-05-03 09:36 INFO     feed          ezrss           Accepted: 4 (Rejected: 0 Undecided: 26 Failed: 0)
+2010-05-03 09:36 INFO     download      ezrss           Downloading: Legend of the Seeker 2x19 [HDTV - LOL]
+2010-05-03 09:36 INFO     download      ezrss           Downloading: Doctor Who (2005) 5x5 [HDTV - BIA]
+2010-05-03 09:36 INFO     download      ezrss           Downloading: The Pacific Pt VIII - p 7x20 [HDTV - DIMENSION]
+2010-05-03 09:36 INFO     download      ezrss           Downloading: The Pacific Pt VIII [HDTV - NOTV]
+2010-05-03 09:36 INFO     html          eclipse         Link names seem to be useless, auto-enabling 'title_from: url'. This may not work well, you might need to configure it.
+2010-05-03 09:36 INFO     feed          eclipse         Produced 54 entries.
+2010-05-03 09:36 INFO     feed          eclipse         Passed [Eclipse] Fullmetal Alchemist Brotherhood - 55 (XviD) [BDC50451].avi (http://torrents.speedsubs.org/eclipse/%5bEclipse%5d%20Fullmetal%20Alchemist%20Brotherhood%20-%2055%20(XviD)%20%5bBDC50451%5d.avi.torrent)
+2010-05-03 09:36 INFO     feed          eclipse         Passed [Eclipse] Fullmetal Alchemist Brotherhood - 54 (XviD) [38AF0DC7].avi (http://torrents.speedsubs.org/eclipse/%5bEclipse%5d%20Fullmetal%20Alchemist%20Brotherhood%20-%2054%20(XviD)%20%5b38AF0DC7%5d.avi.torrent)
+2010-05-03 09:36 INFO     feed          eclipse         Accepted: 2 (Rejected: 52 Undecided: 0 Failed: 0)
+2010-05-03 09:36 INFO     download      eclipse         Downloading: [Eclipse] Fullmetal Alchemist Brotherhood - 55 (XviD) [BDC50451].avi
+2010-05-03 09:36 INFO     download      eclipse         Downloading: [Eclipse] Fullmetal Alchemist Brotherhood - 54 (XviD) [38AF0DC7].avi
+2010-05-03 09:36 INFO     feed          dattebayo       Produced 629 entries.
+2010-05-03 09:36 INFO     feed          dattebayo       Passed Bleach (http://www.dattebayo.com/t/#Bleach)
+2010-05-03 09:36 INFO     feed          dattebayo       Passed [DB] Bleach 268 (http://www.dattebayo.com/t/b268.torrent)
+2010-05-03 09:36 INFO     feed          dattebayo       Accepted: 2 (Rejected: 627 Undecided: 0 Failed: 0)
+2010-05-03 09:36 INFO     download      dattebayo       Downloading: Bleach
+2010-05-03 09:36 INFO     download      dattebayo       Downloading: [DB] Bleach 268
+2010-05-03 09:36 ERROR    download      dattebayo       Unexpected html content received from http://www.dattebayo.com/t/#Bleach

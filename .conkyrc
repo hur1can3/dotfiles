@@ -1,110 +1,32 @@
 use_xft yes
-xftfont Droid Sans:size=8
-override_utf8_locale yes
-
-text_buffer_size 2048
-update_interval 1
+xftfont Radio Space:size=12
+xftalpha 0.5
+update_interval 1.0
 total_run_times 0
+
 double_buffer yes
-no_buffers yes
-net_avg_samples 1
-cpu_avg_samples 1
-
-own_window_class Conky
 own_window yes
-own_window_colour 3C3C3C
-own_window_type override
 own_window_transparent yes
-own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_hints undecorated,sticky,below,skip_taskbar,skip_pager
+own_window_type override
 
-default_color D8D8D8
-draw_borders no
-border_width 1
-border_margin 10
-draw_graph_borders yes
+draw_shades yes
 draw_outline no
-draw_shades no
+draw_borders no
+draw_graph_borders yes
+default_color 7F7F7F
+default_shade_color black
+default_outline_color white
+alignment bottom_left
+gap_x 5
+gap_y 2
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+override_utf8_locale no
 
-color0 E6E6E6
-color1 3465A4
-color2 E6E6E6
-
-alignment top_right
-gap_x 25
-gap_y 5
-minimum_size 182 0
-maximum_width 182
-
-default_bar_size 60 8
-
-imlib_cache_size 0
+color1 006FC0
+color2 333333
 
 TEXT
-${font Droid Sans:style=Bold:size=8}SYSTEM $stippled_hr${font}
-${color0}${voffset 6}${font OpenLogos:size=19}B${font}${color}${goto 38}${voffset -14}Kernel:  ${alignr}${color2}${kernel}${color}
-${goto 38}Uptime: ${alignr}${color2}${uptime}${color}
-#${goto 38}Gmail: ${alignr}${font Droid Sans:style=Bold:size=8}${color0}${execpi 3600 ~/.conkycolors/bin/conkyEmail --servertype=IMAP --servername=imap.googlemail.com -u levandowski.matthew@gmail.com -p gibson311$$ --ssl}${color}${font} New email(s)
-${offset 1}${color0}${font Poky:size=16}P${font}${offset -19}${voffset 9}${cpubar cpu0 4,18}${color}${voffset -16}${goto 38}CPU1: ${font Droid Sans:style=Bold:size=8}${color1}${cpu cpu1}%${color}${font} ${alignr}${color2}${cpugraph cpu1 8,60 204A87 3465A4}${color}
-${goto 38}CPU2: ${font Droid Sans:style=Bold:size=8}${color1}${cpu cpu2}%${color}${font} ${alignr}${color2}${cpugraph cpu2 8,60 204A87 3465A4}${color}
-${color0}${font Poky:size=16}M${font}${color}${goto 38}${voffset -7}RAM: ${font Droid Sans:style=Bold:size=8}${color1}$memperc%${color}${font}
-${offset 1}${voffset 2}${color2}${membar 4,18}${color}${goto 38}${voffset -2}F: ${color2}${memeasyfree}${color} U: ${color2}${mem}${color}
-${voffset 2}${color0}${font Poky:size=14}s${font}${color}${voffset -8}${goto 38}SWAP: ${font Droid Sans:style=Bold:size=8}${color1}${swapperc}%${color}${font}
-${voffset 4}${offset 1}${color2}${swapbar 4,18}${color}${voffset -4}${goto 38}F: ${color2}$swapmax${color} U: ${color2}$swap${color}
-#${color0}${font Poky:size=13}E${font}${color}${goto 38}${voffset -5}Battery: ${font Droid Sans:style=Bold:size=8}${color1}${battery_percent BAT0}%${color}${font} ${alignr}${color2}${battery_bar 8,60 BAT0}${color}
-${voffset 2}${color0}${font Poky:size=15}a${font}${color}${goto 38}${voffset -10}Processes: ${color2}${alignr 13}CPU${alignr}RAM${color}
-${voffset -1}${goto 46}${color2}${top name 1}${color}${font Droid Sans:style=Bold:size=8}${color1} ${goto 127}${top cpu 1}${alignr }${top mem 1}${color}${font}
-${voffset -1}${goto 46}${color2}${top name 2}${color}${font Droid Sans:style=Bold:size=8}${color1} ${goto 127}${top cpu 2}${alignr }${top mem 2}${color}${font}
-${voffset -1}${goto 46}${color2}${top name 3}${color}${font Droid Sans:style=Bold:size=8}${color1} ${goto 127}${top cpu 3}${alignr }${top mem 3}${color}${font}
-${voffset -1}${goto 46}${color2}${top name 4}${color}${font Droid Sans:style=Bold:size=8}${color1} ${goto 127}${top cpu 4}${alignr }${top mem 4}${color}${font}
-${voffset -1}${goto 46}${color2}${top name 5}${color}${font Droid Sans:style=Bold:size=8}${color1} ${goto 127}${top cpu 5}${alignr }${top mem 5}${color}${font}
-${voffset 4}${font Droid Sans:style=Bold:size=8}GCal $stippled_hr${font}
-${voffset 0}${alignc 28}${color2}${font Arial Black:size=12}${time %d %B %Y}${font}${color}
-#${alignc}
-${voffset -2}${color0}${font Poky:size=15}d${font}${color}${voffset -8}${font Liberation Mono:size=8}${execpi 10800 DJS=`date +%-d`; cal | sed 's/^/${goto 38} /' | sed '1d' | sed s/" $DJS "/" "'${font Liberation Mono:style=bold:size=8}${color1}'"$DJS"'${color}${font}${font Liberation Mono:size=8}'" "/}${font}${font}${voffset -14}
-#${color4}${font Bitstream Vera Sans Mono:size=14}@ ${font Droid Sans:style=Bold:size=11}Calendar${font}   ${hr}
-#${voffset -2}${color0}${font Poky:size=15}d${font}${color}${voffset -8}${font Droid Sans Mono:size=8}${execi 600 conkyGoogleCalendar --username=levandowski.matthew@googlemail.com --password=gibson311$$ --daysahead=28 --limit=10}${font}${font}${voffset -14}
-#${color1}${font}${execi 600 conkyGoogleCalendar --username=levandowski.matthew@googlemail.com --password=gibson311$$ --daysahead=28 --limit=10}
-
-${voffset 4}${font Droid Sans:style=Bold:size=8}TO DO $stippled_hr${font}
-${voffset 4}${execpi 20 cat ~/ToDo.txt | sed -n '1,12p' | sed 's/^/${voffset -6}${color0}${font Poky:size=14}A${font}${color}${voffset -3}${goto 38}/'}
-
-${voffset 4}${font Droid Sans:style=Bold:size=8}MPD or SHELL-FM $stippled_hr${font}
-#${execpi 10 ~/.conkycolors/bin/conkyMPD}
-${voffset 4}${color0}${font Musicelements:size=18}z${font}${color}${voffset -8}${goto 32}Station:${alignr}${color2}${execpi 20 cut -d: -f1 ~/.shell-fm/currentsong}${color}
-${voffset 4}${goto 32}${color2}${execpi 20 cut -d: -f2 ~/.shell-fm/currentsong}${color}
-${goto 32}${color2}${execpi 20 cut -d: -f3 ~/.shell-fm/currentsong}
-${goto 32}${color2}${execpi 20 cut -d: -f4 ~/.shell-fm/currentsong}
-
-#${voffset 4}${font Droid Sans:style=Bold:size=8}HD $stippled_hr${font}
-#${execpi 30 ~/.conkycolors/bin/conkyHD1}
-${voffset 4}${font Droid Sans:style=Bold:size=8}NETWORK $stippled_hr${font}
-${if_existing /proc/net/route wlan0}
-${voffset -13}${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 38}${voffset -6}Up: ${font Droid Sans:style=Bold:size=8}${color1}${upspeed wlan0}${color}${font} ${alignr}${color2}${upspeedgraph wlan0 8,60 204A87 3465A4}${color}
-${goto 38}Total: ${color2}${totalup wlan0}${color}
-${voffset -2}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 38}${voffset -6}Down: ${font Droid Sans:style=Bold:size=8}${color1}${downspeed wlan0}${color}${font} ${alignr}${color2}${downspeedgraph wlan0 8,60 204A87 3465A4}${color}
-${goto 38}Total: ${color2}${totaldown wlan0}${color}
-${voffset -2}${color0}${font Poky:size=14}Y${font}${color}${goto 38} ${voffset -2}Signal: ${font Droid Sans:style=Bold:size=8}${color1}${wireless_link_qual wlan0}%${color}${font} ${alignr}${color2}${wireless_link_bar 8,60 wlan0}${color}
-${voffset 4}${color0}${font Poky:size=13}w${font}${color}${goto 38}${voffset -8}Local IP: ${alignr}${color2}${addr wlan0}${color}
-${goto 38}Public IP: ${alignr}${color2}${execi 10800 ~/.conkycolors/bin/conkyIp}${color}
-${else}${if_existing /proc/net/route eth0}
-${voffset -13}${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 38}${voffset -6}Up: ${font Droid Sans:style=Bold:size=8}${color1}${upspeed eth0}${color}${font} ${alignr}${color2}${upspeedgraph eth0 8,60 204A87 3465A4}${color}
-${goto 38}Total: ${color2}${totalup eth0}${color}
-${voffset -2}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 38}${voffset -6}Down: ${font Droid Sans:style=Bold:size=8}${color1}${downspeed eth0}${color}${font} ${alignr}${color2}${downspeedgraph eth0 8,60 204A87 3465A4}${color}
-${goto 38}Total: ${color2}${totaldown eth0}${color}
-${voffset -2}${color0}${font Poky:size=13}w${font}${color}${goto 38}${voffset -4}Local IP: ${alignr}${color2}${addr eth0}${color}
-${goto 38}Public IP: ${alignr}${color2}${execi 10800 ~/.conkycolors/bin/conkyIp}${color}
-${endif}${else}${if_existing /proc/net/route ppp0}
-${voffset -13}${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 38}${voffset -6}Up: ${font Droid Sans:style=Bold:size=8}${color1}${upspeed ppp0}${color}${font} ${alignr}${color2}${upspeedgraph ppp0 8,60 204A87 3465A4}${color}
-${goto 38}Total: ${color2}${totalup ppp0}${color}
-${voffset -2}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 38}${voffset -6}Down: ${font Droid Sans:style=Bold:size=8}${color1}${downspeed ppp0}${color}${font} ${alignr}${color2}${downspeedgraph ppp0 8,60 204A87 3465A4}${color}
-${goto 38}Total: ${color2}${totaldown ppp0}${color}
-${voffset -2}${color0}${font Poky:size=13}w${font}${color}${goto 38}${voffset -4}Local IP: ${alignr}${color2}${addr ppp0}${color}
-${endif}${else}${voffset 4}${color0}${font PizzaDude Bullets:size=12}4${font}${color}${goto 38}Network Unavailable${endif}${endif}
-${voffset -8}${font Droid Sans:style=Bold:size=8}WEATHER $stippled_hr${font}
-${if_existing /proc/net/route wlan0}
-${execpi 10800 ~/.conkycolors/bin/conkyForecast --location=USMI0017 -i -t ~/.conkycolors/templates/conkyForecast.template}
-${else}${if_existing /proc/net/route eth0}
-${execpi 10800 ~/.conkycolors/bin/conkyForecast --location=USMI0017 -i -t ~/.conkycolors/templates/conkyForecast.template}
-${endif}${else}${if_existing /proc/net/route ppp0}
-${execpi 10800 ~/.conkycolors/bin/conkyForecast --location=USMI0017 -i -t ~/.conkycolors/templates/conkyForecast.template}
-${endif}${else}${voffset 4}${color0}${font PizzaDude Bullets:size=12}4${font}${color}${goto 38}Weather Unavailable${endif}${endif}
+   ${color}CPU1 ${if_match ${cpu cpu0} >0}${color1}${else}${color2}${endif}O${if_match ${cpu cpu0} >10}${color1}${else}${color2}${endif}O${if_match ${cpu cpu0} >20}${color1}${else}${color2}${endif}O${if_match ${cpu cpu0} >30}${color1}${else}${color2}${endif}O${if_match ${cpu cpu0} >40}${color1}${else}${color2}${endif}O${if_match ${cpu cpu0} >50}${color1}${else}${color2}${endif}O${if_match ${cpu cpu0} >60}${color1}${else}${color2}${endif}O${if_match ${cpu cpu0} >70}${color1}${else}${color2}${endif}O${if_match ${cpu cpu0} >80}${color1}${else}${color2}${endif}O${if_match ${cpu cpu0} >90}${color1}${else}${color2}${endif}O   ${color}CPU2 ${if_match ${cpu cpu1} >0}${color1}${else}${color2}${endif}O${if_match ${cpu cpu1} >10}${color1}${else}${color2}${endif}O${if_match ${cpu cpu1} >20}${color1}${else}${color2}${endif}O${if_match ${cpu cpu1} >30}${color1}${else}${color2}${endif}O${if_match ${cpu cpu1} >40}${color1}${else}${color2}${endif}O${if_match ${cpu cpu1} >50}${color1}${else}${color2}${endif}O${if_match ${cpu cpu1} >60}${color1}${else}${color2}${endif}O${if_match ${cpu cpu1} >70}${color1}${else}${color2}${endif}O${if_match ${cpu cpu1} >80}${color1}${else}${color2}${endif}O${if_match ${cpu cpu1} >90}${color1}${else}${color2}${endif}O   ${color}RAM ${if_match ${memperc} >0}${color1}${else}${color2}${endif}O${if_match ${memperc} >10}${color1}${else}${color2}${endif}O${if_match ${memperc} >20}${color1}${else}${color2}${endif}O${if_match ${memperc} >30}${color1}${else}${color2}${endif}O${if_match ${memperc} >40}${color1}${else}${color2}${endif}O${if_match ${memperc} >50}${color1}${else}${color2}${endif}O${if_match ${memperc} >60}${color1}${else}${color2}${endif}O${if_match ${memperc} >70}${color1}${else}${color2}${endif}O${if_match ${memperc} >80}${color1}${else}${color2}${endif}O${if_match ${memperc} >90}${color1}${else}${color2}${endif}O   ${color}ROOT ${if_match ${fs_used_perc /} >0}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /} >10}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /} >20}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /} >30}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /} >40}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /} >50}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /} >60}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /} >70}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /} >80}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /} >90}${color1}${else}${color2}${endif}O   ${color}WIN ${if_match ${fs_used_perc /media/win} >0}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /media/win} >10}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /media/win} >20}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /media/win} >30}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /media/win} >40}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /media/win} >50}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /media/win} >60}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /media/win} >70}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /media/win} >80}${color1}${else}${color2}${endif}O${if_match ${fs_used_perc /media/win} >90}${color1}${else}${color2}${endif}O   ${color}WIFI ${if_match ${wireless_link_qual_perc wlan0} >0}${color1}${else}${color2}${endif}O${if_match ${wireless_link_qual_perc wlan0} >10}${color1}${else}${color2}${endif}O${if_match ${wireless_link_qual_perc wlan0} >20}${color1}${else}${color2}${endif}O${if_match ${wireless_link_qual_perc wlan0} >30}${color1}${else}${color2}${endif}O${if_match ${wireless_link_qual_perc wlan0} >40}${color1}${else}${color2}${endif}O${if_match ${wireless_link_qual_perc wlan0} >50}${color1}${else}${color2}${endif}O${if_match ${wireless_link_qual_perc wlan0} >60}${color1}${else}${color2}${endif}O${if_match ${wireless_link_qual_perc wlan0} >70}${color1}${else}${color2}${endif}O${if_match ${wireless_link_qual_perc wlan0} >80}${color1}${else}${color2}${endif}O${if_match ${wireless_link_qual_perc wlan0} >90}${color1}${else}${color2}${endif}O   ${color}BATTERY ${if_match ${apcupsd_charge} >0}${color1}${else}${color2}${endif}O${if_match ${apcupsd_charge} >10}${color1}${else}${color2}${endif}O${if_match ${apcupsd_charge} >20}${color1}${else}${color2}${endif}O${if_match ${apcupsd_charge} >30}${color1}${else}${color2}${endif}O${if_match ${apcupsd_charge} >40}${color1}${else}${color2}${endif}O${if_match ${apcupsd_charge} >50}${color1}${else}${color2}${endif}O${if_match ${apcupsd_charge} >60}${color1}${else}${color2}${endif}O${if_match ${apcupsd_charge} >70}${color1}${else}${color2}${endif}O${if_match ${apcupsd_charge} >80}${color1}${else}${color2}${endif}O${if_match ${apcupsd_charge} >90}${color1}${else}${color2}${endif}O

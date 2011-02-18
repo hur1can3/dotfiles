@@ -1,20 +1,71 @@
 ! -------------------------------------------------
 ! file:     ~/.Xdefaults                           
 ! author:   jason ryan - http://jasonwryan.com/    
-! vim:enc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
+! vim:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
 ! -------------------------------------------------
+
+urxvt*cursorColor:      #fd971f
+
+! terminal colours
+*foreground:#a0a0a0
+*background:#1b1d1e
+
+!black
+*color0:    #1b1d1e
+*color8:    #505354
+!red
+*color1:    #f92672
+*color9:    #ff5995
+!green
+*color2:    #82b414
+*color10:   #b6e354
+!yellow
+*color3:    #fd971f
+*color11:   #feed6c
+!blue
+*color4:    #56c2d6
+*color12:   #8cedff
+!magenta
+*color5:    #8c54fe
+*color13:   #9e6ffe
+!cyan
+*color6:    #465457
+*color14:   #899ca1
+*color6:    #56676b
+*color14:   #899ca1
+!white
+*color7:    #ccccc6
+*color15:   #f8f8f2
+*color7:    #bfbfba
+*color15:   #ebebe5
+*color7:    #aaaaaa
+*color15:   #ffffff
+
+! alsamixer scheme
+alsamixer*color1:   #ff2759
+alsamixer*color9:   #ff2759
+alsamixer*color2:   #52aebf
+alsamixer*color10:  #52aebf
+alsamixer*color7:   #ffffff
+alsamixer*color15:  #ffffff
+alsamixer*color11:  #777777
+alsamixer*color4:   #1b1d1e
+alsamixer*scrollBar:  false
+
+
 
 ! Urxvt
 URxvt.buffered: true
 URxvt.background: #1A1A1A
-URxvt.foreground: #999999
+URxvt.foreground: #A9A9A9
 URxvt.cursorColor: #5E468C
-URxvt.cursorBlink: true
-URxvt.geometry: 90x32
+URxvt.geometry:92x42
 URxvt.transparent: 0
+URxvt.internalBorder: 14
 URxvt.title: Urxvt
+URxvt*urgentOnBell: true
 
-! -- Xft settings -- !
+!-- Xft settings -- !
 Xft.dpi:        96
 Xft.antialias:  true
 Xft.rgba:       rgb
@@ -28,25 +79,40 @@ URxvt*borderLess: false
 
 ! teh transparency stuff
 URxvt*inheritPixmap: true
-URxvt*tintColor: #1A1A1A
-URxvt*shading: 95
+URxvt*tintColor: #FFFFFF
+URxvt*shading: 20
+
+!-- clickable links --!
+URxvt*perl-ext-common: default,matcher
+URxvt*urlLauncher: /usr/bin/chromium
+URxvt*matcher.button: 1
+URxvt.matcher.rend.0: fg16 RS_Uline
 
 ! -- Fonts -- !
-!URxvt.font:xft:envy code r:medium:pixelsize=15
-!URxvt.boldFont:xft:envy code r:medium:pixelsize=15
-URxvt.font:xft:droid sans mono:medium:pixelsize=13
-URxvt.boldFont:xft:droid sans mono:bold:pixelsize=13
+#URxvt.font:xft:envy code r:medium:size=9.25
+#URxvt.boldFont:xft:envy code r:medium:size=9.25
+URxvt.font:xft:droid sans mono:medium:size=9.25
+URxvt.boldFont:xft:droid sand mono:medium:size=9.25
 !URxvt.font:xft:inconsolata:bold:pixelsize=12
 !URxvt.font:     -*-dina-medium-r-*-*-*-80-*-*-*-*-*-*
 !URxvt.boldFont: -*-dina-medium-r-*-*-*-80-*-*-*-*-*-*
 !URxvt.font:     -*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*
 !URxvt.boldFont: -*-terminus-medium-r-*-*-16*-*-*-*-*
+!URxvt.font:xft:bitstream vera sans mono:size=8
+!URxvt.boldFont:xft:bitstream vera sans mono:size=8
 
 ! -- Colours -- !
-!#include "/home/hur1can3/.xcolors/jwrdark.xcolors"
-!#include "/home/hur1can3/.xcolors/jasonwyran.xcolors"
-#include "/home/hur1can3/.xcolors/zenburn.xcolors"
-!#include "/home/hur1can3/.xcolors/zenburn"
+!#include "/home/jason/.colours/dark"
+!#include "/home/jason/.colours/bright"
+!#include "/home/jason/.colours/low"
+!#include "/home/jason/.colours/old"
+!#include "/home/jason/.colours/soft"
+!#include "/home/jason/.colours/washed"
+!#include "/home/jason/.colours/lich"
+!#include "/home/jason/.colours/milomouse"
+!#include "/home/jason/.colours/rab"
+!#include "/home/jason/.colours/reasons"
+!#include "/home/jason/.colours/zenburn"
 
 ! -- Xterm settings -- !
 xterm*toolBar: false
@@ -54,8 +120,8 @@ xterm*scrollBar: false
 xterm*rightScrollBar: false
 xterm*background: #1A1A1A
 xterm*foreground: #A9A9A9
-xterm*font:-*-terminus-medium-*-*-*-16-*-*-*-*-*-iso8859-*
-xterm*geometry: 120x28 
+xterm*font:xft:envy code r:medium:pixelsize=12
+xterm*geometry: 80x30 
 
 !! == xscreensaver == !!
 
@@ -90,3 +156,4 @@ xscreensaver.passwd.thermometer.width:       8
 
 ! -- datestamp format -- !
 xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
+
