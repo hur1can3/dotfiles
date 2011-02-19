@@ -56,8 +56,6 @@ alias lock="xscreensaver-command --lock"
 alias vi="vim"
 alias music="ncmpcpp"
 alias dush="du -sm *|sort -n|tail"
-alias screen="Scripts/screen.pl"
-alias ttytter="Scripts/ttytter.pl"
 
 # path aliases
 alias doc='c ~/Documents'
