@@ -1,17 +1,6 @@
 #!/bin/bash
 # sourced by .bashrc
 
-#####################################################
-#               BEER-WARE LICENSE
-# Matthew Levandowski wrote this file. As long as you
-# retain this notice you can do whatever you want 
-# with this file and its contents. If we meet some
-# day and you think it is worth it, you can buy
-# me a beer in return.             - Matt Levandowski
-# 01/19/2011            levandowski.matthew@gmail.com
-#####################################################
-
-
 ## Functions
 
 #===  FUNCTION  ================================================================
@@ -43,14 +32,11 @@ extract () {
 	fi
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  goto
-#   DESCRIPTION:  Follow copied and moved files to destination directory
-#    PARAMETERS:  goto [directory_name]
-#===============================================================================
+
+# Follow copied and moved files to destination directory
+goto() { [ -d "$1" ] && cd "$1" || cd "$(dirname "$1")"; }
 cpf() { cp "$@" && goto "$_"; }
 mvf() { mv "$@" && goto "$_"; }
-goto() { [ -d "$1" ] && cd "$1" || cd "$(dirname "$1")"; }
 
 #===  FUNCTION  ================================================================
 #          NAME:  togglecpu
@@ -122,12 +108,15 @@ albumart(){ local y="$@";awk '/View larger image/{gsub(/^.*largeImagePopup\(.|.,
 sfm ()
 {
     shell-fm -d -i 127.0.0.1 lastfm://artist/$1/similartists
-}	
+}	# ----------  end of function sfm  ----------
+
 
 
 #===  FUNCTION  ================================================================
 #          NAME:  ipa
-#   DESCRIPTION:  prints the IP Addresses of each attached networking device 
+#   DESCRIPTION:  prints the IP Addresses of each attached networking device
+#    PARAMETERS:  
+#       RETURNS:  
 #===============================================================================
 ipa () {
 	TMP=`ifconfig eth0 | grep "inet "`
@@ -190,6 +179,7 @@ lowercase() {
 #   DESCRIPTION:  get current host related information
 #       RETURNS:  hostname users date stats memory ip addresses open connections 
 #===============================================================================
+# Get current host related info.
 ii(){
     echo -e "\nYou are logged on ${RED}$HOST"
     echo -e "\nAdditionnal information:$NC " ; uname -a
@@ -242,7 +232,7 @@ targzd(){
 
 #===  FUNCTION  ================================================================
 #          NAME:  ltex
-#   DESCRIPTION:  convert a latex source file .tex into dvi, ps, and pdf files
+#   DESCRIPTION:  convert a latex source file .tex into dvi, ps, pdf, txt files
 #    PARAMETERS:  ltex [filename]
 #       RETURNS:  [filename].dvi [filename].ps [filename].pdf
 #===============================================================================
@@ -261,7 +251,29 @@ ltex(){
         makeindex $FILE;
         #latex $FILE.tex && dvipdf $FILE.dvi;
         latex $FILE.tex && dvips -Ppdf -G0 $FILE.dvi -o $FILE.ps && ps2pdf14 $FILE.ps;
+        catdvi -e 1 -U $FILE.dvi | sed -re "s/\[U\+2022\]/*/g" | sed -re "s/([^^[:space:]])\s+/\1 /g" > $FILE.txt;
     fi
+}
+
+
+
+#===  FUNCTION  ================================================================
+#          NAME:  defineold
+#   DESCRIPTION:  define a word with google using lynx and sed
+#    PARAMETERS:  search term in quotes example: defineold "cow"
+#       RETURNS:  3 short sentences
+#===============================================================================
+defineold () {
+lynx -dump "http://www.google.com/search?hl=en&q=define%3A+${1}&btnG=Google+Search" | grep -m 3 -w "*"  | sed 's/;/ -/g' | cut -d- -f1 > /tmp/templookup.txt
+            if [[ -s  /tmp/templookup.txt ]] ;then    
+                until ! read response
+                    do
+                    echo "${response}"
+                    done < /tmp/templookup.txt
+                else
+                    echo "Sorry $USER, I can't find the term \"${1} \""                
+            fi    
+rm -f /tmp/templookup.txt
 }
 
 #===  FUNCTION  ================================================================
@@ -275,12 +287,11 @@ define ()
 {
 	wget -q -U busybox -O- "http://www.google.com/search?ie=UTF8&q=define%3A$1" | tr '<' '\n' | sed -n 's/^li>\(.*\)/\1\n/p'
 
-}
+}	# ----------  end of function define  ----------
 
 #===  FUNCTION  ================================================================
 #          NAME:  definesay
-#   DESCRIPTION:  defines a word or phrase using goole and busybox then speaks 
-#                 it with espeak and sox
+#   DESCRIPTION:  defines a word or phrase using goole and busybox then speaks it with espeak and sox
 #    PARAMETERS:  search term in quotes
 #       RETURNS:  one page of definitions
 #===============================================================================
@@ -297,7 +308,28 @@ definesay ()
 		echo "Sorry $USER, I cannot find the search term \"${1} \""
 	fi
 	rm -f /tmp/templookup.txt
+}	# ----------  end of function definesay  ----------
+
+#===  FUNCTION  ================================================================
+#          NAME:  definesayold
+#   DESCRIPTION:  
+#    PARAMETERS:  
+#       RETURNS:  
+#===============================================================================
+definesayold () {
+	lynx -dump "http://www.google.com/search?hl=en&q=define%3A+${1}&btnG=Google+Search" | grep -m 3 -w "*"  | sed 's/;/ -/g' | cut -d- -f1 > /tmp/templookup.txt
+            if [[ -s  /tmp/templookup.txt ]] ;then    
+                until ! read response
+                    do
+                    echo "${response}"
+                    espeak -v en/en -s 150 -g 0 -k20 -p 0 -l 100 "${response}" --stdout  | play -V1 -q -t wav -
+                    done < /tmp/templookup.txt
+                else
+                    echo "Sorry $USER, I can't find the term \"${1} \""                
+            fi    
+rm -f /tmp/templookup.txt
 }
+
 
 #===  FUNCTION  ================================================================
 #          NAME:  dsb
@@ -320,86 +352,39 @@ dsb() {
 rm -f /tmp/templookup.txt
 }
 	
-#===  FUNCTION  ================================================================
-#          NAME:  calc
-#   DESCRIPTION:  Calculate Stuff on the commandline
-#===============================================================================
+	
+# Calculate Stuff on the commandline
 calc(){ echo "$*" | bc; }
 
-#===  FUNCTION  ================================================================
-#          NAME:  pjet
-#   DESCRIPTION:  Pretty-print using enscript
-#===============================================================================
+# Pretty-print using enscript
 pjet(){ enscript -h -G -fCourier9 "$1"; }
 
-#===  FUNCTION  ================================================================
-#          NAME:  copy
-#   DESCRIPTION:  copy with a progress bar
-#===============================================================================
+# Copy with progress
 copy(){ cp -v "$1" "$2"&watch -n 1 'du -h "$1" "$2";printf "%s%%\n" $(echo `du -h "$2"|cut -dG -f1`/0.`du -h "$1"|cut -dG -f1`|bc)'; }
 
-#===  FUNCTION  ================================================================
-#          NAME:  ff
-#   DESCRIPTION:  find a file witha a pattern in the name
-#    PARAMETERS:  ff [filename_search_pattern]
-#===============================================================================
+# Find a file with a pattern in name:
 ff(){ find . -type f -iname '*'$*'*' -ls ; }
 
-#===  FUNCTION  ================================================================
-#          NAME:  fe
-#   DESCRIPTION:  find a file witha a pattern in the name and exucte on it
-#    PARAMETERS:  fe [filename_search_pattern] [command]
-#===============================================================================
+# Find a file with pattern $1 in name and Execute $2 on it:
 fe(){ find . -type f -iname '*'${1:-}'*' -exec ${2:-file} {} \;  ; }
 
-#===  FUNCTION  ================================================================
-#          NAME:  count
-#   DESCRIPTION:  recursively counts number of lines of all files in a folder
-#    PARAMETERS:  count [folder(s)]
-#===============================================================================
+# Function that counts recursively number of lines of all files in specified folders
 count() { find $@ -type f -exec cat {} + | wc -l; }
 
-#===  FUNCTION  ================================================================
-#          NAME:  dh
-#   DESCRIPTION:  sorts the size of a directory tree by GB, Kb, MB, then bytes
-#    PARAMETERS:  dh [directory]
-#===============================================================================
+# combine `mkdir foo && cd foo`  into a single function `mcd foo`
+mcd() { [ -n "$1" ] && mkdir -p "$@" && cd "$1"; }
+
+# Sort the size usage of a directory tree by gigabytes, kilobytes, megabytes, then bytes.
 dh() { du -ch --max-depth=1 "${@-.}"|sort -n ;}
 
-#===  FUNCTION  ================================================================
-#          NAME:  say
-#   DESCRIPTION:  use espeak to say the inputed word or phrase
-#    PARAMETERS:  say [text_string]
-#===============================================================================
+# Use espeak to say a word or phrase
 say() { espeak -v en/en -s 150 -g 0 -k20 -p 0 -l 100 "$1" --stdout | play -V1 -q -t wav -;}
 
-#===  FUNCTION  ================================================================
-#          NAME:  rsay
-#   DESCRIPTION:  use espeak to read the contents of a text file
-#    PARAMETERS:  rsay [file]
-#===============================================================================
+# Use espeak to read the contents of a text file
 rsay() { espeak -f "$1" --stdout | play -V1 -q -t wav -;}
 
-#===  FUNCTION  ================================================================
-#          NAME:  genpass
-#   DESCRIPTION:  generates an alphanumeric password with given length
-#    PARAMETERS:  genpass [length]
-#===============================================================================
-genpass(){ local i x y z h;h=${1:"$1"};x=({a..z} {A..Z} {0..9});for ((i=0;i<$h;i++));do y=${x[$((RANDOM%${#x[@]}))]};z=$z$y;done;echo $z ; }
-
-#===  FUNCTION  ================================================================
-#          NAME:  genpassr
-#   DESCRIPTION:  generates an alphanumeric password with given length
-#    PARAMETERS:  genpassr [length]
-#===============================================================================
-genpassr(){ < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-"$1"};echo; }
-
-#===  FUNCTION  ================================================================
-#          NAME:  sitepass
-#   DESCRIPTION:  generates an unique password for every website that you use
-#    PARAMETERS:  sitepass [url]
-#===============================================================================
-sitepass() { echo -n "$@" |  md5sum | sha1sum | sha224sum | sha256sum | sha384sum | sha512sum | gzip - | strings -n 1 | tr -d "[:space:]"  | tr -s '[:print:]' | tr '!-~' 'P-~!-O' | rev | cut -b 2-11; history -d $(($HISTCMD-1)); }
+# password generator
+genpass(){ local i x y z h;h=${1:-8};x=({a..z} {A..Z} {0..9});for ((i=0;i<$h;i++));do y=${x[$((RANDOM%${#x[@]}))]};z=$z$y;done;echo $z ; }
 
 #===  FUNCTION  ================================================================
 #          NAME:  geoip
@@ -408,19 +393,20 @@ sitepass() { echo -n "$@" |  md5sum | sha1sum | sha224sum | sha256sum | sha384su
 #       RETURNS:  location
 #===============================================================================
 geoip(){ curl -s "http://www.geody.com/geoip.php?ip=${1}" | sed '/^IP:/!d;s/<[^>][^>]*>//g' ; }
+
+# geoip alternative
+geoipalt(){ curl -A "Mozilla/5.0" -s "http://www.geody.com/geoip.php?ip=$1" | grep "^IP.*$1" | html2text; }
 	 
-#===  FUNCTION  ================================================================
-#          NAME:  structcp
-#   DESCRIPTION:  copies an entire path structure without copying files
-#    PARAMETERS:  structcp [source_path]
-#===============================================================================
+# Copy structure
 structcp(){ ( mkdir -pv $2;f="$(realpath "$1")";t="$(realpath "$2")";cd "$f";find * -type d -exec mkdir -pv $t/{} \;); }
-	
-#===  FUNCTION  ================================================================
-#          NAME:  thumbnail
-#   DESCRIPTION:  create a thumbnail from a given video file
-#    PARAMETERS:  thumbnail [video_file]
-#===============================================================================
+	 
+# Generate random password
+randpw(){ < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-16};echo; }
+	 
+# generate a unique and secure password for every website that you login to
+sitepass() { echo -n "$@" |  md5sum | sha1sum | sha224sum | sha256sum | sha384sum | sha512sum | gzip - | strings -n 1 | tr -d "[:space:]"  | tr -s '[:print:]' | tr '!-~' 'P-~!-O' | rev | cut -b 2-11; history -d $(($HISTCMD-1)); }
+	 
+# Create a thumbnail from a video file
 thumbnail() { ffmpeg  -itsoffset -20 -i $i -vcodec mjpeg -vframes 1 -an -f rawvideo -s 640x272 ${i%.*}.jpg; }
 	 
 #===  FUNCTION  ================================================================
@@ -430,12 +416,8 @@ thumbnail() { ffmpeg  -itsoffset -20 -i $i -vcodec mjpeg -vframes 1 -an -f rawvi
 #===============================================================================
 tweet(){ curl -u "$1" -d status="$2" "http://twitter.com/statuses/update.xml"; }
 
-#===  FUNCTION  ================================================================
-#          NAME:  dbackup
-#   DESCRIPTION:  create date based backups in form YYYYmmdd-HourMinSecond
-#    PARAMETERS:  dbackup [file(s)]
-#===============================================================================
-dbackup() { for i in "$@"; do cp -va $i $i.$(date +%Y%m%d-%H%M%S); done }
+# Create date based backups
+backup() { for i in "$@"; do cp -va $i $i.$(date +%Y%m%d-%H%M%S); done }
 
 #===  FUNCTION  ================================================================
 #          NAME:  shred
@@ -459,6 +441,7 @@ scptun() { sshpass -p "$1" rsync -av -e ssh "$2"@"$3":"$4" /"$5"; }
 #===============================================================================
 tubej() { mencoder -audiofile input.mp3 -oac copy -ovc lavc -lavcopts vcodec=mpeg4 -ffourcc xvid -vf scale=320:240,harddup "$1" "$2" -o "$3"; }
 
+
 #===  FUNCTION  ================================================================
 #          NAME:  pdfo
 #   DESCRIPTION:  optimize a pdf file
@@ -467,11 +450,8 @@ tubej() { mencoder -audiofile input.mp3 -oac copy -ovc lavc -lavcopts vcodec=mpe
 #===============================================================================
 pdfo() { gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile="$2" "$1"; }
 
-#===  FUNCTION  ================================================================
-#          NAME:  thumbit
-#   DESCRIPTION:  make a thumbnail from a pic that is 20% reduced in size
-#    PARAMETERS:  thumbit [file]
-#===============================================================================
+
+# make a thumb %20 the size of a pic
 thumbit() {
   if [ -z $1 ]; then
     echo "please supply a file to shrink"
@@ -501,15 +481,12 @@ thumbit() {
   esac
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  grepp
-#   DESCRIPTION:  grep by paragraph, i.e. search one paragraph at a time
-#    PARAMETERS:  grepp [input]
-#===============================================================================
+# grep by paragraph
 grepp() {
   [ $# -ne 2 ] && return 1
   perl -00ne "print if /$1/i" < $2
 }
+
 
 #===  FUNCTION  ================================================================
 #          NAME:  pullout
@@ -539,6 +516,19 @@ pullout() {
 		echo "'$i' is not a valid archive file"
 	fi
 }
+  #case $2 in
+  #    *.tar.gz|*.tgz)
+  #   gunzip < $2 | tar -xf - $1
+  #  ;;
+  #  *)
+  #  echo $2 is not a valid archive
+  #  return 1
+  #  ;;
+  #esac
+  #return 0
+#}
+
+
 
 #===  FUNCTION  ================================================================
 #          NAME:  fix
@@ -553,6 +543,7 @@ fix() {
   fi
 }
 
+
 #===  FUNCTION  ================================================================
 #          NAME:  shot
 #   DESCRIPTION:  takes a timestamped screen shot
@@ -564,6 +555,7 @@ shot(){
   scrot -t 20 -cd 3 $PIC
 }
 
+
 #===  FUNCTION  ================================================================
 #          NAME:  rip
 #   DESCRIPTION:  rips a standard dvd with handbrake into an x264 mp4
@@ -573,6 +565,7 @@ shot(){
 rip() {
   handbrake -i $1 -o $2.mp4 -L -U -F -f mp4 -e x264 -b 4000 -B 192
 }
+
 
 #===  FUNCTION  ================================================================
 #          NAME:  safeedit
@@ -591,6 +584,7 @@ safeedit() {
 saveit() {
   cp $1 $HOME/Temp/$1.saved
 }
+
 
 #===  FUNCTION  ================================================================
 #          NAME:  switchfile
@@ -642,57 +636,6 @@ trash () {
 			fi
 		fi
 	done
-}
-
-#===  FUNCTION  ================================================================
-#          NAME:  scrld
-#   DESCRIPTION:  Take a screenshot of the screen, upload it to ompldr.org and 
-#                 put link to the clipboard and to the screenshots.log 
-#                 (with a date stamp) in a home directory.
-#    PARAMETERS:  srld [-w] for screenshot of current window only
-#===============================================================================
-scrld() {
-if [ "$1" == "w" ]; then
-        scrot -u  /tmp/screenshot.png && curl -s -F file1=@/tmp/screenshot.png -F submit="OMPLOAD\!" http://ompldr.org/upload | egrep '(View file: <a href="v([A-Za-z0-9+\/]+)">)' | sed 's/^.*\(http:\/\/.*\)<.*$/\1/' | xsel -b -i && rm -f /tmp/screenshot.png &&  notify-send -t 5000 -i dialog-information  "Screenshot uploaded." "\<a href =\"`xsel -o`\">Url</a> copied to clipboard." && echo "`date`______ `xsel -o`">>~/screenshots.log;
-        else
-        scrot $1 /tmp/screenshot.png && curl -s -F file1=@/tmp/screenshot.png -F submit="OMPLOAD\!" http://ompldr.org/upload | egrep '(View file: <a href="v([A-Za-z0-9+\/]+)">)' | sed 's/^.*\(http:\/\/.*\)<.*$/\1/' | xsel -b -i && rm -f /tmp/screenshot.png &&  notify-send -t 5000 -i dialog-information  "Screenshot uploaded." "\<a href =\"`xsel -o`\">Url</a> copied to clipboard." && echo "`date`______ `xsel -o`">>~/screenshots.log
-        fi
-}
-
-#===  FUNCTION  ================================================================
-#          NAME:  lottogen
-#   DESCRIPTION:  generates number for a lottery ticket
-#===============================================================================
-lottogen() {
-echo $(shuf -n 6 -i 1-49 | sort -n)
-}
-
-#===  FUNCTION  ================================================================
-#          NAME:  bigones
-#   DESCRIPTION:  recursively search for large files in Mb from a directory. 
-#    PARAMETERS:  bigones [directory] [size_in_Mb]
-#       RETURNS:  shows size and location.
-#===============================================================================
-bigones() {
-find $1 -size +"$2"M -exec du -h {} \;
-}
-
-#===  FUNCTION  ================================================================
-#          NAME:  rtfm
-#   DESCRIPTION:  read the #%$&*@~! manual 
-#    PARAMETERS:  rtfm [command]
-#===============================================================================
-rtfm() { 
-help $@ || man $@ || $BROWSER "http://www.google.com/search?q=$@"; 
-}
-
-#===  FUNCTION  ================================================================
-#          NAME:  wgetol
-#   DESCRIPTION:  wget download one page and all it's links for offline viewing
-#    PARAMETERS:  wgetol [url]
-#===============================================================================
-wgetol() {
-wget -e robots=off -E -H -k -K -p $1
 }
 
 #===  FUNCTION  ================================================================
