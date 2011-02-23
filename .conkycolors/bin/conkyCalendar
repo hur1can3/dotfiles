@@ -1,0 +1,22 @@
+#! /bin/bash
+#by mobilediesel
+
+date=$(date '+%F')
+DAY=${date:8:2}
+# m="-m" # uncomment this line for starting the week on Monday instead of Sunday.
+cal=$(cal $m | sed 's/^/${alignc} /' | sed '1d' )
+prev=$(cal $m $(date '+%-m %Y' --date="${date:0:7}-15 -1 month")|sed 's/ *$//;/^$/d'|tail -1| sed 's/^/${alignc} /')
+next=$(cal $m $(date '+%-m %Y' --date="${date:0:7}-15 +1 month")|sed '/^ *&/d;1,2d;s/^ *//'|head -1)
+if [ ${#next} == 19 ] ;then next=$'\n'" $next"
+else next="  $next"
+fi
+if [ ${#prev} == 20 ]; then prev="$prev"$'\n '
+else prev="$prev  "
+fi
+dates=$(remind -s|cut -d ' ' -f1|uniq|cut -d '/' -f3|sed "/$DAY/d")
+current=$(echo "${cal:42}"|sed -e '/^ *$/d' -e 's/^/ /' -e 's/$/ /' -e 's/^ *1 / 1 /' )
+for i in $dates; do
+current=$(echo "$current"|sed -e /" ${i/#0/} "/s/" ${i/#0/} "/" "'${color green}'"${i/#0/}"'${color}'" "/)
+done
+current=$(echo "$current"|sed -e /" ${DAY/#0/} "/s/" ${DAY/#0/} "/" "'${font Liberation Mono:style=bold:size=8}${color1}'"${DAY/#0/}"'${color2}${font}${font Liberation Mono:size=8}'" "/ -e 's/^ //' -e 's/ *$//')
+echo -e "\${alignc} \${color2}${cal:10:21}\${color}$prev\${color2}$current\${color}$next"

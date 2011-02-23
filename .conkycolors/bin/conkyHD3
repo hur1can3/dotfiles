@@ -1,0 +1,3 @@
+#! /bin/sh
+cd ~/.conkycolors/scripts
+$PYTHONPATH /usr/bin/python ~/.conkycolors/scripts/conkyHD3.py "$@"

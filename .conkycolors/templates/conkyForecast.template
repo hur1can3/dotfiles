@@ -1,0 +1,18 @@
+${voffset -10}${alignr 56}${color2}${font ConkyWeather:style=Bold:size=40}[--datatype=WF]${font}${color}
+${voffset -50}${color2}${font Weather:size=40}y${font}${color2}  ${voffset -38}${color2}${font Arial Black:size=26}[--datatype=HT]${font}${color}
+${voffset 2}
+${font Droid Sans:style=Bold:size=8}${voffset 0}${goto 13}[--datatype=DW --startday=1 --shortweekday] ${goto 59}[--datatype=DW --startday=2 --shortweekday] ${goto 105}[--datatype=DW --startday=3 --shortweekday] ${goto 150}[--datatype=DW --startday=4 --shortweekday]${font}
+${voffset 0}${color2}${font ConkyWeather:size=28}[--datatype=WF --startday=1 --endday=4 --spaces=1]${font}${color}
+${font Droid Sans:style=Bold:size=8}${voffset 0}${goto 8}[--datatype=HT --startday=1 --hideunits --centeredwidth=3]/[--datatype=LT --startday=1 --hideunits --centeredwidth=3] ${goto 53}[--datatype=HT --startday=2 --hideunits --centeredwidth=3]/[--datatype=LT --startday=2 --hideunits --centeredwidth=3] ${goto 98}[--datatype=HT --startday=3 --hideunits --centeredwidth=3]/[--datatype=LT --startday=3 --hideunits --centeredwidth=3] ${goto 145}[--datatype=HT --startday=4 --hideunits --centeredwidth=3]/[--datatype=LT --startday=4 --hideunits --centeredwidth=3]${font}
+${voffset 5}${goto 12}${font Moon Phases:style=Bold:size=36}${color2}[--datatype=MF]${color}${font}
+${voffset 6}${goto 10}${font ConkyWindNESW:size=40}${color2}[--datatype=BS]${color}${font}
+${voffset 4}${goto 22}[--datatype=WS]
+${voffset -116}${goto 70}${font Droid Sans Mono:style=Bold:size=10}${color2}[--datatype=CT]${color}${font}
+${voffset 8}${goto 70}Station: [--datatype=OB]
+${goto 70}Rain: [--datatype=PC]
+${goto 70}UV: [--datatype=UI] - [--datatype=UT]
+${goto 70}Humidity: [--datatype=HM]
+${goto 70}Sunrise: [--datatype=SR]
+${goto 70}Sunset: [--datatype=SS]
+${goto 70}Moon: [--datatype=MP]
+${voffset -10}
