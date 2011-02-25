@@ -1,8 +1,13 @@
 presets:
   global:
-    download: ~/media/media/vids/
-
+    download: ~/Downloads/
+     
   tv:
+    series_premiere:
+      path: ~/media/media/trailers
+      min_quality: hdtv
+      max_quality: 720p
+      propers: no
     series:
       hdtv:
         - Lost
@@ -12,33 +17,49 @@ presets:
         - Deadliest Warrior
         - Doctor Who
         - The Pacific
-        - V
-		- Survivor
-		- Archer
+        - V 
         - Family Guy
+        - Survivor
+        - Archer
+        - American Idol
+        - Greys Anatomy
+        - The Cape
+        - Top Gear
+        - Man vs. Wild
         - Dirty Jobs
         - Being Human
         - Heroes
         - The Big Bang Theory
         - Two and a Half Men
         - How I Met Your Mother
+        #- Minute To Win It
+        - Wipeout
+        - Merlin
     download: ~/Downloads/
-      
+
+  anime:
+    series:
+      720p:
+        - Naruto Shippuuden
+        - Bleach
+        - Dragonball Kai
+    download: ~/Downloads/
+   
   movies:
-    limit_new: 1
+    limit_new: 3
     seen_movies: loose
+    quality:
+      min: dvdscr
+      max: 720p
     imdb:
-      min_score: 6.0
-      min_votes: 2000
-      min_year: 2009
+      min_score: 5.0
+      min_votes: 500
+      min_year: 2000
       reject_genres:
-        - horror
         - documentary
         - musical
         - music
         - biography
-        - family
-        - romance
     download: ~/Downloads/
 
 feeds:
@@ -46,35 +67,41 @@ feeds:
   ezrss:
     rss: http://www.ezrss.it/feed/
     preset: tv
+    
+  showrss:
+    rss: http://showrss.karmorra.info/rss.php?user_id=49927&hd=0&proper=0
+    preset: tv
+    
+  wipeout:
+    rss: http://www.kickasstorrents.com/account/subscribedmedia.xml?userhash=4fe288e565b0536abb7856f0272a8f70
+    preset: tv
 
 #### Movie feeds:
   rlslog_dvdrips:
     rlslog: http://www.rlslog.net/category/movies/dvdrip/
     preset: movies
-
-#### Anime feeds: 
-  ## Fansubs Naruto, Dragonball, Inuyasha by Taka Fansubs
-  taka:
-    html: http://www.takafansubs.com/?p=torrents#c58cd02cd8f66e9b2e89114a46f82023 
-    limit_new: 2 
-    regexp:
-      accept:
-        - Naruto Shippuuden
-      reject:
-        - 720p
-        - Movie     
-    download: ~/Downloads/
     
-  ## Bleach from DatteBayo  
-  dattebayo:
-    html: http://www.dattebayo.com/t/
-    limit_new: 2 
-    regexp:
-      accept:
-        - Bleach
-      reject:
-        - Movie
-        - HDTV
-        - Final
-        - YHBT
-    download: ~/Downloads/
+  rlslog_brrips:
+    rlslog: http://www.rlslog.net/category/movies/bdrip/
+    preset: movies
+    
+  kickass_dvdrips:
+    rss: http://www.kickasstorrents.com/search/dvdrip/?rss=1
+    preset: movies
+    
+  kickass_brrips:
+    rss: http://www.kickasstorrents.com/search/brrip/?rss=1
+    preset: movies
+ 
+#### Anime feeds:
+  # bleach and naruto
+  horrible_subs:
+    rss: http://www.nyaa.eu/?page=rss&user=64513
+    preset: anime
+    
+  # dragonball kai
+  freeze_subs:
+    rss: http://www.nyaa.eu/?page=torrents&user=59047
+    preset: anime
+    
+    
