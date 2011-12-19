@@ -3,9 +3,10 @@
 
 # check for browser
 if [ -z "$DISPLAY" ]; then
-  BROWSER=lynx
+    BROWSER=lynx
 else
-  BROWSER=firefox
+    #BROWSER=chromium-browser
+    BROWSER=firefox
 fi
 
 # Set some variables
@@ -49,5 +50,8 @@ export LANGUAGE LC_ALL HISTCONTROL HISTIGNORE HISTSIZE HISTFILESIZE HISTTIMEFORM
 # Java exports
 #export PATH=$PATH:/usr/share/java/apache-ant/bin
 
+# Ruby exports
+export PATH=$PATH:/var/lib/gems/1.8/bin
+
 # export directories to PATH
-export PATH=$PATH:$HOME/Scripts:$HOME/Bin
+export PATH=$PATH:$HOME/scripts:$HOME/bin:/sbin

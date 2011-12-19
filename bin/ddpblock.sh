@@ -1,0 +1,1 @@
+sudo dd if=$1 bs=1MB | (pv -s `sudo blockdev --getsize64 $1') | gzip -9 > $2.img.gz

@@ -6,3 +6,9 @@
 alias aget="sudo apt-get"
 
 alias asearch="sudo apt-cache search"
+
+alias appa="sudo add-apt-repository"
+
+alias aupdate="sudo apt-get update"
+
+alias aupgrade="sudo apt-get upgrade"

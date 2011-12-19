@@ -1,0 +1,2 @@
+#!/bin/bash
+nenscript -E -C -R -j -H4 -T4 --highlight-bar-gray=0.87 --mark-wrapped-lines=arrow -fCourier8 $1

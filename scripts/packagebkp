@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# pacckagebkp v0.03
+
+# Author: _khAttAm_, http://www.khattam.info
+
+# License: GPL v3 or any later version of the same
+# http://www.gnu.org/licenses/gpl.html
+
+# Script to create a backup of apt preferences along with sources and 
+# GPG keys in order to facilitate installing the packages installed in
+# one computer to another.
+
+# Changes
+# v0.03
+# * Fixed bug that caused problem in creating script
+# * Fixed bug that caused launchpad integration to not work
+#
+# v0.02
+# * Added launchpad-getkeys
+# * Fixed a bug so that it could be run from directories with space on 
+#	their names
+#
+# v0.01
+# * First Release
+
+if [[ $UID -ne 0 ]]; then
+	echo "$0 must be run as root.
+Try 
+ sudo $0"
+	exit 1
+fi
+mkdir /tmp/apt
+cp -R /etc/apt/* /tmp/apt
+apt-get install aptitude
+DEPS=`aptitude search -F %p ~i --disable-columns libedataserver| sed 's/^/apt-get install /'`
+
+echo "#!/bin/bash
+
+if [[ $UID -ne 0 ]]; then
+	echo \"$0 must be run as root.
+Try 
+ sudo $0\"
+	exit 1
+fi
+TMSTMP=\`date +%s\`
+mv /etc/apt /etc/apt.packagebkp.$TMSTMP
+mkdir /etc/apt
+cp -R apt/* /etc/apt/
+./launchpad-getkeys
+apt-get update
+$DEPS" > /tmp/install-all-packages.sh
+chmod +x /tmp/install-all-packages.sh
+WORKDIR=`pwd`
+
+cp launchpad-getkeys /tmp/launchpad-getkeys
+cd /tmp
+chmod +x launchpad-getkeys
+tar -cvzf "$WORKDIR/output.tar.gz" apt install-all-packages.sh launchpad-getkeys
+cd "$WORKDIR"
+rm /tmp/install-all-packages.sh
+rm /tmp/launchpad-getkeys
+rm -rf /tmp/apt
+
+echo "
+
+Ready.
+Copy the output.tar.gz to the target computer and extract it. Then run the following command:
+sudo ./install-all-packages.sh
+"

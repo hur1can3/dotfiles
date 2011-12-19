@@ -1,0 +1,20 @@
+# Start XBMC / Boxee
+begin
+prog = irexec
+button = Record
+config = /home/hur1can3/Scripts/switchUI.sh
+end
+
+# Start TV
+begin
+prog = irexec
+button = LiveTV
+config = /home/hur1can3/Scripts/switchTV.sh
+end
+
+# Start LCD
+begin
+prog = irexec
+button = RecTV
+config = /home/hur1can3/Scripts/switchLCD.sh
+end

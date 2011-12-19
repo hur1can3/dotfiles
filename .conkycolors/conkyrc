@@ -55,7 +55,7 @@ ${font Droid Sans:style=Bold:size=8}SYSTEM $stippled_hr${font}
 ##############
 # - SYSTEM - #
 ##############
-${color0}${font Poky:size=15}S${font}${color}${goto 32}${voffset -8}Kernel:  ${alignr}${color2}${kernel}${color}
+${color0}${voffset 6}${font OpenLogos:size=19}u${font}${color}${goto 32}${voffset -14}Kernel:  ${alignr}${color2}${kernel}${color}
 ${goto 32}Uptime: ${alignr}${color2}${uptime}${color}
 # |--UPDATES
 ${goto 32}Updates: ${alignr}${font Droid Sans:style=Bold:size=8}${color1}${execi 360 aptitude search "~U" | wc -l | tail}${color}${font} ${color2}Packages${color}
@@ -75,23 +75,14 @@ ${voffset -1}${goto 42}${color2}${top name 5}${color}${font Droid Sans:style=Bol
 #############
 # - CLOCK - #
 #############
-${voffset 4}${font Droid Sans:style=Bold:size=8}TODO $stippled_hr${font}
-${voffset -10}${alignc 46}${color2}${font Arial Black:size=24}${time %H:%M}${font}${color}
+${voffset 4}${font Droid Sans:style=Bold:size=8}DATE $stippled_hr${font}
+${voffset -10}${alignc 46}${color2}${font Arial Black:size=30}${time %H:%M}${font}${color}
 ${alignc}${time %d %B %Y}
-############
-# - TODO - #
-############
-# Create a file called ToDo.txt in your home
-#${voffset 4}${font Droid Sans:style=Bold:size=8}TO DO $stippled_hr${font}
-${voffset 4}${execpi 20 cat ~/ToDo.txt | sed -n '1,12p' | sed 's/^/${voffset -6}${color0}${font Poky:size=14}A${font}${color}${voffset -3}${goto 32}/'}
-##############
-# - NVIDIA - #
-##############
-${voffset 4}${font Droid Sans:style=Bold:size=8}NVIDIA $stippled_hr${font}
-${color0}${voffset -4}${font Poky:size=17}N${font}${color}${goto 32}${voffset -8}GPU Temp:${alignr}${font Droid Sans:style=Bold:size=8}${color1} ${exec nvidia-settings -q GPUCoreTemp | grep Attribute | cut -d ' ' -f 6 | cut -c 1-2}${font}${color}°C
-${goto 32}GPU Clock:${alignr}${font Droid Sans:style=Bold:size=8}${color1} ${exec nvidia-settings -q GPU2DClockFreqs -t}${font}${color}MHz
-${goto 32}Video RAM:${alignr}${font Droid Sans:style=Bold:size=8}${color1} ${exec nvidia-settings -q VideoRam -t}${font}${color}KiB
-${goto 32}Driver Version:${alignr}${font Droid Sans:style=Bold:size=8}${color1} ${exec nvidia-settings -q NvidiaDriverVersion -t}${font}${color}
+####################
+# - MEDIA PLAYER - #
+####################
+${voffset 4}${font Droid Sans:style=Bold:size=8}MEDIA PLAYER $stippled_hr${font}
+${execpi 2 /home/hur1can3/.conkycolors/bin/conkyBanshee -t /home/hur1can3/.conkycolors/templates/conkyPlayer.template}
 ##########
 # - HD - #
 ##########
@@ -129,7 +120,7 @@ ${else}${voffset 4}${color0}${font PizzaDude Bullets:size=12}4${font}${color}${g
 ###############
 # - WEATHER - #
 ###############
-# For a working weather script you NEED to define, in a user specific config file, a partner id and registration code for the weather.com xoap service. For this purpose copy .conkyForecast.config in /usr/share/conkycolors folder to your home and setup as required.
+# For a working weather script you NEED to define, in a user specific config file, a partner id and registration code for the weather.com xoap service. For this purpose copy .conkyForecast.config in (null) folder to your home and setup as required.
 # http://www.weather.com/services/xmloap.html
 ${voffset -8}${font Droid Sans:style=Bold:size=8}WEATHER $stippled_hr${font}
 # |--WLAN0
@@ -137,6 +128,9 @@ ${if_up wlan0}
 ${execpi 10800 /home/hur1can3/.conkycolors/bin/conkyForecast --location=USMI0344 -i -t /home/hur1can3/.conkycolors/templates/conkyForecast.template}
 # |--ETH0
 ${else}${if_up eth0}
+${execpi 10800 /home/hur1can3/.conkycolors/bin/conkyForecast --location=USMI0344 -i -t /home/hur1can3/.conkycolors/templates/conkyForecast.template}
+# |--ETH1
+${else}${if_up eth1}
 ${execpi 10800 /home/hur1can3/.conkycolors/bin/conkyForecast --location=USMI0344 -i -t /home/hur1can3/.conkycolors/templates/conkyForecast.template}
 # |--PPP0
 ${else}${if_up ppp0}

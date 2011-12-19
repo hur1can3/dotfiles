@@ -52,6 +52,7 @@ if [ "$TERM" = "linux" ]; then
      clear # back to default input colours
 fi
 
+# make a really cool linux prompt
 set_prompt_style () {
   local USER_COLOR="\[\033[1;34m\]"   #Light Blue
   local DIR_COLOR="\[\033[1:36m\]"     #Light Grey
@@ -63,8 +64,9 @@ set_prompt_style () {
     DIR_COLOR=$USER_COLOR
     SYMBOL="#"
   fi
+  #export PS1="[\u@`curl icanhazip.com` \W]$ "
 
-  PS1="┌─[\[\e[36m\]\h\[\e[0m\]][\[\e[1;32m\]\w\[\e[0m\]]\n└─╼ "
+  PS1="┌─[\[\e[36m\]\h\[\e[0m\]@`dig +short myip.opendns.com @resolver1.opendns.com`][\[\e[1;32m\]\w\[\e[0m\]]\n└─╼ "
 
 }
 set_prompt_style
@@ -72,9 +74,5 @@ set_prompt_style
 #eval `dircolors -b ~/.dir_colors`
 
 # colourize terminal output w/ cope
-export PATH=/usr/share/perl5/vendor_perl/auto/share/dist/Cope:$PATH
-
-# colourize terminal output w/ cope
-#PATH=/usr/share/perl5/vendor_perl/auto/share/dist/Cope:$PATH
-
+#export PATH=/usr/share/perl5/vendor_perl/auto/share/dist/Cope:$PATH
 

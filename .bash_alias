@@ -16,7 +16,12 @@ alias lm="ls -al |more"     # pipe through 'more'
 alias lr="ls -lR"           # recursive ls
 alias lsr="tree -Csu"       # nice alternative to 'recursive ls'
 
-# The 'cd' family ----------
+# path aliases
+alias doc='c ~/Documents'
+alias down='c ~/Downloads'
+alias tor='c ~/Torrents'
+alias vid='c ~/Videos'
+alias mus='c ~/Music'
 alias h='cd ~'
 alias home='cd ~'
 alias b='cd -;ls' #previous directory
@@ -30,9 +35,6 @@ alias ......='cd ../../../../..'
 alias du='du -kh'			# show files in human readable format
 alias df='df -kTh'			# show files in human readable format
 
-alias nocomment='egrep -v "^[ \t]*#|^[ \t]*$"'
-
-
 # hash checks
 alias sha1='openssl dgst -sha1'	# sha1 digest check
 alias md5='openssl dgst -md5'	# md5 digest check
@@ -41,13 +43,10 @@ alias md5='openssl dgst -md5'	# md5 digest check
 alias g='grep'
 alias s='ssh'
 alias p='ping'
-alias sublime='./home/hur1can3/Apps/sublime/sublime_text'
-
 
 # misc aliases
 alias sv='sudo vim'
 alias nocomment='egrep -v "^[ \t]*#|^[ \t]*$"'
-alias home="cd ~"
 alias eth="sudo dhcpcd eth0"
 alias tabs="urxvt -pe tabbed"
 alias ping="ping -c 3 www.google.com"
@@ -57,12 +56,8 @@ alias vi="vim"
 alias music="ncmpcpp"
 alias dush="du -sm *|sort -n|tail"
 
-# path aliases
-alias doc='c ~/Documents'
-alias down='c ~/Downloads'
-alias tor='c ~/Torrents'
-alias vid='c ~/Videos'
-alias mus='c ~/Music'
+#dd 
+alias dd='dcfldd if=/dev/zero of=/dev/null'
 
 # power aliases
 alias reboot="sudo shutdown -r now"
