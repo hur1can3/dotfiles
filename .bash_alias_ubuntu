@@ -3,12 +3,14 @@
 
 ### Ubuntu Linux aliases
 ## Apt-Get 
-alias aget="sudo apt-get"
+alias aget="sudo apt-get install -y"
+
+alias arem="sudo apt-get remove --purge -y"
 
 alias asearch="sudo apt-cache search"
 
 alias appa="sudo add-apt-repository"
 
-alias aupdate="sudo apt-get update"
+alias aupdate="sudo apt-get update -y "
 
-alias aupgrade="sudo apt-get upgrade"
+alias aupgrade="sudo apt-get dist-upgrade -y"

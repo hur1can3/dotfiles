@@ -57,7 +57,7 @@ alias music="ncmpcpp"
 alias dush="du -sm *|sort -n|tail"
 
 #dd 
-alias dd='dcfldd if=/dev/zero of=/dev/null'
+#alias dd='dcfldd if=/dev/zero of=/dev/null'
 
 # power aliases
 alias reboot="sudo shutdown -r now"

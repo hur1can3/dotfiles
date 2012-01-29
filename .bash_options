@@ -1,6 +1,21 @@
 #!/bin/bash
 # sourced by .bashrc
 
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ];
+    then debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# make less more friendly for non-text input files, see lesspipe(1)
+#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if [ -f /etc/bash_completion ] && ! shopt -oq posix;
+    then . /etc/bash_completion
+fi
+
 # check for browser
 if [ -z "$DISPLAY" ]; then
     BROWSER=lynx
@@ -40,18 +55,19 @@ HISTSIZE=20000
 HISTFILESIZE=20000
 HISTTIMEFORMAT="[%Y-%m-%d - %H:%M:%S] "
 
-# fix locale-shit
+# fix locales
 LANGUAGE=en_US.UTF-8
 LC_ALL=en_US.utf8
-
-# EXPORT VARIABLES NOW
-export LANGUAGE LC_ALL HISTCONTROL HISTIGNORE HISTSIZE HISTFILESIZE HISTTIMEFORMAT GREP_OPTIONS PAGER MPD_HOST MPD_PORT BROWSER EDITOR VISUAL GREP_COLOR
 
 # Java exports
 #export PATH=$PATH:/usr/share/java/apache-ant/bin
 
-# Ruby exports
-export PATH=$PATH:/var/lib/gems/1.8/bin
+# Ruby rvm exports
+#export PATH=$PATH:/var/lib/gems/1.8/bin
+[[ -s "/home/hur1can3/.rvm/scripts/rvm" ]] && source "/home/hur1can3/.rvm/scripts/rvm" 
 
 # export directories to PATH
 export PATH=$PATH:$HOME/scripts:$HOME/bin:/sbin
+
+# EXPORT VARIABLES NOW
+export LANGUAGE LC_ALL HISTCONTROL HISTIGNORE HISTSIZE HISTFILESIZE HISTTIMEFORMAT GREP_OPTIONS PAGER MPD_HOST MPD_PORT BROWSER EDITOR VISUAL GREP_COLOR

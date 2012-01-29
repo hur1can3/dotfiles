@@ -1,50 +1,31 @@
 presets:
   global:
-    download: ~/Downloads/
+    download: ~/torrents/
      
   tv:
     series_premiere:
-      path: ~/media/media/trailers
+      path: ~/media/share/temp
       min_quality: hdtv
       max_quality: 720p
       propers: no
     series:
       hdtv:
-        - Lost
-        - Smallville
         - Mythbusters
-        - Legend of the Seeker
-        - Deadliest Warrior
         - Doctor Who
-        - The Pacific
-        - V 
-        - Family Guy
         - Survivor
-        - Archer
-        - American Idol
-        - Greys Anatomy
-        - The Cape
-        - Top Gear
-        - Man vs. Wild
-        - Dirty Jobs
-        - Being Human
-        - Heroes
         - The Big Bang Theory
         - Two and a Half Men
         - How I Met Your Mother
-        #- Minute To Win It
-        - Wipeout
         - Merlin
-    download: ~/Downloads/
+    download: ~/torrents/
 
   anime:
     series:
       720p:
         - Naruto Shippuuden
         - Bleach
-        - Dragonball Kai
-    download: ~/Downloads/
-   
+    download: ~/torrents/   
+
   movies:
     limit_new: 3
     seen_movies: loose
@@ -60,7 +41,7 @@ presets:
         - musical
         - music
         - biography
-    download: ~/Downloads/
+    download: ~/torrents/
 
 feeds:
 #### TV feeds:
@@ -72,11 +53,12 @@ feeds:
     rss: http://showrss.karmorra.info/rss.php?user_id=49927&hd=0&proper=0
     preset: tv
     
-  wipeout:
-    rss: http://www.kickasstorrents.com/account/subscribedmedia.xml?userhash=4fe288e565b0536abb7856f0272a8f70
-    preset: tv
 
 #### Movie feeds:
+  scenetime:
+    rss: http://www.scenetime.com/get_rss.php?feed=direct&user=jcmax&cat=61,47,57,1&passkey=d7d69ef7a66fb48a81b842341e3a12bb
+    preset: movies
+
   rlslog_dvdrips:
     rlslog: http://www.rlslog.net/category/movies/dvdrip/
     preset: movies
@@ -99,9 +81,4 @@ feeds:
     rss: http://www.nyaa.eu/?page=rss&user=64513
     preset: anime
     
-  # dragonball kai
-  freeze_subs:
-    rss: http://www.nyaa.eu/?page=torrents&user=59047
-    preset: anime
-    
-    
+

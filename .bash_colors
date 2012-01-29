@@ -10,26 +10,6 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
-### linux console colors (jwr dark) ###
-#if [ "$TERM" = "linux" ]; then
-#    echo -en "\e]P0000000" #black
-#    echo -en "\e]P83d3d3d" #darkgrey
-#    echo -en "\e]P18c4665" #darkred
-#    echo -en "\e]P9bf4d80" #red
-#    echo -en "\e]P2287373" #darkgreen
-#    echo -en "\e]PA53a6a6" #green
-#    echo -en "\e]P37c7c99" #brown
-#    echo -en "\e]PB9e9ecb" #yellow
-#    echo -en "\e]P4395573" #darkblue
-#    echo -en "\e]PC477ab3" #blue
-#    echo -en "\e]P55e468c" #darkmagenta
-#    echo -en "\e]PD7e62b3" #magenta
-#    echo -en "\e]P631658c" #darkcyan
-#    echo -en "\e]PE6096bf" #cyan
-#    echo -en "\e]P7899ca1" #lightgrey
-#    echo -en "\e]PFc0c0c0" #white
-#    clear # bring us back to default input colours
-#fi
 
 # molokai console colors -------------------------------------
 if [ "$TERM" = "linux" ]; then
@@ -64,9 +44,14 @@ set_prompt_style () {
     DIR_COLOR=$USER_COLOR
     SYMBOL="#"
   fi
-  #export PS1="[\u@`curl icanhazip.com` \W]$ "
-
-  PS1="┌─[\[\e[36m\]\h\[\e[0m\]@`dig +short myip.opendns.com @resolver1.opendns.com`][\[\e[1;32m\]\w\[\e[0m\]]\n└─╼ "
+  
+  # default user prompt
+  PS1="┌─[\[\e[34m\u\e[36m\]@\h\[\e[0m\]][\[\e[1;32m\]\w\[\e[0m\]]\n└─╼ "
+  
+  if [ `whoami` == "root" ] ; then
+  PS1="┌─[\[\e[34m\u\e[36m\]@\h\[\e[0m\]][\[\e[1;32m\]\w\[\e[0m\]]\n└─╼ "
+  fi  
+  
 
 }
 set_prompt_style
@@ -74,5 +59,6 @@ set_prompt_style
 #eval `dircolors -b ~/.dir_colors`
 
 # colourize terminal output w/ cope
-#export PATH=/usr/share/perl5/vendor_perl/auto/share/dist/Cope:$PATH
+export PATH=/usr/local/share/perl/5.12.4/auto/share/dist/Cope:$PATH
+
 
