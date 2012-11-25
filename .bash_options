@@ -6,9 +6,6 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ];
     then debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -18,16 +15,14 @@ fi
 
 # check for browser
 if [ -z "$DISPLAY" ]; then
-    BROWSER=lynx
+    BROWSER=elinks
 else
-    #BROWSER=chromium-browser
-    BROWSER=firefox
+    BROWSER=chromium-browser
 fi
 
 # Set some variables
-#LESS="-P ?f%f(?b%bb/?B%B Byte)Line %lb of %L %pb\% ?eEOF"
 EDITOR=/usr/bin/vim
-VISUAL=/usr/bin/vim
+VISUAL=sublime-text-2
 MPD_PORT=6600
 MPD_HOST=127.0.0.1
 PAGER=/bin/less
@@ -63,15 +58,18 @@ LC_ALL=en_US.utf8
 #export PATH=$PATH:/usr/share/java/apache-ant/bin
 
 # Ruby rvm exports
-#export PATH=$PATH:/var/lib/gems/1.8/bin
 [[ -s "/home/hur1can3/.rvm/scripts/rvm" ]] && source "/home/hur1can3/.rvm/scripts/rvm" 
 
-# export directories to PATH
-export PATH=$PATH:$HOME/scripts:$HOME/bin:/sbin
+# Python virtual environment settings
+export VIRTUALENV_WRAPPER_PATH=/usr/local/bin/virtualenvwrapper.sh
+export WORKON_HOME=~/.virtualenvs
+export DJANGO_SITES_ROOT=$HOME/projects/
+source $VIRTUALENV_WRAPPER_PATH
 
+# export custom user directories to PATH
+export PATH=$PATH:$HOME/scripts:$HOME/bin:/sbin
 export PATH=$PATH:$HOME/Dropbox/school/cis451/bin
 
-export VIRTUALENV_WRAPPER_PATH=/usr/local/bin/virtualenvwrapper.sh
 
-# EXPORT VARIABLES NOW
+# EXPORT ALL VARIABLES NOW
 export LANGUAGE LC_ALL HISTCONTROL HISTIGNORE HISTSIZE HISTFILESIZE HISTTIMEFORMAT GREP_OPTIONS PAGER MPD_HOST MPD_PORT BROWSER EDITOR VISUAL GREP_COLOR
