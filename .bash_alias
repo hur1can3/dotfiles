@@ -40,6 +40,8 @@ alias sha1='openssl dgst -sha1'	# sha1 digest check
 alias md5='openssl dgst -md5'	# md5 digest check
 
 # simple shourtcuts
+export GREP_COLOR="1;31"
+alias grep="grep --color=auto"
 alias g='grep'
 alias s='ssh'
 alias p='ping'
@@ -65,3 +67,6 @@ alias shut="sudo shutdown -h now"
 
 ## reload the .bashrc file for sourcing
 alias reload='source ~/.bashrc'
+
+#python aliases
+alias mkvirt="mkvirtualenv --system-site-packages"

@@ -804,3 +804,50 @@ sudo gunzip -c $1 | pv | sudo dd of=$2 bs=1MB
 bconv() {
     sudo gunzip -c $1 | qemu-img convert -f raw -O qcow2 alloc.img
 }
+
+
+# Nice mount output
+nmount() { (echo "DEVICE PATH TYPE FLAGS" && mount | awk '$2=$4="";1') | column -t; }
+
+# Print man pages 
+manp() { man -t "$@" | lpr -pPrinter; }
+
+# Create pdf of man page - requires ghostscript and mimeinfo
+manpdf() { man -t "$@" | ps2pdf - /tmp/manpdf_$1.pdf && xdg-open /tmp/manpdf_$1.pdf ;}
+
+
+# edit posts in Octopress
+pedit() { find source/_posts/ -name "*$1*" -exec vim {} \; ;}
+
+# External IP
+wmip(){ printf "External IP: %s\n" $(curl -s  http://ifconfig.me/) ;}
+
+# Health of RAID array
+raid() { awk '/^md/ {printf "%s: ", $1}; /blocks/ {print $NF}' </proc/mdstat ;}
+
+# SSH Keys 
+keys() { eval $(ssh-agent) && ssh-add ~/.ssh/{bb,id_*sa} ;}
+
+### Simple notes ------------------------------------------------
+n() { 
+  local arg files=()
+  for arg; do 
+      files+=( ~/".notes/$arg" )
+  done
+  ${EDITOR:-vi} "${files[@]}"; 
+}
+
+nls() {
+  tree -CR --noreport $HOME/.notes | awk '{ 
+    if (NF==1) print $1 
+    else if (NF==2) print $2
+    else if (NF==3) printf "  %s\n", $3 
+  }'
+}
+
+# TAB completion for notes
+_notes() {
+  local files=($HOME/.notes/**/"$2"*)
+  [[ -e ${files[0]} ]] && COMPREPLY=( "${files[@]##~/.notes/}" )
+}
+complete -o default -F _notes n

@@ -22,7 +22,7 @@ fi
 
 # Set some variables
 EDITOR=/usr/bin/vim
-VISUAL=sublime-text-2
+VISUAL=/usr/bin/vim
 MPD_PORT=6600
 MPD_HOST=127.0.0.1
 PAGER=/bin/less
@@ -41,6 +41,9 @@ shopt -s extglob            # enable extended pattern-matching features
 shopt -s histappend         # append to (not overwrite) the history file
 shopt -s hostcomplete       # attempt hostname expansion when @ is at the beginning of a word
 shopt -s nocaseglob         # pathname expansion will be treated as case-insensitive
+
+# Bash completion
+set show-all-if-ambiguous on
 
 # Set the options for the historyfile
 shopt -s histappend

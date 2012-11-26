@@ -1,0 +1,134 @@
+! ---------------------------------------------------
+! file:     ~/.Xresources                           
+! author:   jason ryan - http://jasonwryan.com/    
+! vim:fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
+! ---------------------------------------------------
+
+! Urxvt
+URxvt.buffered: true
+URxvt.cursorColor: #5E468C
+URxvt.cursorBlink: false
+URxvt.geometry: 80x22
+URxvt.transparent: 0
+URxvt.urgentOnBell: true
+URxvt.letterSpace: -1
+URxvt.lineSpace: 1
+URxvt.internalBorder: 4
+
+! Font settings
+Xft.autohint: 0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.dpi: 96
+Xft.rgba: rgb
+
+! borderless and no scrollbar
+URxvt.scrollBar_right: false
+URxvt.scrollBar: false
+URxvt.borderLess: false
+
+! teh transparency stuff
+URxvt.inheritPixmap: false
+URxvt.tintColor: #080808
+URxvt.shading: 0
+
+! -- Fonts -- !
+!URxvt.font:xft:droid sans mono slashed:size=10.5
+!URxvt.boldFont:xft:droid sans mono slashed:size=10.5
+URxvt.font:xft:dejavu sans mono:size=10.5
+URxvt.boldFont:xft:dejavu sans mono:size=10.5
+!URxvt.font:xft:luxi mono:regular:size=10
+!URxvt.boldFont:xft:luxi mono:regular:size=10
+!URxvt.font:xft:envy code r:medium:size=11
+!URxvt.boldFont:xft:envy code r:medium:size=11
+!URxvt.font:xft:inconsolata:medium:size=13
+!URxvt.boldFont:xft:inconsolata:medium:size=13
+
+! -- Colours -- !
+#include "/home/jason/.colours/dark"
+!#include "/home/jason/.colours/light"
+!#include "/home/jason/.colours/low"
+!#include "/home/jason/.colours/old"
+!#include "/home/jason/.colours/soft"
+!#include "/home/jason/.colours/washed"
+!#include "/home/jason/.colours/bright"
+!#include "/home/jason/.colours/lich"
+!#include "/home/jason/.colours/rab"
+!#include "/home/jason/.colours/reasons"
+!#include "/home/jason/.colours/zenburn"
+
+! --  Extensions -- !
+URxvt.perl-ext-common: default,matcher,keyboard-select,url-select,clipboard
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s: perl:keyboard-select:search
+URxvt.urlLauncher: /home/jason/Scripts/vimprobtab.sh
+URxvt.matcher.button: 1
+URxvt.matcher.rend.0: -Uline fg16
+URxvt.keysym.M-c:   perl:clipboard:copy
+URxvt.keysym.M-v:   perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+
+! -- Xterm settings -- !
+xterm*toolBar: false
+xterm*scrollBar: false
+xterm*rightScrollBar: false
+xterm*background: #1A1A1A
+xterm*foreground: #A9A9A9
+xterm*font:-*-terminus-medium-*-*-*-16-*-*-*-*-*-iso8859-*
+xterm*geometry: 120x28 
+
+! -- Dzen settings -- !
+dzen2.font: droid sans mono slashed:medium:size=10
+dzen2.foreground: #899CA1
+dzen2.background: #121212
+
+
+!xcalc-----------------------------------------------------------------------
+
+xcalc*geometry:                        200x275
+xcalc.ti.bevel.background:             #111111
+xcalc.ti.bevel.screen.background:      #000000
+xcalc.ti.bevel.screen.DEG.background:  #000000
+xcalc.ti.bevel.screen.DEG.foreground:  LightSeaGreen
+xcalc.ti.bevel.screen.GRAD.background: #000000
+xcalc.ti.bevel.screen.GRAD.foreground: LightSeaGreen
+xcalc.ti.bevel.screen.RAD.background:  #000000
+xcalc.ti.bevel.screen.RAD.foreground:  LightSeaGreen
+xcalc.ti.bevel.screen.INV.background:  #000000
+xcalc.ti.bevel.screen.INV.foreground:  Red
+xcalc.ti.bevel.screen.LCD.background:  #000000
+xcalc.ti.bevel.screen.LCD.foreground:  LightSeaGreen
+xcalc.ti.bevel.screen.LCD.shadowWidth: 0
+xcalc.ti.bevel.screen.M.background:    #000000
+xcalc.ti.bevel.screen.M.foreground:    LightSeaGreen
+xcalc.ti.bevel.screen.P.background:    #000000
+xcalc.ti.bevel.screen.P.foreground:    Yellow
+xcalc.ti.Command.foreground:  White
+xcalc.ti.Command.background:  #777777
+xcalc.ti.button5.background:  Orange3
+xcalc.ti.button19.background: #611161
+xcalc.ti.button18.background: #611161
+xcalc.ti.button20.background: #611111
+!uncomment to change label on division button
+!xcalc.ti.button20.label:      /
+xcalc.ti.button25.background: #722222
+xcalc.ti.button30.background: #833333
+xcalc.ti.button35.background: #944444
+xcalc.ti.button40.background: #a55555
+xcalc.ti.button22.background: #222262
+xcalc.ti.button23.background: #222262
+xcalc.ti.button24.background: #222272
+xcalc.ti.button27.background: #333373
+xcalc.ti.button28.background: #333373
+xcalc.ti.button29.background: #333373
+xcalc.ti.button32.background: #444484
+xcalc.ti.button33.background: #444484
+xcalc.ti.button34.background: #444484
+xcalc.ti.button37.background: #555595
+xcalc.ti.button38.background: #555595
+xcalc.ti.button39.background: #555595
+XCalc*Cursor:                 hand2
+XCalc*ShapeStyle:             rectangle
