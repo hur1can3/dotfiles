@@ -12,3 +12,7 @@ alias aupgrade="sudo apt-fast dist-upgrade -y"
 
 #override normal apt-get with apt-fast
 alias apt-get="sudo apt-fast -y"
+
+#append completion with completion wrapper script
+make-completion-wrapper _apt_get _aget apt-get install
+complete -o filenames -F _aget aget

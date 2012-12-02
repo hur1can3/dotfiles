@@ -3,6 +3,8 @@
 
 ## Aliases
 
+. $HOME/bin/make-completion-wrapper.sh
+
 # listing aliases
 alias ll="ls -l --group-directories-first"
 alias ls="ls --color=auto"  # add colors for filetype recognition

@@ -20,4 +20,3 @@
 [ -f ~/.bash_alias_ubuntu ] && source $HOME/.bash_alias_ubuntu
 [ -f ~/.bash_colors ] && source $HOME/.bash_colors
 [ -f ~/.bash_functions ] && source $HOME/.bash_functions
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
