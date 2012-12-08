@@ -851,3 +851,11 @@ _notes() {
   [[ -e ${files[0]} ]] && COMPREPLY=( "${files[@]##~/.notes/}" )
 }
 complete -o default -F _notes n
+
+
+hex2dec(){
+  echo "ibase=16; $@"|bc
+}
+dec2hex(){
+  echo "obase=16; $@"|bc
+}
