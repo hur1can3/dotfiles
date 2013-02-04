@@ -63,6 +63,9 @@ alias dush="du -sm *|sort -n|tail"
 #dd 
 #alias dd='dcfldd if=/dev/zero of=/dev/null'
 
+#ssh
+alias ssh-best='ssh -c blowfish-cbc -XC'
+
 # power aliases
 alias reboot="sudo shutdown -r now"
 alias shut="sudo shutdown -h now"
