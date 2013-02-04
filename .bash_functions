@@ -1,13 +1,37 @@
 #!/bin/bash
-# sourced by .bashrc
+#===================================================================================
+#         FILE: bash_functions
+#  DESCRIPTION: collection of useful bash functions
+# REQUIREMENTS: bash
+#       AUTHOR: Matthew Levandowski <levandowski.matthew@gmail.com>
+#      VERSION: 2.0
+#      CREATED: 12.05.2009 
+#     REVISION: 04.02.2013
+#===================================================================================
+
+## Template
+
+#===================================================================================   
+#         NAME: command
+#        USAGE: command [parameter 1]
+#      RETURNS: file operated on
+#  DESCRIPTION: does something useful
+# REQUIREMENTS: command1 command2
+#       AUTHOR: Unknown
+#     REVISION: 04.02.2013
+#===================================================================================
 
 ## Functions
 
-#===  FUNCTION  ================================================================
-#          NAME:  extract
-#   DESCRIPTION:  extract most popular compressed file formats
-#    PARAMETERS:  extract [filename]
-#===============================================================================
+#===================================================================================   
+#         NAME: extract
+#        USAGE: extract [filename]
+#      RETURNS: unzipped folder [filename]
+#  DESCRIPTION: extract most popular compressed file formats
+# REQUIREMENTS: tar bunzip2 gunzip unrar unzipzip 7z uncompress
+#       AUTHOR: Unknown
+#     REVISION: 04.02.2013
+#===================================================================================
 extract () {
 	if [ -f "$1" ] ; then
 		for i in "$@"
@@ -32,37 +56,70 @@ extract () {
 	fi
 }
 
-
-# Follow copied and moved files to destination directory
+#===================================================================================  
+#         NAME: goto
+#        USAGE: goto [directory]
+#      RETURNS: ---
+#  DESCRIPTION: follow copied and moved files to destination directory
+# REQUIREMENTS: cd
+#       AUTHOR: ---
+#     REVISION: 04.02.2013
+#===================================================================================
 goto() { 
     [ -d "$1" ] && cd "$1" || cd "$(dirname "$1")"; 
 }
 
+#===================================================================================
+#         NAME: cpf
+#        USAGE: cpf [filename(s)]
+#      RETURNS: ---
+#  DESCRIPTION: copies file(s) and then follows to files destination
+# REQUIREMENTS: cp
+#       AUTHOR: ---
+#     REVISION: 04.02.2013
+#===================================================================================
 cpf() { 
     cp "$@" && goto "$_"; 
 }
 
+#=================================================================================== 
+#         NAME: mvf
+#        USAGE: cpf [filename(s)]
+#      RETURNS: ---
+#  DESCRIPTION: moves file(s) and then follows to destination
+# REQUIREMENTS: mv
+#       AUTHOR: ---
+#     REVISION: 04.02.2013
+#===================================================================================
 mvf() { 
     mv "$@" && goto "$_"; 
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  togglecpu
-#   DESCRIPTION:  toggles between a performance profile and ondemand for cpu 
-#		  frequency scaling
-#    PARAMETERS:  none
-#===============================================================================
+#=================================================================================== 
+#         NAME: togglecpu
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: toggles between a performance profile and ondemand for cpu 
+#               frequency scaling
+# REQUIREMENTS: cpufreq
+#       AUTHOR: ---
+#     REVISION: 04.02.2013
+#===================================================================================
 function togglecpu () {
     [ "$(cpufreq-info | grep \"ondemand\")" ] && \
     sudo cpufreq-set -g performance || \
     sudo cpufreq-set -g ondemand ; 
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  dirsize
-#   DESCRIPTION:  gets the size of a directory
-#    PARAMETERS:  none
-#===============================================================================
+#=================================================================================== 
+#         NAME: dirsize
+#        USAGE: dirsize [directory]
+#      RETURNS: ---
+#  DESCRIPTION: gets the size of a directory
+# REQUIREMENTS: ---
+#       AUTHOR: ---
+#     REVISION: 04.02.2013
+#===================================================================================
 dirsize ()
 {
     du -shx * .[a-zA-Z0-9_]* 2> /dev/null | \
@@ -72,28 +129,55 @@ dirsize ()
     rm /tmp/list
 }
 
-# Query wikipedia
+#===================================================================================   
+#         NAME: wiki
+#        USAGE: wiki [input query]
+#      RETURNS: ---
+#  DESCRIPTION: queries wikipedia with input text
+# REQUIREMENTS: dig
+#       AUTHOR: Unknown
+#     REVISION: 04.02.2013
+#===================================================================================
 wiki() { 
     dig +short txt $1.wp.dg.cx; 
 }
 
-
-# Print man pages 
+#===================================================================================   
+#         NAME: manp
+#        USAGE: manp [command]
+#      RETURNS: ---
+#  DESCRIPTION: prints a man page using lpr
+# REQUIREMENTS: lpr
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 manp() { 
     man -t "$@" | lpr -pPrinter; 
 }
 
-# Create pdf of man page (requires ghostscript & perl-file-mimeinfo)
+#===================================================================================   
+#         NAME: manpdf
+#        USAGE: manpdf [command]
+#      RETURNS: [command].pdf
+#  DESCRIPTION: creates a pdf version of man page
+# REQUIREMENTS: ghostscript perl-file-mimeinfo
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 manpdf () { 
     man -t "$@" | ps2pdf - /tmp/manpdf_$1.pdf && xdg-open /tmp/manpdf_$1.pdf ;
 }
 
 
-#===  FUNCTION  ================================================================
-#          NAME:  send
-#   DESCRIPTION:  shortcut for transferring files via scp
-#    PARAMETERS:  send [host1] [srcfile] [destfile]
-#===============================================================================
+#===================================================================================   
+#         NAME: send
+#        USAGE: send [host1] [srcfile] [destfile]
+#      RETURNS: ---
+#  DESCRIPTION: shortcut for transferring files via scp
+# REQUIREMENTS: scp
+#       AUTHOR: unknown
+#     REVISION: 04.02.2013
+#===================================================================================
 send () {	
 	if [ ! -z "$1" ] && [ -e "$2" ]; then
 		LOC="$1"
@@ -105,35 +189,43 @@ send () {
 	fi
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  albumart
-#   DESCRIPTION:  grabs the album art for an album from albumart.org
-#    PARAMETERS:  albumart [album_name]
-#       RETURNS:  [album_name].jpg
-#===============================================================================
+#===================================================================================   
+#         NAME: albumart
+#        USAGE: albumart [album_name]
+#      RETURNS: [album_name].jpg
+#  DESCRIPTION: grabs the album art for an album from albumart.org
+# REQUIREMENTS: awk
+#       AUTHOR: unknown
+#     REVISION: 04.02.2013
+#===================================================================================
 albumart(){ 
     local y="$@";awk '/View larger image/{gsub(/^.*largeImagePopup\(.|., .*$/,"");print;exit}' <(curl -s 'http://www.albumart.org/index.php?srchkey='${y// /+}'&itempage=1&newsearch=1&searchindex=Music'); 
 }
 
-
-#===  FUNCTION  ================================================================
-#          NAME:  sfm
-#   DESCRIPTION:  plays a similar artist stream for last.fm with shell-fm
-#    PARAMETERS:  sfm [artist]
-#===============================================================================
+#===================================================================================   
+#         NAME: sfm
+#        USAGE: sfm [artist_name]
+#      RETURNS: ---
+#  DESCRIPTION: plays a similar artist stream for last.fm with shell-fm
+# REQUIREMENTS: shell-fm
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 sfm ()
 {
     shell-fm -d -i 127.0.0.1 lastfm://artist/$1/similartists
-}	# ----------  end of function sfm  ----------
+}	
 
 
-
-#===  FUNCTION  ================================================================
-#          NAME:  ipa
-#   DESCRIPTION:  prints the IP Addresses of each attached networking device
-#    PARAMETERS:  
-#       RETURNS:  
-#===============================================================================
+#===================================================================================   
+#         NAME: ipa
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: prints the IP Addresses of each attached networking device
+# REQUIREMENTS: ifconfig grep
+#       AUTHOR: unknown
+#     REVISION: 04.02.2013
+#===================================================================================
 ipa () {
 	TMP=`ifconfig eth0 | grep "inet "`
 	if [ -n "$TMP" ]; then
@@ -152,12 +244,15 @@ ipa () {
 	fi
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  or
-#   DESCRIPTION:  makes backups of original files
-#    PARAMETERS:  or [filename]
-#       RETURNS:  [filename.orig]
-#===============================================================================
+#===================================================================================   
+#         NAME: or
+#        USAGE: or [filename]
+#      RETURNS: [filename].orig
+#  DESCRIPTION: makes backups of original files
+# REQUIREMENTS: cp
+#       AUTHOR: unknown
+#     REVISION: 04.02.2013
+#===================================================================================
 or () {
 	if [ -e "$@" ]; then
 		for i in "$@"
@@ -167,11 +262,15 @@ or () {
 	fi
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  lowercase
-#   DESCRIPTION:  moves a file or files to lowercase letters 
-#    PARAMETERS:  lowercase [filename]
-#===============================================================================
+#===================================================================================   
+#         NAME: lowercase
+#        USAGE: lowercase [files]
+#      RETURNS: ---
+#  DESCRIPTION: moves a file or files to lowercase letters 
+# REQUIREMENTS: mv
+#       AUTHOR: unknown
+#     REVISION: 04.02.2013
+#===================================================================================
 lowercase() {
     for file ; do
         filename=${file##*/}
@@ -190,12 +289,16 @@ lowercase() {
     done
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  ii
-#   DESCRIPTION:  get current host related information
-#       RETURNS:  hostname users date stats memory ip addresses open connections 
-#===============================================================================
-# Get current host related info.
+
+#===================================================================================   
+#         NAME: ii
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: get current host related information
+# REQUIREMENTS: date uptime uname free
+#       AUTHOR: unknown
+#     REVISION: 04.02.2013
+#===================================================================================
 ii(){
     echo -e "\nYou are logged on ${RED}$HOST"
     echo -e "\nAdditionnal information:$NC " ; uname -a
@@ -210,12 +313,15 @@ ii(){
     echo
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  tarbz2d
-#   DESCRIPTION:  tarballs and bzip2 a directory
-#    PARAMETERS:  tarbz2d [dirname]
-#       RETURNS:  [date]-[dirname].tar.bz2
-#===============================================================================
+#===================================================================================   
+#         NAME: tarbz2d
+#        USAGE: tarbz2d [dirname]
+#      RETURNS: [date]-[dirname].tar.bz2
+#  DESCRIPTION: tarballs and bzip2 a directory
+# REQUIREMENTS: tar bzip
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 tarbz2d(){ 
     if [ "$1" != "" ]; then
         FOLDER_IN=`echo $1 |sed -e 's/\/$//'`;
@@ -228,12 +334,15 @@ tarbz2d(){
     fi
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  targzd
-#   DESCRIPTION:  tarballs and gzips a directory
-#    PARAMETERS:  targzd [dirname]
-#       RETURNS:  [date]-[dirname].tar.gz
-#===============================================================================
+#===================================================================================   
+#         NAME: targzd
+#        USAGE: targzd [dirname]
+#      RETURNS: [date]-[dirname].tar.gz
+#  DESCRIPTION: tarballs and gzips a directory
+# REQUIREMENTS: tar gzip
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 targzd(){ 
     if [ "$1" != "" ]; then
         FOLDER_IN=`echo $1 |sed -e 's/\/$//'`;
@@ -246,12 +355,15 @@ targzd(){
     fi
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  ltex
-#   DESCRIPTION:  convert a latex source file .tex into dvi, ps, pdf, txt files
-#    PARAMETERS:  ltex [filename]
-#       RETURNS:  [filename].dvi [filename].ps [filename].pdf
-#===============================================================================
+#===================================================================================   
+#         NAME: ltex
+#        USAGE: ltex [filename]
+#      RETURNS: [filename].dvi [filename].ps [filename].pdf
+#  DESCRIPTION: convert a latex source file .tex into dvi, ps, pdf, txt files
+# REQUIREMENTS: latex bibtex ps2pdf
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 ltex(){
     if [ "$1" == "" ]; then
         FILE="paper";
@@ -265,52 +377,60 @@ ltex(){
         latex $FILE.tex;
         bibtex $FILE.aux;
         makeindex $FILE;
-        #latex $FILE.tex && dvipdf $FILE.dvi;
+        latex $FILE.tex && dvipdf $FILE.dvi;
         latex $FILE.tex && dvips -Ppdf -G0 $FILE.dvi -o $FILE.ps && ps2pdf14 $FILE.ps;
         catdvi -e 1 -U $FILE.dvi | sed -re "s/\[U\+2022\]/*/g" | sed -re "s/([^^[:space:]])\s+/\1 /g" > $FILE.txt;
     fi
 }
 
 
-
-#===  FUNCTION  ================================================================
-#          NAME:  defineold
-#   DESCRIPTION:  define a word with google using lynx and sed
-#    PARAMETERS:  search term in quotes example: defineold "cow"
-#       RETURNS:  3 short sentences
-#===============================================================================
+#===================================================================================   
+#         NAME: defineold
+#        USAGE: defineold [search]
+#      RETURNS: ---
+#  DESCRIPTION: define a word with google using lynx grep and sed
+# REQUIREMENTS: lynx sed grep
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 defineold () {
     lynx -dump "http://www.google.com/search?hl=en&q=define%3A+${1}&btnG=Google+Search" | grep -m 3 -w "*"  | sed 's/;/ -/g' | cut -d- -f1 > /tmp/templookup.txt
-            if [[ -s  /tmp/templookup.txt ]] ;then    
-                until ! read response
-                    do
-                    echo "${response}"
-                    done < /tmp/templookup.txt
-                else
-                    echo "Sorry $USER, I can't find the term \"${1} \""                
-            fi    
+    if [[ -s  /tmp/templookup.txt ]] ;then    
+        until ! read response
+            do
+            echo "${response}"
+            done < /tmp/templookup.txt
+        else
+            echo "Sorry $USER, I can't find the term \"${1} \""                
+    fi    
     rm -f /tmp/templookup.txt
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  define
-#   DESCRIPTION:  define a word using google and busybox
-#    PARAMETERS:  search term in quotes
-#        SYNTAX:  define "search phrase"
-#       RETURNS:  one page of definitions
-#===============================================================================
+#===================================================================================   
+#         NAME: define
+#        USAGE: define [search]
+#      RETURNS: ---
+#  DESCRIPTION: define a word using google and busybox
+# REQUIREMENTS: wget busybox sed
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 define ()
 {
 	wget -q -U busybox -O- "http://www.google.com/search?ie=UTF8&q=define%3A$1" | tr '<' '\n' | sed -n 's/^li>\(.*\)/\1\n/p'
 
-}	# ----------  end of function define  ----------
+}
 
-#===  FUNCTION  ================================================================
-#          NAME:  definesay
-#   DESCRIPTION:  defines a word or phrase using goole and busybox then speaks it with espeak and sox
-#    PARAMETERS:  search term in quotes
-#       RETURNS:  one page of definitions
-#===============================================================================
+#===================================================================================   
+#         NAME: definesay
+#        USAGE: definesay [search]
+#      RETURNS: ---
+#  DESCRIPTION: defines a word or phrase using goole and busybox then speaks it with 
+#               espeak and sox
+# REQUIREMENTS: espeak sox wget busybox sed
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 definesay ()
 {
 	wget -q -U busybox -O- "http://www.google.com/search?ie=UTF8&q=define%3A$1" | tr '<' '\n' | sed -n 's/^li>\(.*\)/\1\n/p' > /tmp/templookup.txt
@@ -326,34 +446,17 @@ definesay ()
 	rm -f /tmp/templookup.txt
 }	# ----------  end of function definesay  ----------
 
-#===  FUNCTION  ================================================================
-#          NAME:  definesayold
-#   DESCRIPTION:  
-#    PARAMETERS:  
-#       RETURNS:  
-#===============================================================================
-definesayold () {
-	lynx -dump "http://www.google.com/search?hl=en&q=define%3A+${1}&btnG=Google+Search" | grep -m 3 -w "*"  | sed 's/;/ -/g' | cut -d- -f1 > /tmp/templookup.txt
-            if [[ -s  /tmp/templookup.txt ]] ;then    
-                until ! read response
-                    do
-                    echo "${response}"
-                    espeak -v en/en -s 150 -g 0 -k20 -p 0 -l 100 "${response}" --stdout  | play -V1 -q -t wav -
-                    done < /tmp/templookup.txt
-                else
-                    echo "Sorry $USER, I can't find the term \"${1} \""                
-            fi    
-rm -f /tmp/templookup.txt
-}
 
-
-#===  FUNCTION  ================================================================
-#          NAME:  dsb
-#   DESCRIPTION:  The same as the define say function except it uses bing as the
-#		  search engine backend.
-#    PARAMETERS:  dsb [definition]
-#       RETURNS:  3 defintions printed on the terminal
-#===============================================================================
+#===================================================================================   
+#         NAME: dsb
+#        USAGE: dsb [search]
+#      RETURNS: ---
+#  DESCRIPTION: the same as the definesay function except it uses bing as the
+#               search engine backend.
+# REQUIREMENTS: lynx grep sed espeak play
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 dsb() {
     lynx -dump "http://www.bing.com/search?q=define%3A+${1}&go=&form=QBRE&qs=n&sc=8-11" | grep -m 3 -w "Definition"  | sed 's/;/ -/g' | cut -d- -f1 > /tmp/templookup.txt
         if [[ -s  /tmp/templookup.txt ]] ;then    
@@ -368,107 +471,250 @@ dsb() {
     rm -f /tmp/templookup.txt
 }
 	
-	
-# Calculate Stuff on the commandline
+#===================================================================================   
+#         NAME: calc
+#        USAGE: calc [formula]
+#      RETURNS: ---
+#  DESCRIPTION: calculates stuff on commandline
+# REQUIREMENTS: bc
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 calc(){ 
     echo "$*" | bc; 
 }
 
-# Pretty-print using enscript
+#===================================================================================   
+#         NAME: pjet
+#        USAGE: pjet [file]
+#      RETURNS: ---
+#  DESCRIPTION: pretty-print using enscript
+# REQUIREMENTS: enscript
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 pjet(){ 
     enscript -h -G -fCourier9 "$1"; 
 }
 
-# Copy with progress
+#===================================================================================   
+#         NAME: copy
+#        USAGE: copy [files]
+#      RETURNS: ---
+#  DESCRIPTION: copy with a progress bar
+# REQUIREMENTS: cp watch cut du
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 copy(){ 
     cp -v "$1" "$2"&watch -n 1 'du -h "$1" "$2";printf "%s%%\n" $(echo `du -h "$2"|cut -dG -f1`/0.`du -h "$1"|cut -dG -f1`|bc)'; 
 }
 
-# Find a file with a pattern in name:
+#===================================================================================   
+#         NAME: ff
+#        USAGE: ff [pattern]
+#      RETURNS: ---
+#  DESCRIPTION: find a file with a [pattern] in name
+# REQUIREMENTS: find ls
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 ff(){ 
     find . -type f -iname '*'$*'*' -ls ; 
 }
 
-# Find a file with pattern $1 in name and Execute $2 on it:
+#===================================================================================   
+#         NAME: fe
+#        USAGE: fe [pattern] [command]
+#      RETURNS: ---
+#  DESCRIPTION: find a file with [pattern] in name and Execute [command] on it
+# REQUIREMENTS: find exec
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 fe(){ 
     find . -type f -iname '*'${1:-}'*' -exec ${2:-file} {} \;  ; 
 }
 
-# Function that counts recursively number of lines of all files in specified folders
+#===================================================================================   
+#         NAME: count
+#        USAGE: count [files]
+#      RETURNS: ---
+#  DESCRIPTION: recursively counts number of lines of all [files] 
+# REQUIREMENTS: find cat
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 count() { 
     find $@ -type f -exec cat {} + | wc -l; 
 }
 
-# combine `mkdir foo && cd foo`  into a single function `mcd foo`
+#===================================================================================   
+#         NAME: mcd
+#        USAGE: mcd [file]
+#      RETURNS: ---
+#  DESCRIPTION: combine mkdir [file] && cd [file] into a single function
+# REQUIREMENTS: mkdir cd
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 mcd() { 
     [ -n "$1" ] && mkdir -p "$@" && cd "$1"; 
 }
 
-# Sort the size usage of a directory tree by gigabytes, kilobytes, megabytes, then bytes.
+#===================================================================================   
+#         NAME: dh
+#        USAGE: dh [dir]
+#      RETURNS: ---
+#  DESCRIPTION: sort the size usage of a directory tree by gigabytes, kilobytes, 
+#               megabytes, then bytes.
+# REQUIREMENTS: du sort
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 dh() { 
     du -ch --max-depth=1 "${@-.}"|sort -n ;
 }
 
-# Use espeak to say a word or phrase
+#===================================================================================   
+#         NAME: say
+#        USAGE: say [phrase]
+#      RETURNS: ---
+#  DESCRIPTION: use espeak to say a word or phrase
+# REQUIREMENTS: espeak play
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 say() { 
     espeak -v en/en -s 150 -g 0 -k20 -p 0 -l 100 "$1" --stdout | play -V1 -q -t wav -;
 }
 
-# Use espeak to read the contents of a text file
+#===================================================================================   
+#         NAME: rsay
+#        USAGE: rsay [file]
+#      RETURNS: ---
+#  DESCRIPTION: use espeak to say contents of file
+# REQUIREMENTS: espeak play
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 rsay() { 
     espeak -f "$1" --stdout | play -V1 -q -t wav -;
 }
 
-# password generator
+#===================================================================================   
+#         NAME: genpass
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: psuedo-random password generator
+# REQUIREMENTS: ---
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 genpass(){ 
     local i x y z h;h=${1:-8};x=({a..z} {A..Z} {0..9});for ((i=0;i<$h;i++));do y=${x[$((RANDOM%${#x[@]}))]};z=$z$y;done;echo $z ; 
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  geoip
-#   DESCRIPTION:  looks up an ip address and retrieve geological info
-#    PARAMETERS:  geoip [ip address] ie 192.168.0.1
-#       RETURNS:  location
-#===============================================================================
+#===================================================================================   
+#         NAME: geoip
+#        USAGE: geoip [ip address] ie 192.168.0.1
+#      RETURNS: ---
+#  DESCRIPTION: looks up an ip address and retrieve geological info
+# REQUIREMENTS: curl sed
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 geoip(){ 
     curl -s "http://www.geody.com/geoip.php?ip=${1}" | sed '/^IP:/!d;s/<[^>][^>]*>//g' ; 
 }
 
-# geoip alternative
+#===================================================================================   
+#         NAME: geoipalt
+#        USAGE: geoipalt [ip address] ie 192.168.0.1
+#      RETURNS: ---
+#  DESCRIPTION: looks up an ip address and retrieve geological info (alternative)
+# REQUIREMENTS: curl grep html2text
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 geoipalt() { 
     curl -A "Mozilla/5.0" -s "http://www.geody.com/geoip.php?ip=$1" | grep "^IP.*$1" | html2text; 
 }
 	 
-# Copy structure
+#===================================================================================   
+#         NAME: structcp
+#        USAGE: structcp [dir]
+#      RETURNS: ---
+#  DESCRIPTION: copy entire folder structure
+# REQUIREMENTS: mkdir find cp
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 structcp() { ( 
     mkdir -pv $2;f="$(realpath "$1")";t="$(realpath "$2")";cd "$f";find * -type d -exec mkdir -pv $t/{} \;); 
 }
 	 
-# Generate random password
+#===================================================================================   
+#         NAME: randpw
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: generate a psuedo-random password with /dev/urandom
+# REQUIREMENTS: head
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 randpw() {  
     /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-16};echo; 
 }
 	 
-# generate a unique and secure password for every website that you login to
+#===================================================================================   
+#         NAME: sitepass
+#        USAGE: sitepass [website url]
+#      RETURNS: ---
+#  DESCRIPTION: generate a unique secure password for every [website] that you use
+# REQUIREMENTS: md5 sha1 gzip tr cut
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 sitepass() { 
     echo -n "$@" |  md5sum | sha1sum | sha224sum | sha256sum | sha384sum | sha512sum | gzip - | strings -n 1 | tr -d "[:space:]"  | tr -s '[:print:]' | tr '!-~' 'P-~!-O' | rev | cut -b 2-11; history -d $(($HISTCMD-1)); 
 }
 	 
-# Create a thumbnail from a video file
+#===================================================================================   
+#         NAME: thumbnail
+#        USAGE: thumbnail [file]
+#      RETURNS: [file].jpg
+#  DESCRIPTION: create a thumbnail for a video file using ffmpeg
+# REQUIREMENTS: ffmpeg
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 thumbnail() { 
     ffmpeg  -itsoffset -20 -i $i -vcodec mjpeg -vframes 1 -an -f rawvideo -s 640x272 ${i%.*}.jpg; 
 }
 	 
-#===  FUNCTION  ================================================================
-#          NAME:  tweet
-#   DESCRIPTION:  update twitter from commandline via curl
-#    PARAMETERS:  tweet [username] ["twitter string"]
-#===============================================================================
+#===================================================================================   
+#         NAME: tweet
+#        USAGE: tweet [username] ["twitter string"]
+#      RETURNS: ---
+#  DESCRIPTION: update twitter from commandline via curl
+# REQUIREMENTS: curl
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 tweet(){ 
     curl -u "$1" -d status="$2" "http://twitter.com/statuses/update.xml"; 
 }
 
-# Create date based backups
+#===================================================================================   
+#         NAME: backup
+#        USAGE: backup [files]
+#      RETURNS: [files].[date:YearMonthdDay-HourMinSec]
+#  DESCRIPTION: create data backup
+# REQUIREMENTS: curl
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 backup() { 
     for i in "$@"; 
     do 
@@ -476,47 +722,68 @@ backup() {
     done 
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  shred
-#   DESCRIPTION:  permantly delete a file with 17 rewrites of data
-#    PARAMETERS:  shred [filename]
-#===============================================================================
+#===================================================================================   
+#         NAME: shred
+#        USAGE: shred [file]
+#      RETURNS: ---
+#  DESCRIPTION: permantly delete a file with 17 rewrites of data
+# REQUIREMENTS: ---
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 shred() { 
     shred -u -z -n 17 "$1"; 
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  scptun
-#   DESCRIPTION:  securely copy files over an ssh tunnel with rsync
-#    PARAMETERS:  scptun [password] [username] [host] [src file] [destination]
-#===============================================================================
+
+#===================================================================================   
+#         NAME: scptun
+#        USAGE: scptun [password] [username] [host] [src file] [destination]
+#      RETURNS: ---
+#  DESCRIPTION: securely copy files over an ssh tunnel with rsync
+# REQUIREMENTS: sshpass rsync ssh
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 scptun() { 
     sshpass -p "$1" rsync -av -e ssh "$2"@"$3":"$4" /"$5"; 
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  tubej
-#   DESCRIPTION:  concatenate two avi files into one youtube friendly file
-#    PARAMETERS:  tubej [file1].avi [file2].avi [output.avi]
-#       RETURNS:  [destination].avi
-#===============================================================================
+#===================================================================================   
+#         NAME: tubej
+#        USAGE: tubej [file1].avi [file2].avi [output.avi]
+#      RETURNS: [output]
+#  DESCRIPTION: concatenate two avi files into one youtube friendly file
+# REQUIREMENTS: mencoder 
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 tubej() { 
     mencoder -audiofile input.mp3 -oac copy -ovc lavc -lavcopts vcodec=mpeg4 -ffourcc xvid -vf scale=320:240,harddup "$1" "$2" -o "$3"; 
 }
 
-
-#===  FUNCTION  ================================================================
-#          NAME:  pdfo
-#   DESCRIPTION:  optimize a pdf file
-#    PARAMETERS:  pdfo [input].pdf [output].pdf
-#       RETURNS:  [output].pdf
-#===============================================================================
+#===================================================================================   
+#         NAME: pdfo
+#        USAGE: pdfo [input].pdf [output].pdf
+#      RETURNS: [output].pdf
+#  DESCRIPTION: optimize a pdf file using ghostscript
+# REQUIREMENTS: ghostscript 
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 pdfo() { 
     gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile="$2" "$1"; 
 }
 
-
-# make a thumb %20 the size of a pic
+#===================================================================================   
+#         NAME: thumbit
+#        USAGE: thumbit [file]
+#      RETURNS: [file].jpg
+#  DESCRIPTION: make a thumb 20% the size of a pic
+# REQUIREMENTS: mogrify 
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 thumbit() {
   if [ -z $1 ]; then
     echo "please supply a file to shrink"
@@ -546,24 +813,35 @@ thumbit() {
   esac
 }
 
-# grep by paragraph
+#===================================================================================   
+#         NAME: grepp
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: grep by paragraph
+# REQUIREMENTS: perl 
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 grepp() {
     [ $# -ne 2 ] && return 1
     perl -00ne "print if /$1/i" < $2
 }
 
 
-#===  FUNCTION  ================================================================
-#          NAME:  pullout
-#   DESCRIPTION:  pulls a single file out of a .tar.gz
-#    PARAMETERS:  pullout [file] [archive.tar.gz]
-#       RETURNS:  [file]
-#===============================================================================
+#===================================================================================   
+#         NAME: pullout
+#        USAGE: pullout [file] [archive]
+#      RETURNS: [file]
+#  DESCRIPTION: pulls a single file out of a compressed file
+# REQUIREMENTS: gunzip bunzip2 unrar unzip 
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 pullout() {
 
     if [ $# -ne 2 ]; then
 		echo "need proper arguments:"
-		echo "pullout [file] [archive.tar.gz]"
+		echo "pullout [file] [archive]"
     		return 1
 	fi
 	if [ -f "$2" ] ; then
@@ -583,11 +861,15 @@ pullout() {
 }
  
 
-#===  FUNCTION  ================================================================
-#          NAME:  fix
-#   DESCRIPTION:  recursively fix dir/file permissions on a given directory
-#    PARAMETERS:  fix [dir/file] 
-#===============================================================================
+#===================================================================================   
+#         NAME: fix
+#        USAGE: fix [file]
+#      RETURNS: ---
+#  DESCRIPTION: recursively fix dir/file permissions on a given directory
+# REQUIREMENTS: find chmod 
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 fix() {
     if [ -d "$1" ]; then 
         find "$1" -type d -exec chmod 755 {} -type f -exec chmod 644 {} \;
@@ -596,63 +878,69 @@ fix() {
     fi
 }
 
-
-#===  FUNCTION  ================================================================
-#          NAME:  shot
-#   DESCRIPTION:  takes a timestamped screen shot
-#    PARAMETERS:  shot [destination]
-#       RETURNS:  [destination]/desktop_[date].png
-#===============================================================================
-shot(){
-    local PIC="$1/desktop_$(date +%y%m%d%H%M).png"
+#===================================================================================   
+#         NAME: sshot
+#        USAGE: sshot [destination]
+#      RETURNS: [destination]/ss_[date].png
+#  DESCRIPTION: takes a timestamped screen shot
+# REQUIREMENTS: scrot
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
+sshot(){
+    local PIC="$1/ss_$(date +%y%m%d%H%M).png"
     scrot -t 20 -cd 3 $PIC
 }
 
 
-#===  FUNCTION  ================================================================
-#          NAME:  rip
-#   DESCRIPTION:  rips a standard dvd with handbrake into an x264 mp4
-#    PARAMETERS:  rip [dvd drive] [output file]
-#       RETURNS:  [output file].mp4 with bitrate 4000 and audio 192 kb
-#===============================================================================
-rip() {
-    handbrake -i $1 -o $2.mp4 -L -U -F -f mp4 -e x264 -b 4000 -B 192
+#===================================================================================   
+#         NAME: ripdvd
+#        USAGE: ripdvd [dvd drive] [output file] [vid bitrate] [audio bitrate]
+#      RETURNS: [output file].mp4 with [bitrate] (4000) and [audio] (192kb)
+#  DESCRIPTION: rips a standard dvd with handbrake into an x264 mp4
+# REQUIREMENTS: handbrake
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
+ripdvd() {
+    handbrake -i $1 -o $2.mp4 -L -U -F -f mp4 -e x264 -b $3 -B $4
 }
 
-
-#===  FUNCTION  ================================================================
-#          NAME:  safeedit
-#   DESCRIPTION:  make a backup of a file to [file].backup before editing it
-#    PARAMETERS:  safeedit [file]
-#===============================================================================
-safeedit() {
-    cp $1 $1.backup && vim $1
-}
-
-#===  FUNCTION  ================================================================
-#          NAME:  saveit
-#   DESCRIPTION:  saves a file to ~/Temp or $HOME/Temp
-#    PARAMETERS:  saveit [file]
-#===============================================================================
+#===================================================================================   
+#         NAME: saveit
+#        USAGE: saveit [file]
+#      RETURNS: --
+#  DESCRIPTION: saves a file to ~/Temp or $HOME/Temp
+# REQUIREMENTS: cp
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 saveit() {
     cp $1 $HOME/Temp/$1.saved
 }
 
-
-#===  FUNCTION  ================================================================
-#          NAME:  switchfile
-#   DESCRIPTION:  switch two files (comes in handy)
-#    PARAMETERS:  switchfile [file1] [file2]
-#===============================================================================
+#===================================================================================   
+#         NAME: switchfile
+#        USAGE: switchfile [file1] [file2]
+#      RETURNS: --
+#  DESCRIPTION: switch two files (comes in handy)
+# REQUIREMENTS: mv
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 switchfile() {
     mv $1 $1.tmp && mv $2 $1 && mv $1.tmp $2
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  trash
-#   DESCRIPTION:  move files to trash for deletion
-#    PARAMETERS:  trash [file]
-#===============================================================================
+#===================================================================================   
+#         NAME: tash
+#        USAGE: trash [files]
+#      RETURNS: --
+#  DESCRIPTION: moves files to trash for later deletion
+# REQUIREMENTS: mv touch
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 trash () {
     for i in "$@"
 	do
@@ -691,171 +979,266 @@ trash () {
 	done
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  fixscript
-#   DESCRIPTION:  removes control characters from linux typescript or script
-#    PARAMETERS:  fixscript [file]
-#===============================================================================
+#===================================================================================   
+#         NAME: fixscript
+#        USAGE: fixscript [file]
+#      RETURNS: --
+#  DESCRIPTION: removes control characters from linux typescript or script command
+# REQUIREMENTS: cat col
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 fixscript() {
     cat $1 | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b > $1-processed
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  kerneldepgraph
-#   DESCRIPTION:  draws a kernel dependancy graph
-#    PARAMETERS:  kerneldepgraph
-#===============================================================================
+#===================================================================================   
+#         NAME: kerneldpegraph
+#        USAGE: ---
+#      RETURNS: --
+#  DESCRIPTION: draws a kernel dependancy graph
+# REQUIREMENTS: perl
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 kerneldepgraph() {
 lsmod | perl -e 'print "digraph \"lsmod\" {";<>;while(<>){@_=split/\s+/; print "\"$_[0]\" -> \"$_\"\n" for split/,/,$_[3]}print "}"' | dot -Tpng | display -
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  iencrypt
-#   DESCRIPTION:  encrypt sensitive image using password 
-#    PARAMETERS:  iencrypt [password] [image]
-#===============================================================================
+#===================================================================================   
+#         NAME: iencrypt
+#        USAGE: iencrypt [password] [image].png
+#      RETURNS: [image].png
+#  DESCRIPTION: encrypt sensitive image using password 
+# REQUIREMENTS: convert
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 iencrypt() {
     echo "$1" | convert "$2" -encipher - -depth 8 png24:hidden.png
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  idecrypt
-#   DESCRIPTION:  decrypt sensitive image using password 
-#    PARAMETERS:  idecrypt [password] [image]
-#===============================================================================
+#===================================================================================   
+#         NAME: idecrypt
+#        USAGE: idecrypt [password] [image]
+#      RETURNS: [image].png
+#  DESCRIPTION: decrypt sensitive image using password 
+# REQUIREMENTS: convert
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 idecrypt() {
     echo "$1" | convert "$2" -decipher - sensitive.png
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  pwgen
-#   DESCRIPTION:  Create strong, but easy to remember password 
-#    PARAMETERS:  pwgen [simple passphrase] 
-#===============================================================================
-idecrypt() {
-    echo "$1" | md5sum | base64 | cut -c -16
-}
-
-#===  FUNCTION  ================================================================
-#          NAME:  man2pdf
-#   DESCRIPTION:  save man-page as a pdf
-#    PARAMETERS:  man2pdf [man command]
-#===============================================================================
-man2pdf() {
-    man -t "$1" | ps2pdf - "$1".pdf
-}
-
-#===  FUNCTION  ================================================================
-#          NAME:  waterfall
-#   DESCRIPTION:  Make some powerful pink noise that sounds like waterfall
-#===============================================================================
+#===================================================================================   
+#         NAME: waterfall
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: make some powerful pink noise that sounds like waterfall
+# REQUIREMENTS: play
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 waterfall() {
     play -c 2 -n synth pinknoise band -n 2500 4000 tremolo 0.03 5 reverb 20 gain -l 6
 }
 
+#===================================================================================   
+#         NAME: listssh
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: list all open ssh connections
+# REQUIREMENTS: netstat grep awk sed
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 listssh() {
     netstat -atn | grep :22 | grep ESTABLISHED | awk '{print $4}' | sed 's/:22//'
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  gencommit
-#   DESCRIPTION:  generate a random and/or funny commit message
-#===============================================================================
+#===================================================================================   
+#         NAME: gencommit
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: generate a random and/or funny commit messag
+# REQUIREMENTS: curl grep cut
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 gencommit() {
     curl -s 'http://whatthecommit.com/' | grep '<p>' | cut -c4-
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  gitbranches
-#   DESCRIPTION:  Show git branches by date - useful for showing active branches
-#===============================================================================
+#===================================================================================   
+#         NAME: gitbranches
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: show git branches by date - useful for showing active branches
+# REQUIREMENTS: git sed
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 gitbranches() {
     for k in `git branch|sed s/^..//`;do echo -e `git log -1 --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" "$k" --`\\t"$k";done|sort
 }
 
-#===  FUNCTION  ================================================================
-#          NAME:  gitzip
-#   DESCRIPTION:  bash script to zip a folder while ignoring git files and copying it to dropbox
-#===============================================================================
+#===================================================================================   
+#         NAME: gitzip
+#        USAGE: gitzip [files]
+#      RETURNS: ---
+#  DESCRIPTION: zip a folder while ignoring git files and copying it to dropbox
+# REQUIREMENTS: git gzip dropbox
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 gitzip() {
     git archive HEAD | gzip > ~/Dropbox/archive.tar.gz
 }
 
+#===================================================================================   
+#         NAME: gitstart
+#        USAGE: gitstart [name]
+#      RETURNS: ---
+#  DESCRIPTION: start a git repository in folder
+# REQUIREMENTS: git 
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 gitstart () { if ! [[ -d "$@" ]]; then mkdir -p "$@" && cd "$@" && git init; else cd "$@" && git init; fi }
 
+#===================================================================================   
+#         NAME: whichpkg
+#        USAGE: whichpkg [file]
+#      RETURNS: ---
+#  DESCRIPTION: find out what debian package a file belongs to
+# REQUIREMENTS: readlink dpkg xargs 
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 whichpkg() { readlink -f "$(which $1)" | xargs --no-run-if-empty dpkg -S; }
 
+#===================================================================================   
+#         NAME: genplasma
+#        USAGE: ---
+#      RETURNS: background.png
+#  DESCRIPTION: generate a plasma-like wallpaper image
+# REQUIREMENTS: convert 
+#       AUTHOR: unkown
+#     REVISION: 04.02.2013
+#===================================================================================
 genplasma() {
-    convert -size 1280x720 plasma:fractal -blur 0x5 -emboss 2 ~/background.png
+    convert -size 1280x720 plasma:fractal -blur 0x5 -emboss 2 background.png
 }
 
-
-ddpvblock() {
-BLOCKSIZE='sude blocokdev --getsize64 $1'
-sudo dd if=$1 bs=1MB | pv -s $BLOCKSIZE | gzip -9 > $2.img.gz
+#===================================================================================   
+#         NAME: ddbackup
+#        USAGE: ddbackup [/dev/device] [filename]
+#      RETURNS: [filename].img.gz
+#  DESCRIPTION: backs up a block device using dd and compress it
+# REQUIREMENTS: dd gzip 
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
+ddbackup() {
+    BLOCKSIZE='sudo blockdev --getsize64 $1'
+    sudo dd if=$1 bs=1MB | pv -s $BLOCKSIZE | gzip -9 > $2.img.gz
 }
 
-ddpvunblock() {
-#FILESIZE='ls -l $1 | awk '{print $5}''
-#sudo gunzip -c $1 | pv -s $FILESIZE | sudo dd of=$2 bs=1MB 
-sudo gunzip -c $1 | pv | sudo dd of=$2 bs=1MB 
+#===================================================================================   
+#         NAME: ddrestore
+#        USAGE: ddrestore [filename] [/dev/device] 
+#      RETURNS: ---
+#  DESCRIPTION: restores a dd backup to a block device
+# REQUIREMENTS: dd gunzip 
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
+ddrestore() {
+    FILESIZE=`ls -l $1 | awk '{print $5}'`
+    sudo gunzip -c $1 | pv -s $FILESIZE | sudo dd of=$2 bs=1MB 
 }
 
+#===================================================================================   
+#         NAME: bconv
+#        USAGE: bconv [file]
+#      RETURNS: qemu-img
+#  DESCRIPTION: unzips and converts an img to a qemu img
+# REQUIREMENTS: gunzip qemu
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 bconv() {
     sudo gunzip -c $1 | qemu-img convert -f raw -O qcow2 alloc.img
 }
 
-
-# Nice mount output
+#===================================================================================   
+#         NAME: nmount
+#        USAGE: nmount [/dev/device] 
+#      RETURNS: ---
+#  DESCRIPTION: nice mount of device
+# REQUIREMENTS: mount awk column
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 nmount() { (echo "DEVICE PATH TYPE FLAGS" && mount | awk '$2=$4="";1') | column -t; }
 
-# Print man pages 
-manp() { man -t "$@" | lpr -pPrinter; }
-
-# Create pdf of man page - requires ghostscript and mimeinfo
-manpdf() { man -t "$@" | ps2pdf - /tmp/manpdf_$1.pdf && xdg-open /tmp/manpdf_$1.pdf ;}
-
-
-# edit posts in Octopress
-pedit() { find source/_posts/ -name "*$1*" -exec vim {} \; ;}
-
-# External IP
+#===================================================================================   
+#         NAME: wmip
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: gets your external ip address using curl
+# REQUIREMENTS: curl
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 wmip(){ printf "External IP: %s\n" $(curl -s  http://ifconfig.me/) ;}
 
-# Health of RAID array
+
+#===================================================================================   
+#         NAME: raid
+#        USAGE: raid [devices]
+#      RETURNS: ---
+#  DESCRIPTION: check the health of a RAID array
+# REQUIREMENTS: awk
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 raid() { awk '/^md/ {printf "%s: ", $1}; /blocks/ {print $NF}' </proc/mdstat ;}
 
-# SSH Keys 
+#===================================================================================   
+#         NAME: keys
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: add ssh keys to ssh-agent
+# REQUIREMENTS: ssh-agent
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 keys() { eval $(ssh-agent) && ssh-add ~/.ssh/{bb,id_*sa} ;}
 
-### Simple notes ------------------------------------------------
-n() { 
-  local arg files=()
-  for arg; do 
-      files+=( ~/".notes/$arg" )
-  done
-  ${EDITOR:-vi} "${files[@]}"; 
-}
-
-nls() {
-  tree -CR --noreport $HOME/.notes | awk '{ 
-    if (NF==1) print $1 
-    else if (NF==2) print $2
-    else if (NF==3) printf "  %s\n", $3 
-  }'
-}
-
-# TAB completion for notes
-_notes() {
-  local files=($HOME/.notes/**/"$2"*)
-  [[ -e ${files[0]} ]] && COMPREPLY=( "${files[@]##~/.notes/}" )
-}
-complete -o default -F _notes n
-
-
+#===================================================================================   
+#         NAME: hex2dec
+#        USAGE: hex2dec [decimal #]
+#      RETURNS: ---
+#  DESCRIPTION: convert a hex # to decimal (base 10) on commandline
+# REQUIREMENTS: bc
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 hex2dec(){
   echo "ibase=16; $@"|bc
 }
+
+#===================================================================================   
+#         NAME: dec2hex
+#        USAGE: dec2hex [hex #]
+#      RETURNS: ---
+#  DESCRIPTION: convert a  decimal (base 10) to hex (base 16) on commandline
+# REQUIREMENTS: bc
+#       AUTHOR: hur1can3
+#     REVISION: 04.02.2013
+#===================================================================================
 dec2hex(){
   echo "obase=16; $@"|bc
 }
