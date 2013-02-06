@@ -13,7 +13,7 @@
 
 #===================================================================================   
 #         NAME: command
-#        USAGE: command [parameter 1]
+#        USAGE: command [parameter]
 #      RETURNS: file operated on
 #  DESCRIPTION: does something useful
 # REQUIREMENTS: command1 command2
@@ -1136,27 +1136,30 @@ genplasma() {
 #        USAGE: ddbackup [/dev/device] [filename]
 #      RETURNS: [filename].img.gz
 #  DESCRIPTION: backs up a block device using dd and compress it
-# REQUIREMENTS: dd gzip 
+# REQUIREMENTS: dd gzip pv
 #       AUTHOR: hur1can3
 #     REVISION: 04.02.2013
 #===================================================================================
 ddbackup() {
-    BLOCKSIZE='sudo blockdev --getsize64 $1'
-    sudo dd if=$1 bs=1MB | pv -s $BLOCKSIZE | gzip -9 > $2.img.gz
+    BLOCKSIZE='sudo blockdev --getsize64 $1' 
+    sudo dd if=$1 bs=4096 | pv -s $BLOCKSIZE | gzip -9 > $2.img.gz
 }
+
+#BLOCKSIZE='sudo blockdev --getsize64 /dev/sdc'
+#sudo dd if=/dev/sdc bs=4096 | pv -s $BLOCKSIZE | sudo dd bs=4096 of=~/USB_BLACK_BACKUP.IMG
 
 #===================================================================================   
 #         NAME: ddrestore
 #        USAGE: ddrestore [filename] [/dev/device] 
 #      RETURNS: ---
 #  DESCRIPTION: restores a dd backup to a block device
-# REQUIREMENTS: dd gunzip 
+# REQUIREMENTS: dd gunzip pv
 #       AUTHOR: hur1can3
 #     REVISION: 04.02.2013
 #===================================================================================
 ddrestore() {
     FILESIZE=`ls -l $1 | awk '{print $5}'`
-    sudo gunzip -c $1 | pv -s $FILESIZE | sudo dd of=$2 bs=1MB 
+    sudo gunzip -c $1 | pv -s $FILESIZE | sudo dd of=$2 bs=4096 
 }
 
 #===================================================================================   
@@ -1241,4 +1244,90 @@ hex2dec(){
 #===================================================================================
 dec2hex(){
   echo "obase=16; $@"|bc
+}
+
+#===================================================================================   
+#         NAME: countsheep
+#        USAGE: countsheep [# of sheep]
+#      RETURNS: ---
+#  DESCRIPTION: hypnosis / sleep inducer
+# REQUIREMENTS: espeak sleep seq
+#       AUTHOR: knoppix5
+#     REVISION: 2013-01-25 06:55:35
+#===================================================================================
+countsheep(){
+    for count in $(seq 2 1001); do espeak "$count sheeps";sleep 2;done
+}
+
+#===================================================================================   
+#         NAME: cropimgs
+#        USAGE: cropimgs [files] [width] [height]
+#      RETURNS: ---
+#  DESCRIPTION: batch crop images with imagemagick
+# REQUIREMENTS: imagemagick
+#       AUTHOR: michelsberg
+#     REVISION: 2013-01-25 06:55:35
+#===================================================================================
+crompimgs(){
+    mogrify -crop $2x$3+0+0 $1
+}
+
+#===================================================================================   
+#         NAME: lsr
+#        USAGE: lsr [dir]
+#      RETURNS: ---
+#  DESCRIPTION: List directories recursively showing its sizes using ls and grep
+#               Lists everithing using -l "long listing format" wich includes the 
+#               space used by the folder. Displays it in -h "human readable form" 
+#               (i.e. 2.2G, 32K), and -R recurses subfolders.
+#               grep -e using a regex, show lines containing the word "total" or 
+#               a ":" at the end of the line (those with the name of the folder) only.
+# REQUIREMENTS: ls grep
+#       AUTHOR: Sebasg
+#     REVISION: 2013-01-25 06:55:35
+#===================================================================================
+lsr(){
+    ls -lhR | grep -e "total\|:$"
+}
+
+
+#===================================================================================   
+#         NAME: webcamshot
+#        USAGE: webcamshot [resolution]
+#      RETURNS: webcam-$(date +%m_%d_%Y_%H_%M).jpeg
+#  DESCRIPTION: This command takes a 1280x1024 p picture from the webcam.
+#               If prefer it smaller, try changing the -s parameter: 
+#               qqvga is the tiniest, vga is 640x480, svga is 800x600 and so on.
+# REQUIREMENTS: ls grep
+#       AUTHOR: MarxBro
+#     REVISION: 2013-01-17 11:37:09
+#===================================================================================
+webcamshot(){
+    read && ffmpeg -y -r 1 -t 3 -f video4linux2 -vframes 1 -s sxga -i /dev/video0 ~/webcam-$(date +%m_%d_%Y_%H_%M).jpeg
+}
+
+#===================================================================================   
+#         NAME: pshr
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: Find processes utilizing high memory in human readable format
+# REQUIREMENTS: ps awk
+#       AUTHOR: rockon
+#     REVISION: 2012-11-27 04:29:08
+#===================================================================================
+pshr(){
+    ps -eo size,pid,user,command --sort -size |awk '{hr[1024**2]="GB";hr[1024]="MB";for (x=1024**3; x>=1024; x/=1024){if ($1>=x){printf ("%-6.2f %s ", $1/x, hr[x]);break}}}{printf ("%-6s %-10s ", $2, $3)}{for (x=4;x<=NF;x++){printf ("%s ",$x)} print ("\n")}'
+}
+
+#===================================================================================   
+#         NAME: pacdu
+#        USAGE: ---
+#      RETURNS: ---
+#  DESCRIPTION: Arch Linux pacman sort installed packages by size
+# REQUIREMENTS: pacman grep cut paste awk
+#       AUTHOR: GetterNoCheddar
+#     REVISION: 2012-11-20 03:40:55
+#===================================================================================
+pacdu() {
+    pacman -Qi | grep 'Name\|Size\|Description' | cut -d: -f2 | paste  - - - | awk -F'\t' '{ print $2, "\t", $1, "\t", $3 }' | sort -rn
 }
