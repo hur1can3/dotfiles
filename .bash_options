@@ -61,7 +61,7 @@ LC_ALL=en_US.utf8
 #export PATH=$PATH:/usr/share/java/apache-ant/bin
 
 # Ruby rvm exports
-[[ -s "/home/hur1can3/.rvm/scripts/rvm" ]] && source "/home/hur1can3/.rvm/scripts/rvm" 
+[[ -s "/home/xbmc/.rvm/scripts/rvm" ]] && source "/home/xbmc/.rvm/scripts/rvm" 
 
 # Python virtual environment settings
 export VIRTUALENV_WRAPPER_PATH=/usr/local/bin/virtualenvwrapper.sh
@@ -69,10 +69,21 @@ export WORKON_HOME=~/.virtualenvs
 export DJANGO_SITES_ROOT=$HOME/projects/
 source $VIRTUALENV_WRAPPER_PATH
 
+# Go Language
+# goto homedir and clone:
+# hg clone -u release https://code.google.com/p/go
+export GOROOT=$HOME/go
+export GOARCH=386
+export GOOS=linux
+export GOBIN=$GOROOT/bin
+export PATH=$PATH:$GOBIN
+
+# Play Language
+export PATH=$PATH:$HOME/apps/play/
+
 # export custom user directories to PATH
 export PATH=$PATH:$HOME/scripts:$HOME/bin:/sbin
 export PATH=$PATH:$HOME/Dropbox/school/cis451/bin
-
 
 # EXPORT ALL VARIABLES NOW
 export LANGUAGE LC_ALL HISTCONTROL HISTIGNORE HISTSIZE HISTFILESIZE HISTTIMEFORMAT GREP_OPTIONS PAGER MPD_HOST MPD_PORT BROWSER EDITOR VISUAL GREP_COLOR
