@@ -1272,24 +1272,6 @@ crompimgs(){
     mogrify -crop $2x$3+0+0 $1
 }
 
-#===================================================================================   
-#         NAME: lsr
-#        USAGE: lsr [dir]
-#      RETURNS: ---
-#  DESCRIPTION: List directories recursively showing its sizes using ls and grep
-#               Lists everithing using -l "long listing format" wich includes the 
-#               space used by the folder. Displays it in -h "human readable form" 
-#               (i.e. 2.2G, 32K), and -R recurses subfolders.
-#               grep -e using a regex, show lines containing the word "total" or 
-#               a ":" at the end of the line (those with the name of the folder) only.
-# REQUIREMENTS: ls grep
-#       AUTHOR: Sebasg
-#     REVISION: 2013-01-25 06:55:35
-#===================================================================================
-lsr(){
-    ls -lhR | grep -e "total\|:$"
-}
-
 
 #===================================================================================   
 #         NAME: webcamshot
